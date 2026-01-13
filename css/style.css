@@ -987,8 +987,12 @@ body[data-lang="zh"] {
 /* Gallery Sections */
 .gallery-section {
     padding: var(--section-padding);
-    background: var(--white-color);
+    background: var(--light-color);
     position: relative;
+}
+
+.lip-gallery {
+    background: var(--white-color);
 }
 
 .gallery-section::before {
