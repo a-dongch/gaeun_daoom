@@ -732,6 +732,168 @@ body[data-lang="zh"] {
     color: var(--text-light);
 }
 
+/* Premium Reason Section */
+.premium-reason {
+    padding: var(--section-padding);
+    background: linear-gradient(180deg, #FAF9F7 0%, #F5F0EB 50%, #FAF9F7 100%);
+    position: relative;
+}
+
+.premium-reason::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: 
+        radial-gradient(circle at 10% 20%, rgba(139, 115, 85, 0.03) 0%, transparent 40%),
+        radial-gradient(circle at 90% 80%, rgba(196, 160, 122, 0.03) 0%, transparent 40%);
+    pointer-events: none;
+}
+
+.premium-reason .section-header {
+    text-align: center;
+    margin-bottom: 60px;
+    position: relative;
+    z-index: 1;
+}
+
+.premium-reason-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: start;
+    position: relative;
+    z-index: 1;
+}
+
+.premium-reason-left {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.reason-block {
+    background: var(--white-color);
+    padding: 25px;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+}
+
+.reason-title {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--dark-color);
+    margin-bottom: 12px;
+    line-height: 1.4;
+}
+
+.reason-title strong {
+    color: var(--primary-color);
+    font-weight: 700;
+}
+
+.reason-desc {
+    font-size: 1rem;
+    line-height: 1.7;
+    color: var(--text-color);
+    margin-bottom: 10px;
+    word-break: keep-all;
+    overflow-wrap: break-word;
+}
+
+.reason-desc:last-child {
+    margin-bottom: 0;
+    margin-top: 10px;
+}
+
+.reason-list {
+    list-style: none;
+    padding: 0;
+    margin: 10px 0;
+}
+
+.reason-list li {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: var(--text-light);
+    margin-bottom: 8px;
+    padding-left: 0;
+}
+
+.reason-checklist {
+    list-style: none;
+    padding: 0;
+    margin: 15px 0;
+}
+
+.reason-checklist li {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: var(--text-color);
+    margin-bottom: 8px;
+    padding-left: 0;
+}
+
+.reason-checklist li::before {
+    content: '✓';
+    color: #4CAF50;
+    font-weight: bold;
+    margin-right: 8px;
+}
+
+.premium-reason-right {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.premium-reason-image {
+    width: 100%;
+}
+
+.premium-reason-image .image-placeholder {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    background: linear-gradient(135deg, var(--light-color) 0%, #E8DDD3 100%);
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-light);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+}
+
+.premium-reason-image .image-placeholder i {
+    font-size: 4rem;
+    margin-bottom: 20px;
+    color: var(--primary-color);
+    opacity: 0.5;
+}
+
+.premium-reason-image .image-placeholder p {
+    font-size: 1.2rem;
+    color: var(--text-light);
+}
+
+.premium-reason-summary {
+    background: var(--white-color);
+    padding: 25px;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+}
+
+.premium-reason-summary p {
+    font-size: 1.05rem;
+    line-height: 1.8;
+    color: var(--text-color);
+    word-break: keep-all;
+    overflow-wrap: break-word;
+    margin: 0;
+}
+
 /* Premium Care Section */
 .premium-care {
     padding: var(--section-padding);
@@ -909,6 +1071,11 @@ body[data-lang="zh"] {
         gap: 40px;
     }
     
+    .premium-reason-content {
+        grid-template-columns: 1fr;
+        gap: 40px;
+    }
+    
     .technique-image {
         min-height: 400px;
     }
@@ -1061,6 +1228,53 @@ body[data-lang="zh"] {
     
     .consultation-image .image-placeholder p {
         font-size: 1rem;
+    }
+    
+    .premium-reason-content {
+        grid-template-columns: 1fr;
+        gap: 25px;
+    }
+    
+    .premium-reason-left {
+        gap: 20px;
+    }
+    
+    .reason-block {
+        padding: 20px;
+    }
+    
+    .reason-title {
+        font-size: 1.1rem;
+    }
+    
+    .reason-desc {
+        font-size: 0.95rem;
+    }
+    
+    .reason-list li,
+    .reason-checklist li {
+        font-size: 0.9rem;
+    }
+    
+    .premium-reason-image .image-placeholder {
+        aspect-ratio: 16 / 9;
+    }
+    
+    .premium-reason-image .image-placeholder i {
+        font-size: 3rem;
+        margin-bottom: 15px;
+    }
+    
+    .premium-reason-image .image-placeholder p {
+        font-size: 1rem;
+    }
+    
+    .premium-reason-summary {
+        padding: 20px;
+    }
+    
+    .premium-reason-summary p {
+        font-size: 0.95rem;
     }
     
     .mission-text-content,
