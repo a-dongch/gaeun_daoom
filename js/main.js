@@ -253,6 +253,108 @@ function initializeApp(trans) {
         statsObserver.observe(heroStats);
     }
     
+    // Swiper 초기화
+    if (typeof Swiper !== 'undefined') {
+        // 눈썹 시술사진 Swiper
+        const eyebrowSwiper = new Swiper('.eyebrow-swiper', {
+            slidesPerView: 1,
+            spaceBetween: 20,
+            loop: true,
+            autoplay: {
+                delay: 3000,
+                disableOnInteraction: false,
+            },
+            pagination: {
+                el: '.eyebrow-swiper .swiper-pagination',
+                clickable: true,
+            },
+            navigation: {
+                nextEl: '.eyebrow-swiper .swiper-button-next',
+                prevEl: '.eyebrow-swiper .swiper-button-prev',
+            },
+            breakpoints: {
+                640: {
+                    slidesPerView: 2,
+                    spaceBetween: 20,
+                },
+                768: {
+                    slidesPerView: 2,
+                    spaceBetween: 30,
+                },
+                1024: {
+                    slidesPerView: 3,
+                    spaceBetween: 30,
+                },
+            },
+        });
+        
+        // 입술 시술사진 Swiper
+        const lipSwiper = new Swiper('.lip-swiper', {
+            slidesPerView: 1,
+            spaceBetween: 20,
+            loop: true,
+            autoplay: {
+                delay: 3000,
+                disableOnInteraction: false,
+            },
+            pagination: {
+                el: '.lip-swiper .swiper-pagination',
+                clickable: true,
+            },
+            navigation: {
+                nextEl: '.lip-swiper .swiper-button-next',
+                prevEl: '.lip-swiper .swiper-button-prev',
+            },
+            breakpoints: {
+                640: {
+                    slidesPerView: 2,
+                    spaceBetween: 20,
+                },
+                768: {
+                    slidesPerView: 2,
+                    spaceBetween: 30,
+                },
+                1024: {
+                    slidesPerView: 3,
+                    spaceBetween: 30,
+                },
+            },
+        });
+        
+        // 후기 모음 Swiper
+        const reviewsSwiper = new Swiper('.reviews-swiper', {
+            slidesPerView: 1,
+            spaceBetween: 20,
+            loop: true,
+            autoplay: {
+                delay: 3000,
+                disableOnInteraction: false,
+            },
+            pagination: {
+                el: '.reviews-swiper .swiper-pagination',
+                clickable: true,
+            },
+            navigation: {
+                nextEl: '.reviews-swiper .swiper-button-next',
+                prevEl: '.reviews-swiper .swiper-button-prev',
+            },
+            breakpoints: {
+                640: {
+                    slidesPerView: 2,
+                    spaceBetween: 20,
+                },
+                768: {
+                    slidesPerView: 2,
+                    spaceBetween: 30,
+                },
+                1024: {
+                    slidesPerView: 3,
+                    spaceBetween: 30,
+                },
+            },
+        });
+    }
+    
     // 콘솔 로그 (개발자용)
     console.log('%c가은다움 뷰티 웹사이트', 'color: #8B7355; font-size: 20px; font-weight: bold;');
     console.log('%cKorean PMU Artist - Premium Semi-Permanent Makeup', 'color: #C4A07A; font-size: 14px;');

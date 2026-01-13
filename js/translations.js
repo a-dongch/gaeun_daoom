@@ -84,6 +84,10 @@
         reason_4_conclusion: "좋은 재료는 당연히 단가가 올라갑니다.",
         premium_reason_summary: "🗣️ 헤어스트록은 시간이 오래 걸리고, 기술 난이도가 높으며, 시간과 경험, 손의 감각이 필요한 작업입니다. 한 사람만을 위한 맞춤 작업이기 때문에 가장 자연스럽고 예쁜 결과를 주는 기법입니다. 그래서 고가이지만, 그래서 만족도가 높아요🧡",
         
+        eyebrow_gallery_title: "눈썹 시술사진",
+        lip_gallery_title: "입술 시술사진",
+        reviews_title: "후기 모음",
+        
         care_title: "1:1 프리미엄 케어",
         care_subtitle: "예약부터 사후관리까지 책임지는 시스템",
         step_1_title: "상담 및 예약",
@@ -187,6 +191,10 @@
         reason_4_item_2: "✓ Pigments with high color stability = long-lasting, beautiful fading",
         reason_4_conclusion: "Good materials naturally increase the cost.",
         premium_reason_summary: "🗣️ Hair stroke takes a long time, has high technical difficulty, and requires time, experience, and manual dexterity. Because it's a customized procedure for each individual, it's a technique that yields the most natural and beautiful results. Therefore, it's expensive, but the satisfaction is high.🧡",
+        
+        eyebrow_gallery_title: "Eyebrow Procedure Photos",
+        lip_gallery_title: "Lip Procedure Photos",
+        reviews_title: "Customer Reviews",
         
         care_title: "1:1 Premium Care",
         care_subtitle: "A System Responsible from Reservation to Aftercare",
@@ -373,6 +381,10 @@
         reason_4_item_2: "✓ 高色稳定性色素 = 持久，美观褪色",
         reason_4_conclusion: "好材料自然会提高单价。",
         premium_reason_summary: "🗣️ 发丝线条需要很长时间，技术难度高，需要时间、经验和手感。因为是为每个人定制的作业，所以是能产生最自然、最美结果的技法。因此价格昂贵，但满意度很高🧡",
+        
+        eyebrow_gallery_title: "眉毛施术照片",
+        lip_gallery_title: "嘴唇施术照片",
+        reviews_title: "评价汇总",
         
         care_title: "1:1 高端护理",
         care_subtitle: "从预约到术后护理负责到底的系统",
