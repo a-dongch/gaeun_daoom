@@ -253,6 +253,29 @@ function initializeApp(trans) {
         statsObserver.observe(heroStats);
     }
     
+    // FAQ 아코디언 기능
+    const faqItems = document.querySelectorAll('.faq-item');
+    faqItems.forEach(item => {
+        const question = item.querySelector('.faq-question');
+        question.addEventListener('click', function() {
+            const isActive = item.classList.contains('active');
+            
+            // 다른 모든 FAQ 닫기
+            faqItems.forEach(otherItem => {
+                if (otherItem !== item) {
+                    otherItem.classList.remove('active');
+                }
+            });
+            
+            // 현재 FAQ 토글
+            if (isActive) {
+                item.classList.remove('active');
+            } else {
+                item.classList.add('active');
+            }
+        });
+    });
+    
     // Swiper 초기화
     if (typeof Swiper !== 'undefined') {
         // 눈썹 시술사진 Swiper
