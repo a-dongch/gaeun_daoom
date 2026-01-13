@@ -60,6 +60,8 @@
         mission_left_content: "현재의 반영구 기법 중 가장 섬세하게<br>눈썹 털을 표현 할 수 있는 기법이라고 생각합니다.<br>헤어스트록은 더 자유롭고 세밀한 입체감과<br>음영을 만들어 낼 수 있습니다.<br><br>모의 굵기, 명암의 표현이 가능하여<br>입체적인 눈썹 결을 만들어내기 때문에<br>더 고급스럽고 섬세하며 사실주의적인 표현이 가능하죠.<br><br>또한 찢어지는 상처 없이 색소를 넣기 때문에<br>피부손상이나 통증이 거의 없고<br>작업 후 딱지가 생기지 않으며, 관리가 매우 용이합니다.<br><br>이러한 특성 때문에 극건성, 지성, 아토피 등등<br>스킨이 얇거나 예민한 피부 혹은<br>레이저 시술로 피부가 얇아진 분들에게도 적합한 기법이죠.",
         mission_right_content: "비용보다는 결과물을 중시하세요!<br><br>헤어스트록은 초기 비용이 들더라도 관리가 용이하고<br>고퀄리티의 자연스러운 결과와<br>안전한 피부시술을 제공하므로,<br>장기적으로는 훨씬 가성비가 좋다고 생각합니다.<br><br>예 : 매월 네일, 속눈썹, 헤어 관리에 드는 비용에 비해<br>눈썹 반영구는 월 1만 원도 안 되는 가격으로 유지 가능",
         
+        consultation_content: "'가은다움'의 상담은 단순한 가격 안내나<br>기법 설명에서 끝나지 않습니다.<br><br>먼저 방문 전, 구글폼으로 사전 상담지를 보내드려<br>고객님의 현재 고민, 원하는 방향성,<br>그리고 질병·약 복용 여부까지 꼼꼼히 확인해<br>안전한 맞춤형 반영구 시술을 준비합니다.<br><br>이후에는 고객님의 현재 눈썹 사진을 받아<br>아이패드로 가상 디자인 작업을 진행해<br>시술 후의 느낌을 미리 보여드릴 수 있도록 합니다.<br><br>이러한 체계적인 과정 덕분에<br>고객님은 더 높은 만족도의 시술을 경험하실 수 있으며,<br>컴플레인 또한 제로에 가깝습니다.",
+        
         care_title: "1:1 프리미엄 케어",
         care_subtitle: "예약부터 사후관리까지 책임지는 시스템",
         step_1_title: "상담 및 예약",
@@ -139,6 +141,8 @@
         mission_title: "What is Hair Stroke Technique?",
         mission_left_content: "I believe it is the most delicate technique among current semi-permanent methods<br>that can express eyebrow hairs.<br>Hair stroke can create more free and detailed three-dimensional effects<br>and shading.<br><br>Because it can express the thickness and shading of individual hairs,<br>creating three-dimensional eyebrow texture,<br>it enables more sophisticated, delicate, and realistic expression.<br><br>Since pigment is inserted without tearing wounds,<br>there is almost no skin damage or pain,<br>no scabs form after the procedure, and maintenance is very easy.<br><br>Due to these characteristics, it is a suitable technique for<br>those with thin or sensitive skin such as extremely dry, oily, or atopic skin,<br>or those whose skin has become thin from laser treatments.",
         mission_right_content: "Focus on results rather than cost!<br><br>Even though hair stroke has initial costs,<br>it is easy to maintain and provides<br>high-quality natural results and safe skin treatment,<br>so I believe it is much more cost-effective in the long run.<br><br>Example: Compared to monthly costs for nails, eyelash extensions, and hair care,<br>semi-permanent eyebrows can be maintained for less than 10,000 won per month",
+        
+        consultation_content: "Gaeundaum's consultation does not end with<br>simple price information or technique explanation.<br><br>First, before your visit, we send you a pre-consultation form via Google Forms<br>to carefully check your current concerns, desired direction,<br>and even disease and medication status<br>to prepare a safe customized semi-permanent procedure.<br><br>Afterwards, we receive your current eyebrow photos<br>and proceed with virtual design work on an iPad<br>to show you how it will look after the procedure in advance.<br><br>Thanks to this systematic process,<br>customers can experience procedures with higher satisfaction,<br>and complaints are close to zero.",
         
         care_title: "1:1 Premium Care",
         care_subtitle: "A System Responsible from Reservation to Aftercare",
@@ -220,6 +224,8 @@
         mission_left_content: "現在の半永久技法の中で最も繊細に<br>眉毛の毛を表現できる技法だと考えています。<br>ヘアストロークはより自由で細密な立体感と<br>陰影を作り出すことができます。<br><br>毛の太さ、明暗の表現が可能で、<br>立体的な眉毛の質感を作り出すため、<br>より高級で繊細、写実的な表現が可能です。<br><br>また、裂ける傷なしで色素を入れるため、<br>皮膚損傷や痛みがほとんどなく、<br>作業後にかさぶたができず、管理が非常に容易です。<br><br>これらの特性により、極乾性、脂性、アトピーなど<br>肌が薄いまたは敏感な肌、または<br>レーザー施術で肌が薄くなった方にも適した技法です。",
         mission_right_content: "費用よりも結果を重視してください！<br><br>ヘアストロークは初期費用がかかっても管理が容易で、<br>高品質の自然な結果と<br>安全な皮膚施術を提供するため、<br>長期的にははるかにコストパフォーマンスが良いと考えます。<br><br>例：毎月のネイル、まつげ、ヘアケアにかかる費用に比べ、<br>眉毛半永久は月1万円もかからない価格で維持可能",
         
+        consultation_content: "「ガウンダウム」の相談は単純な価格案内や<br>技法説明で終わりません。<br><br>まず訪問前に、グーグルフォームで事前相談書をお送りし、<br>お客様の現在の悩み、希望する方向性、<br>そして病気・薬服用の有無まで丁寧に確認して<br>安全なカスタム型半永久施術を準備します。<br><br>その後はお客様の現在の眉毛写真を受け取り、<br>iPadで仮想デザイン作業を進めて<br>施術後の感じを事前にお見せできるようにします。<br><br>このような体系的な過程のおかげで、<br>お客様はより高い満足度の施術を体験でき、<br>クレームもゼロに近いです。",
+        
         care_title: "1:1 プレミアムケア",
         care_subtitle: "予約からアフターケアまで責任を持つシステム",
         step_1_title: "相談及び予約",
@@ -299,6 +305,8 @@
         mission_title: "什么是发丝线条技法？",
         mission_left_content: "我认为这是当前半永久技法中<br>最能细致表现眉毛毛发的技法。<br>发丝线条可以创造出更自由、精细的立体感和<br>阴影效果。<br><br>因为可以表现毛发的粗细、明暗，<br>创造出立体的眉毛纹理，<br>所以能够实现更高级、细致、写实的表现。<br><br>此外，由于无需撕裂伤口即可注入色素，<br>几乎没有皮肤损伤或疼痛，<br>术后不会产生结痂，管理非常容易。<br><br>由于这些特性，对于极度干燥、油性、特应性等<br>皮肤较薄或敏感，或<br>因激光治疗导致皮肤变薄的人群来说，这也是适合的技法。",
         mission_right_content: "请重视结果而非费用！<br><br>发丝线条虽然初期费用较高，但管理容易，<br>提供高品质的自然效果和<br>安全的皮肤治疗，<br>因此从长期来看，性价比要高得多。<br><br>例如：相比每月美甲、睫毛、头发护理的费用，<br>眉毛半永久可以以每月不到1万韩元的价格维持",
+        
+        consultation_content: "'Gaeundaum'的咨询不会止步于<br>简单的价格介绍或技法说明。<br><br>首先，在访问前，我们会通过谷歌表单发送预咨询表，<br>仔细确认您当前的困扰、期望的方向，<br>以及疾病和用药情况，<br>以准备安全的定制型半永久施术。<br><br>之后，我们会接收您当前的眉毛照片，<br>在iPad上进行虚拟设计工作，<br>以便提前向您展示施术后的效果。<br><br>得益于这种系统化的过程，<br>顾客可以体验到更高满意度的施术，<br>投诉也几乎为零。",
         
         care_title: "1:1 高端护理",
         care_subtitle: "从预约到术后护理负责到底的系统",

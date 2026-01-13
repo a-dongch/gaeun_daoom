@@ -621,8 +621,8 @@ body[data-lang="zh"] {
 
 .mission-image .image-placeholder {
     width: 100%;
-    aspect-ratio: 21 / 9;
-    max-height: 300px;
+    aspect-ratio: 16 / 9;
+    max-height: 220px;
     background: linear-gradient(135deg, var(--light-color) 0%, #E8DDD3 100%);
     border-radius: 20px;
     display: flex;
@@ -654,6 +654,82 @@ body[data-lang="zh"] {
     background: var(--light-color);
     padding: 30px;
     border-radius: 15px;
+}
+
+/* Consultation Section */
+.consultation {
+    padding: var(--section-padding);
+    background: var(--white-color);
+    position: relative;
+}
+
+.consultation::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: 
+        radial-gradient(circle at 15% 30%, rgba(139, 115, 85, 0.02) 0%, transparent 40%),
+        radial-gradient(circle at 85% 70%, rgba(196, 160, 122, 0.02) 0%, transparent 40%);
+    pointer-events: none;
+}
+
+.consultation-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: center;
+    position: relative;
+    z-index: 1;
+}
+
+.consultation-left {
+    display: flex;
+    flex-direction: column;
+}
+
+.consultation-text-content {
+    font-size: 1.05rem;
+    line-height: 1.9;
+    color: var(--text-color);
+    word-break: keep-all;
+    overflow-wrap: break-word;
+}
+
+.consultation-right {
+    display: flex;
+    flex-direction: column;
+}
+
+.consultation-image {
+    width: 100%;
+}
+
+.consultation-image .image-placeholder {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    background: linear-gradient(135deg, var(--light-color) 0%, #E8DDD3 100%);
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-light);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+}
+
+.consultation-image .image-placeholder i {
+    font-size: 4rem;
+    margin-bottom: 20px;
+    color: var(--primary-color);
+    opacity: 0.5;
+}
+
+.consultation-image .image-placeholder p {
+    font-size: 1.2rem;
+    color: var(--text-light);
 }
 
 /* Premium Care Section */
@@ -828,6 +904,11 @@ body[data-lang="zh"] {
         gap: 40px;
     }
     
+    .consultation-content {
+        grid-template-columns: 1fr;
+        gap: 40px;
+    }
+    
     .technique-image {
         min-height: 400px;
     }
@@ -958,6 +1039,28 @@ body[data-lang="zh"] {
     .mission-content {
         grid-template-columns: 1fr;
         gap: 30px;
+    }
+    
+    .consultation-content {
+        grid-template-columns: 1fr;
+        gap: 30px;
+    }
+    
+    .consultation-text-content {
+        font-size: 0.95rem;
+    }
+    
+    .consultation-image .image-placeholder {
+        aspect-ratio: 16 / 9;
+    }
+    
+    .consultation-image .image-placeholder i {
+        font-size: 3rem;
+        margin-bottom: 15px;
+    }
+    
+    .consultation-image .image-placeholder p {
+        font-size: 1rem;
     }
     
     .mission-text-content,
