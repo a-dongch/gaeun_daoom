@@ -1,5 +1,8 @@
 // 다국어 번역 데이터
-const translations = {
+(function() {
+    'use strict';
+    
+    window.translations = {
     ko: {
         page_title: "가은다움 뷰티 - 프리미엄 반영구 화장",
         hero_badge: "Korean PMU Artist",
@@ -44,6 +47,14 @@ const translations = {
         highlight_1: "직업, 라이프스타일, 표정까지 고려한 디자인",
         highlight_2: "누구에게나 똑같은 눈썹이 아닌 '한 사람을 위한' 설계",
         highlight_3: "보는 사람보다, 내가 편한 눈썹",
+        
+        technique_intro: "서울에서 활동하는 반영구 아티스트로서<br>피부 손상을 최소화하는 섬세한 헤어스트록 기법을 지속적으로 연구·개발해 왔습니다.<br><br>시간이 지나도 자연스럽게 유지되는 반영구 화장을 완성해드립니다.<br>저는 유행이나 과한 표현보다는 고객 한 분의 얼굴형과 피부 상태에 맞춘<br>개별 최적화 디자인에 집중합니다.",
+        feature_1_title: "피부에 부담을 덜 주는 기술",
+        feature_1_desc: "피부 자극을 최소화하는 얕고 섬세한 깊이 컨트롤",
+        feature_2_title: "위생을 우선하는 시술 환경",
+        feature_2_desc: "단계별 멸균 도구 사용, 철저한 일회용 소모품 관리, 인증된 니들과 색소 사용",
+        feature_3_title: "오직 나만을 위한 디자인",
+        feature_3_desc: "개인의 얼굴 균형, 피부톤, 라이프스타일을 반영한 맞춤 설계 디자인",
         
         mission_title: "섬세한 헤어스트록 기법으로<br>자연스러운 아름다움을 완성합니다",
         mission_description: "서울에서 활동하는 반영구 아티스트로서 피부 손상을 최소화하는<br>섬세한 헤어스트록 기법을 지속적으로 연구·개발해 왔습니다.<br><br>시간이 지나도 자연스럽게 유지되는 반영구 화장을 완성해드립니다.<br>유행이나 과한 표현보다는 고객 한 분의 얼굴형과 피부 상태에 맞춘<br>개별 최적화 디자인을 추구합니다.",
@@ -116,6 +127,14 @@ const translations = {
         highlight_2: "Not the same eyebrows for everyone, but a design 'for one person'",
         highlight_3: "Eyebrows that are comfortable for you, not just for observers",
         
+        technique_intro: "As a semi-permanent artist working in Seoul, I have continuously researched and developed<br>delicate hair stroke techniques that minimize skin damage.<br><br>I complete semi-permanent makeup that maintains its natural look over time.<br>Rather than trends or excessive expression, I focus on individually optimized designs<br>tailored to each customer's face shape and skin condition.",
+        feature_1_title: "Technology That Minimizes Skin Burden",
+        feature_1_desc: "Shallow and delicate depth control that minimizes skin irritation",
+        feature_2_title: "Hygiene-First Treatment Environment",
+        feature_2_desc: "Step-by-step sterilization tool usage, thorough disposable supply management, certified needles and pigments",
+        feature_3_title: "Design Only for Me",
+        feature_3_desc: "Custom design reflecting individual facial balance, skin tone, and lifestyle",
+        
         mission_title: "We Complete Natural Beauty<br>with Delicate Hair Stroke Technique",
         mission_description: "As a semi-permanent artist working in Seoul, I have continuously researched and developed<br>delicate hair stroke techniques that minimize skin damage.<br><br>I complete semi-permanent makeup that maintains its natural look over time.<br>Rather than trends or excessive expression, I pursue individually optimized designs<br>tailored to each customer's face shape and skin condition.",
         
@@ -187,6 +206,14 @@ const translations = {
         highlight_2: "誰にでも同じ眉毛ではなく「一人のための」設計",
         highlight_3: "見る人より、自分が心地よい眉毛",
         
+        technique_intro: "ソウルで活動する半永久アーティストとして、皮膚損傷を最小限に抑える<br>繊細なヘアストローク技法を継続的に研究・開発してきました。<br><br>時間が経っても自然に維持される半永久化粧を完成させます。<br>流行や過度な表現より、お客様一人一人の顔型と皮膚状態に合わせた<br>個別最適化デザインに集中します。",
+        feature_1_title: "肌への負担を軽減する技術",
+        feature_1_desc: "皮膚刺激を最小限に抑える浅く繊細な深さコントロール",
+        feature_2_title: "衛生を優先する施術環境",
+        feature_2_desc: "段階的な滅菌工具使用、徹底した使い捨て消耗品管理、認証されたニードルと色素使用",
+        feature_3_title: "私だけのためのデザイン",
+        feature_3_desc: "個人の顔のバランス、肌のトーン、ライフスタイルを反映したカスタム設計デザイン",
+        
         mission_title: "繊細なヘアストローク技法で<br>自然な美しさを完成させます",
         mission_description: "ソウルで活動する半永久アーティストとして、皮膚損傷を最小限に抑える<br>繊細なヘアストローク技法を継続的に研究・開発してきました。<br><br>時間が経っても自然に維持される半永久化粧を完成させます。<br>流行や過度な表現より、お客様一人一人の顔型と皮膚状態に合わせた<br>個別最適化デザインを追求します。",
         
@@ -241,7 +268,7 @@ const translations = {
         award_4: "K美容专家联合会首席评审委员",
         award_5: "国际身体艺术大赛半永久羽毛部门首席评审委员",
         
-        philosophy_title: ""Gaeundaum"的半永久哲学",
+        philosophy_title: "\"Gaeundaum\"的半永久哲学",
         philosophy_subtitle: "经久自然协调的眉毛",
         phil_1_title: "经久自然",
         phil_1_desc: "打造随时间推移仍自然协调的眉毛。",
@@ -255,8 +282,16 @@ const translations = {
         phil_5_desc: "打造不突兀、如同天生眉毛般的效果。",
         
         highlight_1: "考虑职业、生活方式、表情的设计",
-        highlight_2: "不是千篇一律的眉毛，而是"为一个人"的设计",
+        highlight_2: "不是千篇一律的眉毛，而是\"为一个人\"的设计",
         highlight_3: "不只是看起来好，而是让自己舒适的眉毛",
+        
+        technique_intro: "作为在首尔活动的半永久艺术家，持续研究开发<br>将皮肤损伤降至最低的精致发丝线条技法。<br><br>完成随时间推移仍自然保持的半永久化妆。<br>相比流行或过度表现，我专注于针对每位顾客的脸型和皮肤状态<br>个别优化的设计。",
+        feature_1_title: "减轻皮肤负担的技术",
+        feature_1_desc: "将皮肤刺激降至最低的浅而精致的深度控制",
+        feature_2_title: "优先卫生的施术环境",
+        feature_2_desc: "分阶段灭菌工具使用，彻底的一次性消耗品管理，认证的针头和色素使用",
+        feature_3_title: "只为我的设计",
+        feature_3_desc: "反映个人面部平衡、肤色、生活方式的定制设计",
         
         mission_title: "用精致的发丝线条技法<br>完成自然美",
         mission_description: "作为在首尔活动的半永久艺术家，持续研究开发<br>将皮肤损伤降至最低的精致发丝线条技法。<br><br>完成随时间推移仍自然保持的半永久化妆。<br>相比流行或过度表现，追求针对每位顾客的脸型和皮肤状态<br>个别优化的设计。",
@@ -283,4 +318,10 @@ const translations = {
         footer_copyright: "© 2026 Gaeundaum Beauty. 版权所有。",
         footer_location: "Seoul, Korea"
     }
-};
+    };
+    
+    // 전역 변수로도 할당 (하위 호환성)
+    if (typeof window !== 'undefined') {
+        var translations = window.translations;
+    }
+})();

@@ -1,26 +1,59 @@
 // 메인 JavaScript
 document.addEventListener('DOMContentLoaded', function() {
+    // translations 객체가 로드될 때까지 기다리는 함수
+    function waitForTranslations(callback, maxAttempts = 50) {
+        let attempts = 0;
+        
+        function check() {
+            attempts++;
+            const trans = window.translations;
+            
+            if (trans && typeof trans === 'object' && Object.keys(trans).length > 0) {
+                callback(trans);
+            } else if (attempts < maxAttempts) {
+                setTimeout(check, 50);
+            } else {
+                console.error('Translations object failed to load after', maxAttempts, 'attempts');
+                console.log('window.translations:', window.translations);
+                console.log('typeof window.translations:', typeof window.translations);
+                // 그래도 계속 진행 (에러 방지)
+                if (window.translations) {
+                    callback(window.translations);
+                } else {
+                    console.error('Translations object is not loaded. Please check translations.js');
+                }
+            }
+        }
+        
+        check();
+    }
+    
+    waitForTranslations(function(trans) {
+        if (!trans) {
+            console.error('Translations object is not loaded. Please check translations.js');
+            return;
+        }
+        
+        initializeApp(trans);
+    });
+});
+
+function initializeApp(trans) {
+    
+    console.log('Translations loaded successfully:', Object.keys(trans));
+    
     // 현재 언어 설정 (기본값: 한국어)
     let currentLang = localStorage.getItem('preferredLang') || 'ko';
     
-    // 초기 언어 설정
-    setLanguage(currentLang);
-    
-    // 언어 버튼 클릭 이벤트
-    const langButtons = document.querySelectorAll('.lang-btn');
-    langButtons.forEach(button => {
-        button.addEventListener('click', function() {
-            const lang = this.getAttribute('data-lang');
-            setLanguage(lang);
-            
-            // 버튼 활성화 상태 변경
-            langButtons.forEach(btn => btn.classList.remove('active'));
-            this.classList.add('active');
-        });
-    });
-    
     // 언어 설정 함수
     function setLanguage(lang) {
+        if (!trans || !trans[lang]) {
+            console.error('Translations not available for language:', lang);
+            return;
+        }
+        
+        console.log('Setting language to:', lang);
+        
         currentLang = lang;
         localStorage.setItem('preferredLang', lang);
         
@@ -36,8 +69,8 @@ document.addEventListener('DOMContentLoaded', function() {
         elements.forEach(element => {
             const key = element.getAttribute('data-i18n');
             
-            if (translations[lang] && translations[lang][key]) {
-                const translation = translations[lang][key];
+            if (trans[lang] && trans[lang][key]) {
+                const translation = trans[lang][key];
                 
                 // HTML 태그가 포함된 경우 innerHTML 사용
                 if (translation.includes('<br>')) {
@@ -49,8 +82,8 @@ document.addEventListener('DOMContentLoaded', function() {
         });
         
         // 페이지 타이틀 변경
-        if (translations[lang] && translations[lang]['page_title']) {
-            document.title = translations[lang]['page_title'];
+        if (trans[lang] && trans[lang]['page_title']) {
+            document.title = trans[lang]['page_title'];
         }
         
         // 현재 활성화된 언어 버튼 표시
@@ -67,6 +100,42 @@ document.addEventListener('DOMContentLoaded', function() {
             document.body.style.opacity = '1';
         }, 150);
     }
+    
+    // 초기 언어 설정
+    setLanguage(currentLang);
+    
+    // 언어 버튼 클릭 이벤트
+    const langButtons = document.querySelectorAll('.lang-btn');
+    console.log('Found language buttons:', langButtons.length);
+    
+    langButtons.forEach((button, index) => {
+        const lang = button.getAttribute('data-lang');
+        console.log(`Button ${index}: lang=${lang}`);
+        
+        // 클릭 이벤트 리스너 추가
+        button.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            
+            const clickedLang = this.getAttribute('data-lang');
+            console.log('Language button clicked:', clickedLang);
+            
+            if (clickedLang && trans[clickedLang]) {
+                setLanguage(clickedLang);
+                
+                // 버튼 활성화 상태 변경
+                langButtons.forEach(btn => btn.classList.remove('active'));
+                this.classList.add('active');
+            } else {
+                console.warn('Language not found:', clickedLang);
+            }
+        });
+        
+        // 마우스 이벤트도 추가 (디버깅용)
+        button.addEventListener('mousedown', function() {
+            console.log('Button mousedown:', this.getAttribute('data-lang'));
+        });
+    });
     
     // 스크롤 애니메이션
     const observerOptions = {
@@ -188,4 +257,4 @@ document.addEventListener('DOMContentLoaded', function() {
     console.log('%c가은다움 뷰티 웹사이트', 'color: #8B7355; font-size: 20px; font-weight: bold;');
     console.log('%cKorean PMU Artist - Premium Semi-Permanent Makeup', 'color: #C4A07A; font-size: 14px;');
     console.log('%c현재 언어: ' + currentLang.toUpperCase(), 'color: #666; font-size: 12px;');
-});
+}
