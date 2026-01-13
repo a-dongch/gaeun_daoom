@@ -48,7 +48,7 @@
         highlight_2: "누구에게나 똑같은 눈썹이 아닌 '한 사람을 위한' 설계",
         highlight_3: "보는 사람보다, 내가 편한 눈썹",
         
-        technique_intro: "서울에서 활동하는 반영구 아티스트로서<br>피부 손상을 최소화하는 섬세한 헤어스트록 기법을 지속적으로 연구·개발해 왔습니다.<br><br>시간이 지나도 자연스럽게 유지되는 반영구 화장을 완성해드립니다.<br>저는 유행이나 과한 표현보다는 고객 한 분의 얼굴형과 피부 상태에 맞춘<br>개별 최적화 디자인에 집중합니다.",
+        technique_intro: "서울에서 활동하는 반영구 아티스트로서<br>피부 손상을 최소화하는 섬세한 헤어스트록 기법을<br>지속적으로 연구·개발해 왔습니다.<br><br>시간이 지나도 자연스럽게 유지되는<br>반영구 화장을 완성해드립니다.<br>저는 유행이나 과한 표현보다는<br>고객 한 분의 얼굴형과 피부 상태에 맞춘<br>개별 최적화 디자인에 집중합니다.",
         feature_1_title: "피부에 부담을 덜 주는 기술",
         feature_1_desc: "피부 자극을 최소화하는 얕고 섬세한 깊이 컨트롤",
         feature_2_title: "위생을 우선하는 시술 환경",
@@ -56,8 +56,9 @@
         feature_3_title: "오직 나만을 위한 디자인",
         feature_3_desc: "개인의 얼굴 균형, 피부톤, 라이프스타일을 반영한 맞춤 설계 디자인",
         
-        mission_title: "섬세한 헤어스트록 기법으로<br>자연스러운 아름다움을 완성합니다",
-        mission_description: "서울에서 활동하는 반영구 아티스트로서 피부 손상을 최소화하는<br>섬세한 헤어스트록 기법을 지속적으로 연구·개발해 왔습니다.<br><br>시간이 지나도 자연스럽게 유지되는 반영구 화장을 완성해드립니다.<br>유행이나 과한 표현보다는 고객 한 분의 얼굴형과 피부 상태에 맞춘<br>개별 최적화 디자인을 추구합니다.",
+        mission_title: "헤어스트록 기법이란?",
+        mission_left_content: "현재의 반영구 기법 중 가장 섬세하게<br>눈썹 털을 표현 할 수 있는 기법이라고 생각합니다.<br>헤어스트록은 더 자유롭고 세밀한 입체감과<br>음영을 만들어 낼 수 있습니다.<br><br>모의 굵기, 명암의 표현이 가능하여<br>입체적인 눈썹 결을 만들어내기 때문에<br>더 고급스럽고 섬세하며 사실주의적인 표현이 가능하죠.<br><br>또한 찢어지는 상처 없이 색소를 넣기 때문에<br>피부손상이나 통증이 거의 없고<br>작업 후 딱지가 생기지 않으며, 관리가 매우 용이합니다.<br><br>이러한 특성 때문에 극건성, 지성, 아토피 등등<br>스킨이 얇거나 예민한 피부 혹은<br>레이저 시술로 피부가 얇아진 분들에게도 적합한 기법이죠.",
+        mission_right_content: "비용보다는 결과물을 중시하세요!<br><br>헤어스트록은 초기 비용이 들더라도 관리가 용이하고<br>고퀄리티의 자연스러운 결과와<br>안전한 피부시술을 제공하므로,<br>장기적으로는 훨씬 가성비가 좋다고 생각합니다.<br><br>예 : 매월 네일, 속눈썹, 헤어 관리에 드는 비용에 비해<br>눈썹 반영구는 월 1만 원도 안 되는 가격으로 유지 가능",
         
         care_title: "1:1 프리미엄 케어",
         care_subtitle: "예약부터 사후관리까지 책임지는 시스템",
@@ -127,7 +128,7 @@
         highlight_2: "Not the same eyebrows for everyone, but a design 'for one person'",
         highlight_3: "Eyebrows that are comfortable for you, not just for observers",
         
-        technique_intro: "As a semi-permanent artist working in Seoul, I have continuously researched and developed<br>delicate hair stroke techniques that minimize skin damage.<br><br>I complete semi-permanent makeup that maintains its natural look over time.<br>Rather than trends or excessive expression, I focus on individually optimized designs<br>tailored to each customer's face shape and skin condition.",
+        technique_intro: "As a semi-permanent artist working in Seoul,<br>I have continuously researched and developed<br>delicate hair stroke techniques that minimize skin damage.<br><br>I complete semi-permanent makeup that<br>maintains its natural look over time.<br>Rather than trends or excessive expression,<br>I focus on individually optimized designs<br>tailored to each customer's face shape and skin condition.",
         feature_1_title: "Technology That Minimizes Skin Burden",
         feature_1_desc: "Shallow and delicate depth control that minimizes skin irritation",
         feature_2_title: "Hygiene-First Treatment Environment",
@@ -135,8 +136,9 @@
         feature_3_title: "Design Only for Me",
         feature_3_desc: "Custom design reflecting individual facial balance, skin tone, and lifestyle",
         
-        mission_title: "We Complete Natural Beauty<br>with Delicate Hair Stroke Technique",
-        mission_description: "As a semi-permanent artist working in Seoul, I have continuously researched and developed<br>delicate hair stroke techniques that minimize skin damage.<br><br>I complete semi-permanent makeup that maintains its natural look over time.<br>Rather than trends or excessive expression, I pursue individually optimized designs<br>tailored to each customer's face shape and skin condition.",
+        mission_title: "What is Hair Stroke Technique?",
+        mission_left_content: "I believe it is the most delicate technique among current semi-permanent methods<br>that can express eyebrow hairs.<br>Hair stroke can create more free and detailed three-dimensional effects<br>and shading.<br><br>Because it can express the thickness and shading of individual hairs,<br>creating three-dimensional eyebrow texture,<br>it enables more sophisticated, delicate, and realistic expression.<br><br>Since pigment is inserted without tearing wounds,<br>there is almost no skin damage or pain,<br>no scabs form after the procedure, and maintenance is very easy.<br><br>Due to these characteristics, it is a suitable technique for<br>those with thin or sensitive skin such as extremely dry, oily, or atopic skin,<br>or those whose skin has become thin from laser treatments.",
+        mission_right_content: "Focus on results rather than cost!<br><br>Even though hair stroke has initial costs,<br>it is easy to maintain and provides<br>high-quality natural results and safe skin treatment,<br>so I believe it is much more cost-effective in the long run.<br><br>Example: Compared to monthly costs for nails, eyelash extensions, and hair care,<br>semi-permanent eyebrows can be maintained for less than 10,000 won per month",
         
         care_title: "1:1 Premium Care",
         care_subtitle: "A System Responsible from Reservation to Aftercare",
@@ -206,7 +208,7 @@
         highlight_2: "誰にでも同じ眉毛ではなく「一人のための」設計",
         highlight_3: "見る人より、自分が心地よい眉毛",
         
-        technique_intro: "ソウルで活動する半永久アーティストとして、皮膚損傷を最小限に抑える<br>繊細なヘアストローク技法を継続的に研究・開発してきました。<br><br>時間が経っても自然に維持される半永久化粧を完成させます。<br>流行や過度な表現より、お客様一人一人の顔型と皮膚状態に合わせた<br>個別最適化デザインに集中します。",
+        technique_intro: "ソウルで活動する半永久アーティストとして、<br>皮膚損傷を最小限に抑える繊細なヘアストローク技法を<br>継続的に研究・開発してきました。<br><br>時間が経っても自然に維持される<br>半永久化粧を完成させます。<br>流行や過度な表現より、<br>お客様一人一人の顔型と皮膚状態に合わせた<br>個別最適化デザインに集中します。",
         feature_1_title: "肌への負担を軽減する技術",
         feature_1_desc: "皮膚刺激を最小限に抑える浅く繊細な深さコントロール",
         feature_2_title: "衛生を優先する施術環境",
@@ -214,8 +216,9 @@
         feature_3_title: "私だけのためのデザイン",
         feature_3_desc: "個人の顔のバランス、肌のトーン、ライフスタイルを反映したカスタム設計デザイン",
         
-        mission_title: "繊細なヘアストローク技法で<br>自然な美しさを完成させます",
-        mission_description: "ソウルで活動する半永久アーティストとして、皮膚損傷を最小限に抑える<br>繊細なヘアストローク技法を継続的に研究・開発してきました。<br><br>時間が経っても自然に維持される半永久化粧を完成させます。<br>流行や過度な表現より、お客様一人一人の顔型と皮膚状態に合わせた<br>個別最適化デザインを追求します。",
+        mission_title: "ヘアストローク技法とは？",
+        mission_left_content: "現在の半永久技法の中で最も繊細に<br>眉毛の毛を表現できる技法だと考えています。<br>ヘアストロークはより自由で細密な立体感と<br>陰影を作り出すことができます。<br><br>毛の太さ、明暗の表現が可能で、<br>立体的な眉毛の質感を作り出すため、<br>より高級で繊細、写実的な表現が可能です。<br><br>また、裂ける傷なしで色素を入れるため、<br>皮膚損傷や痛みがほとんどなく、<br>作業後にかさぶたができず、管理が非常に容易です。<br><br>これらの特性により、極乾性、脂性、アトピーなど<br>肌が薄いまたは敏感な肌、または<br>レーザー施術で肌が薄くなった方にも適した技法です。",
+        mission_right_content: "費用よりも結果を重視してください！<br><br>ヘアストロークは初期費用がかかっても管理が容易で、<br>高品質の自然な結果と<br>安全な皮膚施術を提供するため、<br>長期的にははるかにコストパフォーマンスが良いと考えます。<br><br>例：毎月のネイル、まつげ、ヘアケアにかかる費用に比べ、<br>眉毛半永久は月1万円もかからない価格で維持可能",
         
         care_title: "1:1 プレミアムケア",
         care_subtitle: "予約からアフターケアまで責任を持つシステム",
@@ -285,7 +288,7 @@
         highlight_2: "不是千篇一律的眉毛，而是\"为一个人\"的设计",
         highlight_3: "不只是看起来好，而是让自己舒适的眉毛",
         
-        technique_intro: "作为在首尔活动的半永久艺术家，持续研究开发<br>将皮肤损伤降至最低的精致发丝线条技法。<br><br>完成随时间推移仍自然保持的半永久化妆。<br>相比流行或过度表现，我专注于针对每位顾客的脸型和皮肤状态<br>个别优化的设计。",
+        technique_intro: "作为在首尔活动的半永久艺术家，<br>持续研究开发将皮肤损伤降至最低的<br>精致发丝线条技法。<br><br>完成随时间推移仍自然保持的<br>半永久化妆。<br>相比流行或过度表现，<br>我专注于针对每位顾客的脸型和皮肤状态<br>个别优化的设计。",
         feature_1_title: "减轻皮肤负担的技术",
         feature_1_desc: "将皮肤刺激降至最低的浅而精致的深度控制",
         feature_2_title: "优先卫生的施术环境",
@@ -293,8 +296,9 @@
         feature_3_title: "只为我的设计",
         feature_3_desc: "反映个人面部平衡、肤色、生活方式的定制设计",
         
-        mission_title: "用精致的发丝线条技法<br>完成自然美",
-        mission_description: "作为在首尔活动的半永久艺术家，持续研究开发<br>将皮肤损伤降至最低的精致发丝线条技法。<br><br>完成随时间推移仍自然保持的半永久化妆。<br>相比流行或过度表现，追求针对每位顾客的脸型和皮肤状态<br>个别优化的设计。",
+        mission_title: "什么是发丝线条技法？",
+        mission_left_content: "我认为这是当前半永久技法中<br>最能细致表现眉毛毛发的技法。<br>发丝线条可以创造出更自由、精细的立体感和<br>阴影效果。<br><br>因为可以表现毛发的粗细、明暗，<br>创造出立体的眉毛纹理，<br>所以能够实现更高级、细致、写实的表现。<br><br>此外，由于无需撕裂伤口即可注入色素，<br>几乎没有皮肤损伤或疼痛，<br>术后不会产生结痂，管理非常容易。<br><br>由于这些特性，对于极度干燥、油性、特应性等<br>皮肤较薄或敏感，或<br>因激光治疗导致皮肤变薄的人群来说，这也是适合的技法。",
+        mission_right_content: "请重视结果而非费用！<br><br>发丝线条虽然初期费用较高，但管理容易，<br>提供高品质的自然效果和<br>安全的皮肤治疗，<br>因此从长期来看，性价比要高得多。<br><br>例如：相比每月美甲、睫毛、头发护理的费用，<br>眉毛半永久可以以每月不到1万韩元的价格维持",
         
         care_title: "1:1 高端护理",
         care_subtitle: "从预约到术后护理负责到底的系统",

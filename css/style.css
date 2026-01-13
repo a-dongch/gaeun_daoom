@@ -20,10 +20,10 @@
     --text-light: #666666;
     --border-color: #E0E0E0;
     
-    --font-kr: 'Noto Sans KR', sans-serif;
-    --font-en: 'Inter', sans-serif;
-    --font-jp: 'Noto Sans JP', sans-serif;
-    --font-zh: 'Noto Sans SC', sans-serif;
+    --font-kr: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, 'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', sans-serif;
+    --font-en: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, 'Helvetica Neue', 'Segoe UI', sans-serif;
+    --font-jp: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, 'Helvetica Neue', 'Segoe UI', 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', Meiryo, sans-serif;
+    --font-zh: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, 'Helvetica Neue', 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
     
     --section-padding: 100px 20px;
     --container-max: 1200px;
@@ -36,18 +36,26 @@ body {
     line-height: 1.6;
     background-color: var(--white-color);
     overflow-x: hidden;
+    word-break: keep-all;
+    overflow-wrap: break-word;
 }
 
 body[data-lang="en"] {
     font-family: var(--font-en);
+    word-break: normal;
+    overflow-wrap: break-word;
 }
 
 body[data-lang="ja"] {
     font-family: var(--font-jp);
+    word-break: keep-all;
+    overflow-wrap: break-word;
 }
 
 body[data-lang="zh"] {
     font-family: var(--font-zh);
+    word-break: keep-all;
+    overflow-wrap: break-word;
 }
 
 .container {
@@ -176,6 +184,8 @@ body[data-lang="zh"] {
     color: var(--text-light);
     margin-bottom: 50px;
     line-height: 1.8;
+    word-break: keep-all;
+    overflow-wrap: break-word;
 }
 
 .hero-stats {
@@ -485,6 +495,8 @@ body[data-lang="zh"] {
     line-height: 1.8;
     color: var(--text-color);
     margin-bottom: 40px;
+    word-break: keep-all;
+    overflow-wrap: break-word;
 }
 
 .technique-features {
@@ -533,42 +545,79 @@ body[data-lang="zh"] {
 /* Mission Section */
 .mission {
     padding: var(--section-padding);
-    background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
-    color: var(--white-color);
+    background: var(--white-color);
+}
+
+.mission .section-header {
+    text-align: center;
+    margin-bottom: 60px;
 }
 
 .mission-content {
-    text-align: center;
-    max-width: 900px;
-    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: stretch;
 }
 
-.mission-icon {
+.mission-left {
+    display: flex;
+    flex-direction: column;
+}
+
+.mission-text-content {
+    font-size: 1.05rem;
+    line-height: 1.9;
+    color: var(--text-color);
+    word-break: keep-all;
+    overflow-wrap: break-word;
+}
+
+.mission-right {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.mission-image {
+    width: 100%;
+}
+
+.mission-image .image-placeholder {
+    width: 100%;
+    aspect-ratio: 21 / 9;
+    max-height: 300px;
+    background: linear-gradient(135deg, var(--light-color) 0%, #E8DDD3 100%);
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-light);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+}
+
+.mission-image .image-placeholder i {
     font-size: 4rem;
-    margin-bottom: 30px;
-    animation: pulse 2s infinite;
+    margin-bottom: 20px;
+    color: var(--primary-color);
+    opacity: 0.5;
 }
 
-@keyframes pulse {
-    0%, 100% {
-        transform: scale(1);
-    }
-    50% {
-        transform: scale(1.1);
-    }
+.mission-image .image-placeholder p {
+    font-size: 1.2rem;
+    color: var(--text-light);
 }
 
-.mission-title {
-    font-size: 2.2rem;
-    font-weight: 600;
-    margin-bottom: 30px;
-    line-height: 1.4;
-}
-
-.mission-description {
-    font-size: 1.1rem;
-    line-height: 2;
-    opacity: 0.95;
+.mission-right-content {
+    font-size: 1.05rem;
+    line-height: 1.9;
+    color: var(--text-color);
+    word-break: keep-all;
+    overflow-wrap: break-word;
+    background: var(--light-color);
+    padding: 30px;
+    border-radius: 15px;
 }
 
 /* Premium Care Section */
@@ -738,6 +787,11 @@ body[data-lang="zh"] {
         gap: 40px;
     }
     
+    .mission-content {
+        grid-template-columns: 1fr;
+        gap: 40px;
+    }
+    
     .technique-image {
         min-height: 400px;
     }
@@ -865,12 +919,31 @@ body[data-lang="zh"] {
         font-size: 0.9rem;
     }
     
-    .mission-title {
-        font-size: 1.6rem;
+    .mission-content {
+        grid-template-columns: 1fr;
+        gap: 30px;
     }
     
-    .mission-description {
+    .mission-text-content,
+    .mission-right-content {
+        font-size: 0.95rem;
+    }
+    
+    .mission-image .image-placeholder {
+        aspect-ratio: 16 / 9;
+    }
+    
+    .mission-image .image-placeholder i {
+        font-size: 3rem;
+        margin-bottom: 15px;
+    }
+    
+    .mission-image .image-placeholder p {
         font-size: 1rem;
+    }
+    
+    .mission-right-content {
+        padding: 20px;
     }
     
     .footer-content {
