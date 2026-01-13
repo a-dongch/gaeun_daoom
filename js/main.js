@@ -260,6 +260,7 @@ function initializeApp(trans) {
             slidesPerView: 1,
             spaceBetween: 20,
             loop: true,
+            loopAdditionalSlides: 2,
             autoplay: {
                 delay: 3000,
                 disableOnInteraction: false,
@@ -276,14 +277,17 @@ function initializeApp(trans) {
                 640: {
                     slidesPerView: 2,
                     spaceBetween: 20,
+                    loopAdditionalSlides: 1,
                 },
                 768: {
-                    slidesPerView: 2,
-                    spaceBetween: 30,
+                    slidesPerView: 3,
+                    spaceBetween: 20,
+                    loopAdditionalSlides: 1,
                 },
                 1024: {
-                    slidesPerView: 3,
-                    spaceBetween: 30,
+                    slidesPerView: 6,
+                    spaceBetween: 20,
+                    loopAdditionalSlides: 2,
                 },
             },
         });
@@ -293,6 +297,7 @@ function initializeApp(trans) {
             slidesPerView: 1,
             spaceBetween: 20,
             loop: true,
+            loopAdditionalSlides: 2,
             autoplay: {
                 delay: 3000,
                 disableOnInteraction: false,
@@ -309,14 +314,17 @@ function initializeApp(trans) {
                 640: {
                     slidesPerView: 2,
                     spaceBetween: 20,
+                    loopAdditionalSlides: 1,
                 },
                 768: {
-                    slidesPerView: 2,
-                    spaceBetween: 30,
+                    slidesPerView: 3,
+                    spaceBetween: 20,
+                    loopAdditionalSlides: 1,
                 },
                 1024: {
-                    slidesPerView: 3,
-                    spaceBetween: 30,
+                    slidesPerView: 6,
+                    spaceBetween: 20,
+                    loopAdditionalSlides: 2,
                 },
             },
         });
@@ -326,6 +334,7 @@ function initializeApp(trans) {
             slidesPerView: 1,
             spaceBetween: 20,
             loop: true,
+            loopAdditionalSlides: 2,
             autoplay: {
                 delay: 3000,
                 disableOnInteraction: false,
@@ -342,14 +351,17 @@ function initializeApp(trans) {
                 640: {
                     slidesPerView: 2,
                     spaceBetween: 20,
+                    loopAdditionalSlides: 1,
                 },
                 768: {
-                    slidesPerView: 2,
-                    spaceBetween: 30,
+                    slidesPerView: 3,
+                    spaceBetween: 20,
+                    loopAdditionalSlides: 1,
                 },
                 1024: {
-                    slidesPerView: 3,
-                    spaceBetween: 30,
+                    slidesPerView: 6,
+                    spaceBetween: 20,
+                    loopAdditionalSlides: 2,
                 },
             },
         });
