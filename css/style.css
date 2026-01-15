@@ -293,6 +293,15 @@ body[data-lang="zh"] {
     top: 100px;
 }
 
+.director-image {
+    width: 100%;
+    height: auto;
+    border-radius: 20px;
+    object-fit: cover;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+    display: block;
+}
+
 .profile-placeholder {
     width: 100%;
     aspect-ratio: 1;
@@ -466,6 +475,15 @@ body[data-lang="zh"] {
 
 .technique-image {
     width: 100%;
+}
+
+.technique-photo {
+    width: 100%;
+    height: auto;
+    border-radius: 20px;
+    object-fit: cover;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+    display: block;
 }
 
 .technique-image .image-placeholder {
@@ -702,6 +720,15 @@ body[data-lang="zh"] {
 
 .consultation-image {
     width: 100%;
+}
+
+.consultation-photo {
+    width: 100%;
+    height: auto;
+    border-radius: 20px;
+    object-fit: cover;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+    display: block;
 }
 
 .consultation-image .image-placeholder {
