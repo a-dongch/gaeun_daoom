@@ -905,6 +905,15 @@ body[data-lang="zh"] {
     width: 100%;
 }
 
+.premium-reason-photo {
+    width: 100%;
+    height: auto;
+    border-radius: 20px;
+    object-fit: cover;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+    display: block;
+}
+
 .premium-reason-image .image-placeholder {
     width: 100%;
     aspect-ratio: 4 / 3;
