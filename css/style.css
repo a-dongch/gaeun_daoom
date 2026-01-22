@@ -1988,6 +1988,14 @@ body[data-lang="zh"] {
     .section-title {
         font-size: 1.5rem;
     }
+    
+    .eyebrow-gallery .swiper-slide {
+        width: calc(50% - 6px) !important;
+    }
+    
+    .eyebrow-gallery .gallery-image {
+        aspect-ratio: 1 / 2;
+    }
 }
 
 /* Gallery Mobile Responsive */
@@ -2008,12 +2016,16 @@ body[data-lang="zh"] {
     }
     
     .gallery-image {
-        max-width: 90%;
+        max-width: 100%;
         margin: 0 auto;
     }
     
     .eyebrow-gallery .gallery-image {
         aspect-ratio: 1 / 2;
+    }
+    
+    .eyebrow-gallery .swiper-slide {
+        width: calc(50% - 6px) !important;
     }
     
     .faq-question {

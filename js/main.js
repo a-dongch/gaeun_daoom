@@ -323,8 +323,8 @@ function initializeApp(trans) {
             },
             breakpoints: {
                 640: {
-                    slidesPerView: 1.5,
-                    spaceBetween: 15,
+                    slidesPerView: 2,
+                    spaceBetween: 12,
                     loopedSlides: 20,
                     loopAdditionalSlides: 20,
                 },
@@ -385,7 +385,7 @@ function initializeApp(trans) {
                             }, 200);
                         }
                     }
-                }, 67); // 67ms마다 슬라이드 이동 (속도 1.5배, 부드러운 연속 효과)
+                }, 134); // 134ms마다 슬라이드 이동 (속도 반으로 줄임, 부드러운 연속 효과)
             }
             
             function stopContinuousAutoplay() {
