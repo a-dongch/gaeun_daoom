@@ -379,6 +379,10 @@ function initializeApp(trans) {
             },
             effect: 'slide',
             allowTouchMove: true,
+            touchRatio: 1,
+            touchReleaseOnEdges: false,
+            preventInteractionOnTransition: true,
+            grabCursor: false,
             navigation: {
                 nextEl: '.eyebrow-swiper .swiper-button-next',
                 prevEl: '.eyebrow-swiper .swiper-button-prev',
@@ -410,6 +414,32 @@ function initializeApp(trans) {
                 },
             },
         });
+        
+        // 모바일에서 터치 이벤트로 인한 확대/축소 방지
+        const eyebrowSwiperContainer = document.querySelector('.eyebrow-swiper');
+        if (eyebrowSwiperContainer) {
+            let touchStartDistance = 0;
+            
+            eyebrowSwiperContainer.addEventListener('touchstart', function(e) {
+                if (e.touches.length === 2) {
+                    // 핀치 줌 방지
+                    e.preventDefault();
+                } else {
+                    touchStartDistance = 0;
+                }
+            }, { passive: false });
+            
+            eyebrowSwiperContainer.addEventListener('touchmove', function(e) {
+                if (e.touches.length === 2) {
+                    // 핀치 줌 방지
+                    e.preventDefault();
+                }
+            }, { passive: false });
+            
+            eyebrowSwiperContainer.addEventListener('touchend', function(e) {
+                touchStartDistance = 0;
+            }, { passive: false });
+        }
         
         // 자동 슬라이드 속도 조절 (끊김 없이 부드럽게, 무한 루프) - 모든 화면 크기에서 작동
         if (eyebrowSwiper) {

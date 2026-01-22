@@ -38,6 +38,10 @@ body {
     overflow-x: hidden;
     word-break: keep-all;
     overflow-wrap: break-word;
+    touch-action: pan-y;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    user-select: none;
 }
 
 body[data-lang="en"] {
@@ -1148,6 +1152,8 @@ body[data-lang="zh"] {
     padding: 20px 0;
     width: 100%;
     overflow: visible;
+    touch-action: pan-y;
+    -webkit-overflow-scrolling: touch;
 }
 
 .eyebrow-gallery .swiper-wrapper {
@@ -1160,6 +1166,18 @@ body[data-lang="zh"] {
 
 .eyebrow-gallery .swiper {
     overflow: visible;
+    touch-action: pan-y;
+    -webkit-overflow-scrolling: touch;
+}
+
+.eyebrow-gallery .swiper-wrapper {
+    touch-action: pan-y;
+}
+
+.eyebrow-gallery .gallery-image,
+.eyebrow-gallery .gallery-img {
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
 }
 
 .lip-gallery {
