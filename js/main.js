@@ -340,23 +340,28 @@ function initializeApp(trans) {
     
     // Swiper 초기화
     if (typeof Swiper !== 'undefined') {
-        // PC에서 루프가 제대로 작동하도록 슬라이드 복제
+        // 무한 루프가 제대로 작동하도록 슬라이드를 충분히 복제
         const eyebrowSwiperEl = document.querySelector('.eyebrow-swiper .swiper-wrapper');
         if (eyebrowSwiperEl) {
-            const originalSlides = eyebrowSwiperEl.querySelectorAll('.swiper-slide');
-            // PC에서 10개를 보여주려면 최소 20개 이상의 슬라이드가 필요
-            // 원본 슬라이드를 복제하여 추가
-            if (originalSlides.length === 10) {
-                originalSlides.forEach((slide, index) => {
-                    const clonedSlide = slide.cloneNode(true);
-                    clonedSlide.classList.add('cloned-slide');
-                    // data-index도 복제 슬라이드에 맞게 조정
-                    const clonedImg = clonedSlide.querySelector('.gallery-img');
-                    if (clonedImg) {
-                        clonedImg.setAttribute('data-index', index);
-                    }
-                    eyebrowSwiperEl.appendChild(clonedSlide);
-                });
+            const originalSlides = eyebrowSwiperEl.querySelectorAll('.swiper-slide:not(.cloned-slide)');
+            const originalCount = originalSlides.length;
+            
+            // PC에서 10개를 보여주려면 최소 30개 이상의 슬라이드가 필요 (3배 복제)
+            // 모바일에서도 끊김 없이 작동하도록 충분히 복제
+            if (originalCount === 10) {
+                // 3번 복제하여 총 40개로 만들기 (원본 10개 + 복제 30개)
+                for (let copy = 0; copy < 3; copy++) {
+                    originalSlides.forEach((slide, index) => {
+                        const clonedSlide = slide.cloneNode(true);
+                        clonedSlide.classList.add('cloned-slide');
+                        // data-index도 복제 슬라이드에 맞게 조정
+                        const clonedImg = clonedSlide.querySelector('.gallery-img');
+                        if (clonedImg) {
+                            clonedImg.setAttribute('data-index', index);
+                        }
+                        eyebrowSwiperEl.appendChild(clonedSlide);
+                    });
+                }
             }
         }
         
@@ -365,9 +370,10 @@ function initializeApp(trans) {
             slidesPerView: 1,
             spaceBetween: 20,
             loop: true,
-            loopedSlides: 20,
-            loopAdditionalSlides: 20,
-            speed: 2000,
+            loopedSlides: 30,
+            loopAdditionalSlides: 30,
+            watchSlidesProgress: true,
+            speed: 300,
             autoplay: {
                 delay: 1,
                 disableOnInteraction: false,
@@ -381,30 +387,28 @@ function initializeApp(trans) {
             allowTouchMove: true,
             touchRatio: 1,
             touchReleaseOnEdges: false,
-            preventInteractionOnTransition: true,
+            preventInteractionOnTransition: false,
             grabCursor: false,
-            navigation: {
-                nextEl: '.eyebrow-swiper .swiper-button-next',
-                prevEl: '.eyebrow-swiper .swiper-button-prev',
-            },
+            simulateTouch: false,
+            navigation: false,
             breakpoints: {
                 640: {
                     slidesPerView: 2,
                     spaceBetween: 12,
-                    loopedSlides: 20,
-                    loopAdditionalSlides: 20,
+                    loopedSlides: 30,
+                    loopAdditionalSlides: 30,
                 },
                 768: {
                     slidesPerView: 2.5,
                     spaceBetween: 15,
-                    loopedSlides: 20,
-                    loopAdditionalSlides: 20,
+                    loopedSlides: 30,
+                    loopAdditionalSlides: 30,
                 },
                 1024: {
                     slidesPerView: 10,
                     spaceBetween: 15,
-                    loopedSlides: 20,
-                    loopAdditionalSlides: 20,
+                    loopedSlides: 30,
+                    loopAdditionalSlides: 30,
                 },
             },
             on: {
@@ -425,36 +429,16 @@ function initializeApp(trans) {
                 }
             });
             
-            // 터치 이벤트로 인한 뷰포트 변경 방지
-            let lastTouchY = 0;
-            let touchStartY = 0;
-            
+            // 터치 이벤트로 인한 뷰포트 변경 방지 (핀치 줌만 방지)
             eyebrowSwiperContainer.addEventListener('touchstart', function(e) {
-                touchStartY = e.touches[0].clientY;
-                lastTouchY = touchStartY;
-                
-                // 더블탭 줌 방지
-                if (e.touches.length === 1) {
-                    const now = Date.now();
-                    if (now - (this.lastTouchTime || 0) < 300) {
-                        e.preventDefault();
-                    }
-                    this.lastTouchTime = now;
+                // 핀치 줌만 방지 (두 손가락 터치)
+                if (e.touches.length === 2) {
+                    e.preventDefault();
                 }
             }, { passive: false });
             
             eyebrowSwiperContainer.addEventListener('touchmove', function(e) {
-                if (e.touches.length === 1) {
-                    const currentY = e.touches[0].clientY;
-                    const deltaY = Math.abs(currentY - touchStartY);
-                    
-                    // 수직 스크롤만 허용, 수평 스와이프는 Swiper가 처리
-                    if (deltaY < 10) {
-                        // 수평 스와이프는 허용하되 뷰포트 변경은 방지
-                    }
-                }
-                
-                // 핀치 줌 방지
+                // 핀치 줌만 방지
                 if (e.touches.length === 2) {
                     e.preventDefault();
                 }
@@ -502,12 +486,19 @@ function initializeApp(trans) {
                 
                 // 모바일 여부 확인 (768px 이하)
                 const isMobile = window.innerWidth <= 768;
-                const slideInterval = isMobile ? 330 : 160; // 모바일: 330ms (2/3 수준으로 느리게), PC: 160ms
+                const slideInterval = isMobile ? 990 : 480; // 모바일: 990ms (3배 느리게), PC: 480ms (3배 느리게)
                 
                 autoplayInterval = setInterval(() => {
-                    if (!isPaused && eyebrowSwiper && eyebrowSwiper.slideNext) {
+                    if (!isPaused && eyebrowSwiper) {
                         try {
-                            eyebrowSwiper.slideNext();
+                            // loop 모드에서 slideNext()는 자동으로 무한 루프 처리됨
+                            // 끝에 도달했는지 확인하고 필요시 처음으로 이동
+                            if (eyebrowSwiper.isEnd && eyebrowSwiper.params.loop) {
+                                // loop를 통해 처음으로 부드럽게 이동
+                                eyebrowSwiper.slideToLoop(0, 0, false);
+                            } else {
+                                eyebrowSwiper.slideNext();
+                            }
                         } catch(e) {
                             console.log('Swiper slide error:', e);
                             clearInterval(autoplayInterval);
@@ -613,6 +604,25 @@ function initializeApp(trans) {
                     }
                 }, 300);
             });
+            
+            // 슬라이드 기능 테스트
+            console.log('=== Eyebrow Gallery Swiper 테스트 ===');
+            console.log('Total slides:', eyebrowSwiper.slides.length);
+            console.log('Looped slides:', eyebrowSwiper.params.loopedSlides);
+            eyebrowSwiper.on('slideChange', function() {
+                console.log('Eyebrow slide changed - Real index:', this.realIndex, 'Active index:', this.activeIndex, 'Is end:', this.isEnd);
+                // 무한 루프 확인
+                if (this.isEnd && this.params.loop) {
+                    console.log('End reached, loop should activate');
+                }
+            });
+            
+            // 네비게이션 버튼 제거됨
+            
+            // 무한 루프 테스트
+            eyebrowSwiper.on('loopFix', function() {
+                console.log('Eyebrow loop fixed - 무한 루프 작동 확인');
+            });
         }
         
         // 이미지 갤러리 모달 기능
@@ -629,7 +639,32 @@ function initializeApp(trans) {
             'images/gallery-eyebrow/eyebrow10.jpeg'
         ];
         
+        const lipImages = [
+            'images/gallery-lip/lip1.jpeg',
+            'images/gallery-lip/lip2.jpeg',
+            'images/gallery-lip/lip3.png',
+            'images/gallery-lip/lip4.jpeg',
+            'images/gallery-lip/lip5.jpeg',
+            'images/gallery-lip/lip6.jpeg',
+            'images/gallery-lip/lip7.png',
+            'images/gallery-lip/lip8.jpeg',
+            'images/gallery-lip/lip9.jpeg',
+            'images/gallery-lip/lip10.jpeg',
+            'images/gallery-lip/lip11.jpeg',
+            'images/gallery-lip/lip12.jpeg',
+            'images/gallery-lip/lip13.jpeg',
+            'images/gallery-lip/lip14.jpeg',
+            'images/gallery-lip/lip15.jpeg',
+            'images/gallery-lip/lip16.jpeg',
+            'images/gallery-lip/lip17.jpeg',
+            'images/gallery-lip/lip18.jpeg',
+            'images/gallery-lip/lip19.jpeg',
+            'images/gallery-lip/lip20.png'
+        ];
+        
         let currentImageIndex = 0;
+        let currentGallery = 'eyebrow'; // 'eyebrow' or 'lip'
+        let currentImages = eyebrowImages;
         const modal = document.getElementById('imageModal');
         const modalImage = document.getElementById('modalImage');
         const modalCurrent = document.getElementById('modalCurrent');
@@ -639,12 +674,21 @@ function initializeApp(trans) {
         const modalNext = document.querySelector('.modal-next');
         const modalOverlay = document.querySelector('.modal-overlay');
         
-        // 모달 총 개수 설정
-        modalTotal.textContent = eyebrowImages.length;
-        
-        // 이미지 클릭 이벤트
+        // eyebrow 이미지 클릭 이벤트
         document.querySelectorAll('.eyebrow-swiper .gallery-img').forEach((img, index) => {
             img.addEventListener('click', function() {
+                currentGallery = 'eyebrow';
+                currentImages = eyebrowImages;
+                currentImageIndex = parseInt(this.getAttribute('data-index'));
+                openModal(currentImageIndex);
+            });
+        });
+        
+        // lip 이미지 클릭 이벤트
+        document.querySelectorAll('.lip-swiper .gallery-img').forEach((img, index) => {
+            img.addEventListener('click', function() {
+                currentGallery = 'lip';
+                currentImages = lipImages;
                 currentImageIndex = parseInt(this.getAttribute('data-index'));
                 openModal(currentImageIndex);
             });
@@ -653,8 +697,9 @@ function initializeApp(trans) {
         // 모달 열기
         function openModal(index) {
             currentImageIndex = index;
-            modalImage.src = eyebrowImages[currentImageIndex];
+            modalImage.src = currentImages[currentImageIndex];
             modalCurrent.textContent = currentImageIndex + 1;
+            modalTotal.textContent = currentImages.length;
             modal.classList.add('active');
             document.body.style.overflow = 'hidden';
         }
@@ -663,19 +708,31 @@ function initializeApp(trans) {
         function closeModal() {
             modal.classList.remove('active');
             document.body.style.overflow = '';
+            
+            // 모달 닫은 후 Swiper 업데이트
+            if (eyebrowSwiper && eyebrowSwiper.update) {
+                setTimeout(() => {
+                    eyebrowSwiper.update();
+                }, 100);
+            }
+            if (lipSwiper && lipSwiper.update) {
+                setTimeout(() => {
+                    lipSwiper.update();
+                }, 100);
+            }
         }
         
         // 다음 이미지
         function nextImage() {
-            currentImageIndex = (currentImageIndex + 1) % eyebrowImages.length;
-            modalImage.src = eyebrowImages[currentImageIndex];
+            currentImageIndex = (currentImageIndex + 1) % currentImages.length;
+            modalImage.src = currentImages[currentImageIndex];
             modalCurrent.textContent = currentImageIndex + 1;
         }
         
         // 이전 이미지
         function prevImage() {
-            currentImageIndex = (currentImageIndex - 1 + eyebrowImages.length) % eyebrowImages.length;
-            modalImage.src = eyebrowImages[currentImageIndex];
+            currentImageIndex = (currentImageIndex - 1 + currentImages.length) % currentImages.length;
+            modalImage.src = currentImages[currentImageIndex];
             modalCurrent.textContent = currentImageIndex + 1;
         }
         
@@ -698,42 +755,273 @@ function initializeApp(trans) {
             }
         });
         
+        // 무한 루프가 제대로 작동하도록 lip 슬라이드를 충분히 복제
+        const lipSwiperEl = document.querySelector('.lip-swiper .swiper-wrapper');
+        if (lipSwiperEl) {
+            const originalLipSlides = lipSwiperEl.querySelectorAll('.swiper-slide:not(.cloned-slide)');
+            const originalCount = originalLipSlides.length;
+            
+            // PC에서 10개를 보여주려면 최소 30개 이상의 슬라이드가 필요 (3배 복제)
+            // 모바일에서도 끊김 없이 작동하도록 충분히 복제
+            if (originalCount === 20) {
+                // 3번 복제하여 총 80개로 만들기 (원본 20개 + 복제 60개)
+                for (let copy = 0; copy < 3; copy++) {
+                    originalLipSlides.forEach((slide, index) => {
+                        const clonedSlide = slide.cloneNode(true);
+                        clonedSlide.classList.add('cloned-slide');
+                        // data-index도 복제 슬라이드에 맞게 조정
+                        const clonedImg = clonedSlide.querySelector('.gallery-img');
+                        if (clonedImg) {
+                            clonedImg.setAttribute('data-index', index);
+                        }
+                        lipSwiperEl.appendChild(clonedSlide);
+                    });
+                }
+            }
+        }
+        
         // 입술 시술사진 Swiper
         const lipSwiper = new Swiper('.lip-swiper', {
             slidesPerView: 1,
             spaceBetween: 20,
             loop: true,
-            loopAdditionalSlides: 2,
+            loopedSlides: 60,
+            loopAdditionalSlides: 60,
+            watchSlidesProgress: true,
+            speed: 300,
             autoplay: {
-                delay: 3000,
+                delay: 1,
                 disableOnInteraction: false,
+                pauseOnMouseEnter: true,
+                reverseDirection: false,
             },
-            pagination: {
-                el: '.lip-swiper .swiper-pagination',
-                clickable: true,
+            freeMode: {
+                enabled: false,
             },
-            navigation: {
-                nextEl: '.lip-swiper .swiper-button-next',
-                prevEl: '.lip-swiper .swiper-button-prev',
-            },
+            effect: 'slide',
+            allowTouchMove: true,
+            touchRatio: 1,
+            touchReleaseOnEdges: false,
+            preventInteractionOnTransition: false,
+            grabCursor: false,
+            simulateTouch: false,
+            navigation: false,
             breakpoints: {
                 640: {
                     slidesPerView: 2,
-                    spaceBetween: 20,
-                    loopAdditionalSlides: 1,
+                    spaceBetween: 12,
+                    loopedSlides: 60,
+                    loopAdditionalSlides: 60,
                 },
                 768: {
-                    slidesPerView: 3,
-                    spaceBetween: 20,
-                    loopAdditionalSlides: 1,
+                    slidesPerView: 2.5,
+                    spaceBetween: 15,
+                    loopedSlides: 60,
+                    loopAdditionalSlides: 60,
                 },
                 1024: {
-                    slidesPerView: 6,
-                    spaceBetween: 20,
-                    loopAdditionalSlides: 2,
+                    slidesPerView: 10,
+                    spaceBetween: 15,
+                    loopedSlides: 60,
+                    loopAdditionalSlides: 40,
+                },
+            },
+            on: {
+                init: function() {
+                    // 초기화 후 자동 슬라이드 시작
+                    this.autoplay.start();
                 },
             },
         });
+        
+        // 모바일에서 전체화면 모드 방지 및 뷰포트 고정 (lip-gallery)
+        const lipSwiperContainer = document.querySelector('.lip-swiper');
+        if (lipSwiperContainer) {
+            // 전체화면 API 방지
+            document.addEventListener('fullscreenchange', function() {
+                if (document.fullscreenElement) {
+                    document.exitFullscreen().catch(() => {});
+                }
+            });
+            
+            // 터치 이벤트로 인한 뷰포트 변경 방지 (핀치 줌만 방지)
+            lipSwiperContainer.addEventListener('touchstart', function(e) {
+                // 핀치 줌만 방지 (두 손가락 터치)
+                if (e.touches.length === 2) {
+                    e.preventDefault();
+                }
+            }, { passive: false });
+            
+            lipSwiperContainer.addEventListener('touchmove', function(e) {
+                // 핀치 줌만 방지
+                if (e.touches.length === 2) {
+                    e.preventDefault();
+                }
+            }, { passive: false });
+        }
+        
+        // lip-gallery 자동 슬라이드 속도 조절 (끊김 없이 부드럽게, 무한 루프) - 모든 화면 크기에서 작동
+        if (lipSwiper) {
+            let lipAutoplayInterval = null;
+            let lipIsPaused = false;
+            let lipIsRunning = false;
+            
+            function startLipContinuousAutoplay() {
+                if (lipIsPaused) return;
+                
+                // 이미 실행 중이면 중지하고 재시작
+                if (lipAutoplayInterval) {
+                    clearInterval(lipAutoplayInterval);
+                    lipAutoplayInterval = null;
+                }
+                
+                lipIsRunning = true;
+                
+                // Swiper autoplay를 중지하고 수동으로 더 부드럽게 제어
+                if (lipSwiper.autoplay) {
+                    lipSwiper.autoplay.stop();
+                }
+                
+                // 모바일 여부 확인 (768px 이하)
+                const isMobile = window.innerWidth <= 768;
+                const slideInterval = isMobile ? 990 : 480; // 모바일: 990ms (3배 느리게), PC: 480ms (3배 느리게)
+                
+                lipAutoplayInterval = setInterval(() => {
+                    if (!lipIsPaused && lipSwiper) {
+                        try {
+                            // loop 모드에서 slideNext()는 자동으로 무한 루프 처리됨
+                            // 끝에 도달했는지 확인하고 필요시 처음으로 이동
+                            if (lipSwiper.isEnd && lipSwiper.params.loop) {
+                                // loop를 통해 처음으로 부드럽게 이동
+                                lipSwiper.slideToLoop(0, 0, false);
+                            } else {
+                                lipSwiper.slideNext();
+                            }
+                        } catch(e) {
+                            console.log('Lip Swiper slide error:', e);
+                            clearInterval(lipAutoplayInterval);
+                            lipAutoplayInterval = null;
+                            lipIsRunning = false;
+                            setTimeout(() => {
+                                startLipContinuousAutoplay();
+                            }, 200);
+                        }
+                    }
+                }, slideInterval);
+            }
+            
+            function stopLipContinuousAutoplay() {
+                if (lipAutoplayInterval) {
+                    clearInterval(lipAutoplayInterval);
+                    lipAutoplayInterval = null;
+                }
+                lipIsRunning = false;
+            }
+            
+            // 여러 방법으로 초기화 시도
+            function initializeLipAutoplay() {
+                setTimeout(() => {
+                    if (!lipIsRunning && !lipIsPaused) {
+                        console.log('Starting continuous autoplay for lip gallery');
+                        startLipContinuousAutoplay();
+                    }
+                }, 500);
+            }
+            
+            // Swiper 초기화 이벤트
+            lipSwiper.on('init', function() {
+                console.log('Lip Swiper initialized, total slides:', this.slides.length);
+                initializeLipAutoplay();
+            });
+            
+            // 이미 초기화된 경우
+            if (lipSwiper.initialized) {
+                console.log('Lip Swiper already initialized, total slides:', lipSwiper.slides.length);
+                initializeLipAutoplay();
+            } else {
+                // 초기화 대기
+                setTimeout(() => {
+                    console.log('Lip Swiper initialization check, total slides:', lipSwiper.slides ? lipSwiper.slides.length : 'unknown');
+                    initializeLipAutoplay();
+                }, 1000);
+            }
+            
+            // 화면 크기 변경 시 재시작
+            let lipResizeTimer;
+            window.addEventListener('resize', function() {
+                clearTimeout(lipResizeTimer);
+                lipResizeTimer = setTimeout(() => {
+                    stopLipContinuousAutoplay();
+                    setTimeout(() => {
+                        if (!lipIsPaused) {
+                            startLipContinuousAutoplay();
+                        }
+                    }, 300);
+                }, 300);
+            });
+            
+            // 마우스 호버 시 일시정지
+            const lipSwiperEl = document.querySelector('.lip-swiper');
+            if (lipSwiperEl) {
+                lipSwiperEl.addEventListener('mouseenter', () => {
+                    lipIsPaused = true;
+                    stopLipContinuousAutoplay();
+                });
+                
+                lipSwiperEl.addEventListener('mouseleave', () => {
+                    lipIsPaused = false;
+                    if (!lipIsRunning) {
+                        startLipContinuousAutoplay();
+                    }
+                });
+            }
+            
+            // 슬라이드 변경 시 루프 확인
+            lipSwiper.on('slideChange', function() {
+                // 루프가 제대로 작동하는지 확인
+                if (!lipIsPaused && !lipIsRunning && !lipAutoplayInterval) {
+                    startLipContinuousAutoplay();
+                }
+            });
+            
+            // 루프 완료 시 재시작
+            lipSwiper.on('loopFix', function() {
+                if (!lipIsPaused && !lipIsRunning) {
+                    setTimeout(() => {
+                        startLipContinuousAutoplay();
+                    }, 200);
+                }
+            });
+            
+            // breakpoint 변경 시 재시작
+            lipSwiper.on('breakpoint', function() {
+                stopLipContinuousAutoplay();
+                setTimeout(() => {
+                    if (!lipIsPaused) {
+                        startLipContinuousAutoplay();
+                    }
+                }, 300);
+            });
+            
+            // 슬라이드 기능 테스트
+            console.log('=== Lip Gallery Swiper 테스트 ===');
+            console.log('Total slides:', lipSwiper.slides.length);
+            console.log('Looped slides:', lipSwiper.params.loopedSlides);
+            lipSwiper.on('slideChange', function() {
+                console.log('Lip slide changed - Real index:', this.realIndex, 'Active index:', this.activeIndex, 'Is end:', this.isEnd);
+                // 무한 루프 확인
+                if (this.isEnd && this.params.loop) {
+                    console.log('End reached, loop should activate');
+                }
+            });
+            
+            // 네비게이션 버튼 제거됨
+            
+            // 무한 루프 테스트
+            lipSwiper.on('loopFix', function() {
+                console.log('Lip loop fixed - 무한 루프 작동 확인');
+            });
+        }
         
         // 후기 모음 Swiper
         const reviewsSwiper = new Swiper('.reviews-swiper', {
@@ -777,4 +1065,62 @@ function initializeApp(trans) {
     console.log('%c가은다움 뷰티 웹사이트', 'color: #8B7355; font-size: 20px; font-weight: bold;');
     console.log('%cKorean PMU Artist - Premium Semi-Permanent Makeup', 'color: #C4A07A; font-size: 14px;');
     console.log('%c현재 언어: ' + currentLang.toUpperCase(), 'color: #666; font-size: 12px;');
+    
+    // 슬라이드 기능 테스트 함수
+    function testSliders() {
+        setTimeout(() => {
+            console.log('\n=== 슬라이드 기능 테스트 ===');
+            
+            // Eyebrow Swiper 테스트
+            const eyebrowSwiper = document.querySelector('.eyebrow-swiper')?.swiper;
+            if (eyebrowSwiper) {
+                console.log('✓ Eyebrow Swiper 초기화됨');
+                console.log('  - Loop:', eyebrowSwiper.params.loop);
+                console.log('  - Autoplay:', eyebrowSwiper.params.autoplay.enabled);
+                console.log('  - 총 슬라이드:', eyebrowSwiper.slides.length);
+                console.log('  - 현재 인덱스:', eyebrowSwiper.realIndex);
+                
+                // 수동 슬라이드 테스트
+                const eyebrowNav = document.querySelectorAll('.eyebrow-swiper .swiper-button-next, .eyebrow-swiper .swiper-button-prev');
+                console.log('  - 네비게이션 버튼:', eyebrowNav.length, '개');
+                
+                // 무한 루프 테스트
+                eyebrowSwiper.once('slideChange', function() {
+                    console.log('  - 수동 슬라이드 작동 확인');
+                });
+            } else {
+                console.log('✗ Eyebrow Swiper 초기화 실패');
+            }
+            
+            // Lip Swiper 테스트
+            const lipSwiper = document.querySelector('.lip-swiper')?.swiper;
+            if (lipSwiper) {
+                console.log('✓ Lip Swiper 초기화됨');
+                console.log('  - Loop:', lipSwiper.params.loop);
+                console.log('  - Autoplay:', lipSwiper.params.autoplay.enabled);
+                console.log('  - 총 슬라이드:', lipSwiper.slides.length);
+                console.log('  - 현재 인덱스:', lipSwiper.realIndex);
+                
+                // 수동 슬라이드 테스트
+                const lipNav = document.querySelectorAll('.lip-swiper .swiper-button-next, .lip-swiper .swiper-button-prev');
+                console.log('  - 네비게이션 버튼:', lipNav.length, '개');
+                
+                // 무한 루프 테스트
+                lipSwiper.once('slideChange', function() {
+                    console.log('  - 수동 슬라이드 작동 확인');
+                });
+            } else {
+                console.log('✗ Lip Swiper 초기화 실패');
+            }
+            
+            console.log('\n=== 테스트 완료 ===');
+            console.log('체크 사항:');
+            console.log('1. 수동 슬라이드: 네비게이션 버튼 클릭 또는 터치 스와이프');
+            console.log('2. 자동 슬라이드: 자동으로 흐르는지 확인');
+            console.log('3. 무한 루프: 마지막 이미지 다음이 첫 이미지인지 확인');
+        }, 2000);
+    }
+    
+    // 테스트 실행
+    testSliders();
 }

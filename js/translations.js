@@ -120,6 +120,8 @@
         cta_title: "궁금한 게 더 있으신가요?",
         cta_subtitle: "카카오톡으로 편하게 문의해주세요",
         cta_kakao_btn: "카카오채널 연결",
+        cta_naver_btn: "네이버 플레이스",
+        cta_instagram_btn: "인스타그램",
         cta_message: "\"가격이 아닌, 당신의 만족도로 증명됩니다.\"",
         
         care_title: "1:1 프리미엄 케어",
@@ -262,6 +264,8 @@
         cta_title: "Do you have more questions?",
         cta_subtitle: "Feel free to contact us via KakaoTalk",
         cta_kakao_btn: "Connect to Kakao Channel",
+        cta_naver_btn: "Naver Place",
+        cta_instagram_btn: "Instagram",
         cta_message: "\"Proven not by price, but by your satisfaction.\"",
         
         care_title: "1:1 Premium Care",
@@ -400,6 +404,8 @@
         cta_title: "他にご質問はありますか？",
         cta_subtitle: "カカオトークでお気軽にお問い合わせください",
         cta_kakao_btn: "カカオチャンネル接続",
+        cta_naver_btn: "ネイバープレイス",
+        cta_instagram_btn: "インスタグラム",
         cta_message: "\"価格ではなく、あなたの満足度で証明されます。\"",
         
         footer_tagline: "Korean PMU Artist - Premium Semi-Permanent Makeup",
@@ -524,6 +530,8 @@
         cta_title: "还有更多疑问吗？",
         cta_subtitle: "请通过KakaoTalk轻松咨询",
         cta_kakao_btn: "连接Kakao频道",
+        cta_naver_btn: "Naver Place",
+        cta_instagram_btn: "Instagram",
         cta_message: "\"不是用价格，而是用您的满意度来证明。\"",
         
         care_title: "1:1 高端护理",
