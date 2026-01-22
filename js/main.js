@@ -340,7 +340,7 @@ function initializeApp(trans) {
     
     // Swiper 초기화
     if (typeof Swiper !== 'undefined') {
-        // 눈썹 시술사진 Swiper - Swiper의 기본 loop 기능 활용
+        // 눈썹 시술사진 Swiper - 무한 루프 보장
         const eyebrowSwiper = new Swiper('.eyebrow-swiper', {
             slidesPerView: 1,
             spaceBetween: 20,
@@ -454,6 +454,14 @@ function initializeApp(trans) {
             
             eyebrowSwiper.on('slideChange', function() {
                 console.log('Eyebrow slide changed - Real index:', this.realIndex, 'Active index:', this.activeIndex);
+                // 마지막 이미지 다음이면 첫 번째로 이동 (무한 루프 보장)
+                if (this.realIndex >= 9) {
+                    setTimeout(() => {
+                        if (this.autoplay && this.autoplay.running) {
+                            this.slideToLoop(0, 800);
+                        }
+                    }, 2100);
+                }
             });
         }
         
@@ -587,7 +595,7 @@ function initializeApp(trans) {
             }
         });
         
-        // 입술 시술사진 Swiper - Swiper의 기본 loop 기능 활용
+        // 입술 시술사진 Swiper - 무한 루프 보장
         const lipSwiper = new Swiper('.lip-swiper', {
             slidesPerView: 1,
             spaceBetween: 20,
@@ -684,6 +692,14 @@ function initializeApp(trans) {
             
             lipSwiper.on('slideChange', function() {
                 console.log('Lip slide changed - Real index:', this.realIndex, 'Active index:', this.activeIndex);
+                // 마지막 이미지 다음이면 첫 번째로 이동 (무한 루프 보장)
+                if (this.realIndex >= 19) {
+                    setTimeout(() => {
+                        if (this.autoplay && this.autoplay.running) {
+                            this.slideToLoop(0, 800);
+                        }
+                    }, 2100);
+                }
             });
         }
         
