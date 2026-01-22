@@ -1153,12 +1153,13 @@ body[data-lang="zh"] {
 }
 
 .gallery-image {
-    width: 100%;
+    width: 75%;
     aspect-ratio: 1 / 2;
     overflow: hidden;
     border-radius: 12px;
     cursor: pointer;
     transition: var(--transition);
+    margin: 0 auto;
 }
 
 .gallery-image:hover {
