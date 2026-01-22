@@ -12,6 +12,7 @@
         stat_years: "년 경력",
         stat_procedures: "시술",
         stat_satisfaction: "만족도",
+        hero_cta_btn: "전후 사진 보러가기",
         
         about_title: "PMU Master Gaeun",
         about_subtitle: "가은다움 뷰티 대표원장",
@@ -153,6 +154,7 @@
         stat_years: "Years",
         stat_procedures: "Procedures",
         stat_satisfaction: "Satisfaction",
+        hero_cta_btn: "View Before & After Photos",
         
         about_title: "PMU Master Gaeun",
         about_subtitle: "Chief Director of Gaeundaum Beauty",
@@ -294,6 +296,7 @@
         stat_years: "年経験",
         stat_procedures: "施術",
         stat_satisfaction: "満足度",
+        hero_cta_btn: "施術前後の写真を見る",
         
         about_title: "PMU マスター ガウン",
         about_subtitle: "ガウンダウム ビューティー代表院長",
@@ -413,6 +416,7 @@
         stat_years: "年经验",
         stat_procedures: "施术",
         stat_satisfaction: "满意度",
+        hero_cta_btn: "查看前后对比照片",
         
         about_title: "PMU Master Gaeun",
         about_subtitle: "Gaeundaum Beauty 代表院长",

@@ -283,36 +283,260 @@ function initializeApp(trans) {
             slidesPerView: 1,
             spaceBetween: 20,
             loop: true,
-            loopAdditionalSlides: 2,
+            loopedSlides: 10,
+            loopAdditionalSlides: 10,
+            speed: 2000,
             autoplay: {
-                delay: 3000,
+                delay: 1,
                 disableOnInteraction: false,
+                pauseOnMouseEnter: true,
+                reverseDirection: false,
             },
-            pagination: {
-                el: '.eyebrow-swiper .swiper-pagination',
-                clickable: true,
+            freeMode: {
+                enabled: false,
             },
+            effect: 'slide',
+            allowTouchMove: true,
             navigation: {
                 nextEl: '.eyebrow-swiper .swiper-button-next',
                 prevEl: '.eyebrow-swiper .swiper-button-prev',
             },
             breakpoints: {
                 640: {
-                    slidesPerView: 2,
-                    spaceBetween: 20,
-                    loopAdditionalSlides: 1,
+                    slidesPerView: 1.5,
+                    spaceBetween: 15,
+                    loopedSlides: 10,
+                    loopAdditionalSlides: 10,
                 },
                 768: {
-                    slidesPerView: 3,
-                    spaceBetween: 20,
-                    loopAdditionalSlides: 1,
+                    slidesPerView: 2.5,
+                    spaceBetween: 15,
+                    loopedSlides: 10,
+                    loopAdditionalSlides: 10,
                 },
                 1024: {
-                    slidesPerView: 6,
-                    spaceBetween: 20,
-                    loopAdditionalSlides: 2,
+                    slidesPerView: 10,
+                    spaceBetween: 15,
+                    loopedSlides: 10,
+                    loopAdditionalSlides: 10,
                 },
             },
+            on: {
+                init: function() {
+                    // 초기화 후 자동 슬라이드 시작
+                    this.autoplay.start();
+                },
+            },
+        });
+        
+        // 자동 슬라이드 속도 조절 (끊김 없이 부드럽게, 무한 루프) - 모든 화면 크기에서 작동
+        if (eyebrowSwiper) {
+            let autoplayInterval = null;
+            let isPaused = false;
+            let isRunning = false;
+            
+            function startContinuousAutoplay() {
+                if (isPaused) return;
+                
+                // 이미 실행 중이면 중지하고 재시작
+                if (autoplayInterval) {
+                    clearInterval(autoplayInterval);
+                    autoplayInterval = null;
+                }
+                
+                isRunning = true;
+                
+                // Swiper autoplay를 중지하고 수동으로 더 부드럽게 제어
+                if (eyebrowSwiper.autoplay) {
+                    eyebrowSwiper.autoplay.stop();
+                }
+                
+                autoplayInterval = setInterval(() => {
+                    if (!isPaused && eyebrowSwiper && eyebrowSwiper.slideNext) {
+                        try {
+                            eyebrowSwiper.slideNext();
+                        } catch(e) {
+                            console.log('Swiper slide error:', e);
+                            clearInterval(autoplayInterval);
+                            autoplayInterval = null;
+                            isRunning = false;
+                            setTimeout(() => {
+                                startContinuousAutoplay();
+                            }, 200);
+                        }
+                    }
+                }, 100); // 100ms마다 슬라이드 이동 (부드러운 연속 효과)
+            }
+            
+            function stopContinuousAutoplay() {
+                if (autoplayInterval) {
+                    clearInterval(autoplayInterval);
+                    autoplayInterval = null;
+                }
+                isRunning = false;
+            }
+            
+            // 여러 방법으로 초기화 시도
+            function initializeAutoplay() {
+                setTimeout(() => {
+                    if (!isRunning && !isPaused) {
+                        startContinuousAutoplay();
+                    }
+                }, 500);
+            }
+            
+            // Swiper 초기화 이벤트
+            eyebrowSwiper.on('init', function() {
+                initializeAutoplay();
+            });
+            
+            // 이미 초기화된 경우
+            if (eyebrowSwiper.initialized) {
+                initializeAutoplay();
+            } else {
+                // 초기화 대기
+                setTimeout(initializeAutoplay, 1000);
+            }
+            
+            // 화면 크기 변경 시 재시작
+            let resizeTimer;
+            window.addEventListener('resize', function() {
+                clearTimeout(resizeTimer);
+                resizeTimer = setTimeout(() => {
+                    stopContinuousAutoplay();
+                    setTimeout(() => {
+                        if (!isPaused) {
+                            startContinuousAutoplay();
+                        }
+                    }, 300);
+                }, 300);
+            });
+            
+            // 마우스 호버 시 일시정지
+            const eyebrowSwiperEl = document.querySelector('.eyebrow-swiper');
+            if (eyebrowSwiperEl) {
+                eyebrowSwiperEl.addEventListener('mouseenter', () => {
+                    isPaused = true;
+                    stopContinuousAutoplay();
+                });
+                
+                eyebrowSwiperEl.addEventListener('mouseleave', () => {
+                    isPaused = false;
+                    if (!isRunning) {
+                        startContinuousAutoplay();
+                    }
+                });
+            }
+            
+            // 슬라이드 변경 시 루프 확인
+            eyebrowSwiper.on('slideChange', function() {
+                // 루프가 제대로 작동하는지 확인
+                if (!isPaused && !isRunning && !autoplayInterval) {
+                    startContinuousAutoplay();
+                }
+            });
+            
+            // 루프 완료 시 재시작
+            eyebrowSwiper.on('loopFix', function() {
+                if (!isPaused && !isRunning) {
+                    setTimeout(() => {
+                        startContinuousAutoplay();
+                    }, 200);
+                }
+            });
+            
+            // breakpoint 변경 시 재시작
+            eyebrowSwiper.on('breakpoint', function() {
+                stopContinuousAutoplay();
+                setTimeout(() => {
+                    if (!isPaused) {
+                        startContinuousAutoplay();
+                    }
+                }, 300);
+            });
+        }
+        
+        // 이미지 갤러리 모달 기능
+        const eyebrowImages = [
+            'images/gallery-eyebrow/eyebrow1.jpeg',
+            'images/gallery-eyebrow/eyebrow2.jpeg',
+            'images/gallery-eyebrow/eyebrow3.jpeg',
+            'images/gallery-eyebrow/eyebrow4.jpeg',
+            'images/gallery-eyebrow/eyebrow5.jpeg',
+            'images/gallery-eyebrow/eyebrow6.jpeg',
+            'images/gallery-eyebrow/eyebrow7.jpeg',
+            'images/gallery-eyebrow/eyebrow8.jpeg',
+            'images/gallery-eyebrow/eyebrow9.jpeg',
+            'images/gallery-eyebrow/eyebrow10.jpeg'
+        ];
+        
+        let currentImageIndex = 0;
+        const modal = document.getElementById('imageModal');
+        const modalImage = document.getElementById('modalImage');
+        const modalCurrent = document.getElementById('modalCurrent');
+        const modalTotal = document.getElementById('modalTotal');
+        const modalClose = document.querySelector('.modal-close');
+        const modalPrev = document.querySelector('.modal-prev');
+        const modalNext = document.querySelector('.modal-next');
+        const modalOverlay = document.querySelector('.modal-overlay');
+        
+        // 모달 총 개수 설정
+        modalTotal.textContent = eyebrowImages.length;
+        
+        // 이미지 클릭 이벤트
+        document.querySelectorAll('.eyebrow-swiper .gallery-img').forEach((img, index) => {
+            img.addEventListener('click', function() {
+                currentImageIndex = parseInt(this.getAttribute('data-index'));
+                openModal(currentImageIndex);
+            });
+        });
+        
+        // 모달 열기
+        function openModal(index) {
+            currentImageIndex = index;
+            modalImage.src = eyebrowImages[currentImageIndex];
+            modalCurrent.textContent = currentImageIndex + 1;
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+        
+        // 모달 닫기
+        function closeModal() {
+            modal.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+        
+        // 다음 이미지
+        function nextImage() {
+            currentImageIndex = (currentImageIndex + 1) % eyebrowImages.length;
+            modalImage.src = eyebrowImages[currentImageIndex];
+            modalCurrent.textContent = currentImageIndex + 1;
+        }
+        
+        // 이전 이미지
+        function prevImage() {
+            currentImageIndex = (currentImageIndex - 1 + eyebrowImages.length) % eyebrowImages.length;
+            modalImage.src = eyebrowImages[currentImageIndex];
+            modalCurrent.textContent = currentImageIndex + 1;
+        }
+        
+        // 이벤트 리스너
+        modalClose.addEventListener('click', closeModal);
+        modalOverlay.addEventListener('click', closeModal);
+        modalNext.addEventListener('click', nextImage);
+        modalPrev.addEventListener('click', prevImage);
+        
+        // 키보드 이벤트
+        document.addEventListener('keydown', function(e) {
+            if (modal.classList.contains('active')) {
+                if (e.key === 'Escape') {
+                    closeModal();
+                } else if (e.key === 'ArrowRight') {
+                    nextImage();
+                } else if (e.key === 'ArrowLeft') {
+                    prevImage();
+                }
+            }
         });
         
         // 입술 시술사진 Swiper
