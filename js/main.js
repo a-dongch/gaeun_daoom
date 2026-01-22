@@ -278,13 +278,33 @@ function initializeApp(trans) {
     
     // Swiper 초기화
     if (typeof Swiper !== 'undefined') {
+        // PC에서 루프가 제대로 작동하도록 슬라이드 복제
+        const eyebrowSwiperEl = document.querySelector('.eyebrow-swiper .swiper-wrapper');
+        if (eyebrowSwiperEl) {
+            const originalSlides = eyebrowSwiperEl.querySelectorAll('.swiper-slide');
+            // PC에서 10개를 보여주려면 최소 20개 이상의 슬라이드가 필요
+            // 원본 슬라이드를 복제하여 추가
+            if (originalSlides.length === 10) {
+                originalSlides.forEach((slide, index) => {
+                    const clonedSlide = slide.cloneNode(true);
+                    clonedSlide.classList.add('cloned-slide');
+                    // data-index도 복제 슬라이드에 맞게 조정
+                    const clonedImg = clonedSlide.querySelector('.gallery-img');
+                    if (clonedImg) {
+                        clonedImg.setAttribute('data-index', index);
+                    }
+                    eyebrowSwiperEl.appendChild(clonedSlide);
+                });
+            }
+        }
+        
         // 눈썹 시술사진 Swiper
         const eyebrowSwiper = new Swiper('.eyebrow-swiper', {
             slidesPerView: 1,
             spaceBetween: 20,
             loop: true,
-            loopedSlides: 10,
-            loopAdditionalSlides: 10,
+            loopedSlides: 20,
+            loopAdditionalSlides: 20,
             speed: 2000,
             autoplay: {
                 delay: 1,
@@ -305,20 +325,20 @@ function initializeApp(trans) {
                 640: {
                     slidesPerView: 1.5,
                     spaceBetween: 15,
-                    loopedSlides: 10,
-                    loopAdditionalSlides: 10,
+                    loopedSlides: 20,
+                    loopAdditionalSlides: 20,
                 },
                 768: {
                     slidesPerView: 2.5,
                     spaceBetween: 15,
-                    loopedSlides: 10,
-                    loopAdditionalSlides: 10,
+                    loopedSlides: 20,
+                    loopAdditionalSlides: 20,
                 },
                 1024: {
                     slidesPerView: 10,
                     spaceBetween: 15,
-                    loopedSlides: 10,
-                    loopAdditionalSlides: 10,
+                    loopedSlides: 20,
+                    loopAdditionalSlides: 20,
                 },
             },
             on: {
@@ -365,7 +385,7 @@ function initializeApp(trans) {
                             }, 200);
                         }
                     }
-                }, 100); // 100ms마다 슬라이드 이동 (부드러운 연속 효과)
+                }, 67); // 67ms마다 슬라이드 이동 (속도 1.5배, 부드러운 연속 효과)
             }
             
             function stopContinuousAutoplay() {
@@ -380,6 +400,7 @@ function initializeApp(trans) {
             function initializeAutoplay() {
                 setTimeout(() => {
                     if (!isRunning && !isPaused) {
+                        console.log('Starting continuous autoplay for eyebrow gallery');
                         startContinuousAutoplay();
                     }
                 }, 500);
@@ -387,15 +408,20 @@ function initializeApp(trans) {
             
             // Swiper 초기화 이벤트
             eyebrowSwiper.on('init', function() {
+                console.log('Eyebrow Swiper initialized, total slides:', this.slides.length);
                 initializeAutoplay();
             });
             
             // 이미 초기화된 경우
             if (eyebrowSwiper.initialized) {
+                console.log('Eyebrow Swiper already initialized, total slides:', eyebrowSwiper.slides.length);
                 initializeAutoplay();
             } else {
                 // 초기화 대기
-                setTimeout(initializeAutoplay, 1000);
+                setTimeout(() => {
+                    console.log('Eyebrow Swiper initialization check, total slides:', eyebrowSwiper.slides ? eyebrowSwiper.slides.length : 'unknown');
+                    initializeAutoplay();
+                }, 1000);
             }
             
             // 화면 크기 변경 시 재시작
