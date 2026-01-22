@@ -30,18 +30,31 @@
     --transition: all 0.3s ease;
 }
 
+html {
+    width: 100%;
+    height: 100%;
+    overflow-x: hidden;
+    position: fixed;
+    touch-action: pan-y;
+}
+
 body {
     font-family: var(--font-kr);
     color: var(--text-color);
     line-height: 1.6;
     background-color: var(--white-color);
     overflow-x: hidden;
+    overflow-y: auto;
     word-break: keep-all;
     overflow-wrap: break-word;
     touch-action: pan-y;
     -webkit-touch-callout: none;
     -webkit-user-select: none;
     user-select: none;
+    width: 100%;
+    height: 100%;
+    position: relative;
+    -webkit-overflow-scrolling: touch;
 }
 
 body[data-lang="en"] {
@@ -1129,10 +1142,16 @@ body[data-lang="zh"] {
     padding: var(--section-padding);
     background: var(--light-color);
     position: relative;
+    overflow-x: hidden;
+    width: 100%;
+    max-width: 100%;
 }
 
 .eyebrow-gallery {
     padding: var(--section-padding);
+    overflow-x: hidden;
+    width: 100%;
+    max-width: 100%;
 }
 
 .eyebrow-gallery .section-header {
@@ -1146,22 +1165,32 @@ body[data-lang="zh"] {
     padding: 0 20px;
 }
 
+.eyebrow-gallery {
+    overflow-x: hidden;
+    width: 100%;
+    max-width: 100%;
+}
+
 .eyebrow-gallery .swiper {
     position: relative;
     z-index: 1;
     padding: 20px 0;
     width: 100%;
-    overflow: visible;
+    max-width: 100%;
+    overflow: hidden;
     touch-action: pan-y;
     -webkit-overflow-scrolling: touch;
 }
 
 .eyebrow-gallery .swiper-wrapper {
     transition-timing-function: linear !important;
+    width: 100%;
 }
 
 .eyebrow-gallery .swiper-slide {
     transition: transform 0.2s linear !important;
+    width: auto;
+    flex-shrink: 0;
 }
 
 .eyebrow-gallery .swiper {
@@ -2061,8 +2090,25 @@ body[data-lang="zh"] {
         font-size: 1.5rem;
     }
     
+    .eyebrow-gallery {
+        overflow-x: hidden !important;
+        width: 100% !important;
+        max-width: 100% !important;
+    }
+    
+    .eyebrow-gallery .swiper {
+        overflow: hidden !important;
+        width: 100% !important;
+        max-width: 100% !important;
+    }
+    
+    .eyebrow-gallery .swiper-wrapper {
+        width: 100% !important;
+    }
+    
     .eyebrow-gallery .swiper-slide {
         width: calc(50% - 6px) !important;
+        flex-shrink: 0;
     }
     
     .eyebrow-gallery .gallery-image {

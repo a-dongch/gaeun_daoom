@@ -415,30 +415,67 @@ function initializeApp(trans) {
             },
         });
         
-        // 모바일에서 터치 이벤트로 인한 확대/축소 방지
+        // 모바일에서 전체화면 모드 방지 및 뷰포트 고정
         const eyebrowSwiperContainer = document.querySelector('.eyebrow-swiper');
         if (eyebrowSwiperContainer) {
-            let touchStartDistance = 0;
+            // 전체화면 API 방지
+            document.addEventListener('fullscreenchange', function() {
+                if (document.fullscreenElement) {
+                    document.exitFullscreen().catch(() => {});
+                }
+            });
+            
+            // 터치 이벤트로 인한 뷰포트 변경 방지
+            let lastTouchY = 0;
+            let touchStartY = 0;
             
             eyebrowSwiperContainer.addEventListener('touchstart', function(e) {
-                if (e.touches.length === 2) {
-                    // 핀치 줌 방지
-                    e.preventDefault();
-                } else {
-                    touchStartDistance = 0;
+                touchStartY = e.touches[0].clientY;
+                lastTouchY = touchStartY;
+                
+                // 더블탭 줌 방지
+                if (e.touches.length === 1) {
+                    const now = Date.now();
+                    if (now - (this.lastTouchTime || 0) < 300) {
+                        e.preventDefault();
+                    }
+                    this.lastTouchTime = now;
                 }
             }, { passive: false });
             
             eyebrowSwiperContainer.addEventListener('touchmove', function(e) {
+                if (e.touches.length === 1) {
+                    const currentY = e.touches[0].clientY;
+                    const deltaY = Math.abs(currentY - touchStartY);
+                    
+                    // 수직 스크롤만 허용, 수평 스와이프는 Swiper가 처리
+                    if (deltaY < 10) {
+                        // 수평 스와이프는 허용하되 뷰포트 변경은 방지
+                    }
+                }
+                
+                // 핀치 줌 방지
                 if (e.touches.length === 2) {
-                    // 핀치 줌 방지
                     e.preventDefault();
                 }
             }, { passive: false });
             
-            eyebrowSwiperContainer.addEventListener('touchend', function(e) {
-                touchStartDistance = 0;
-            }, { passive: false });
+            // 뷰포트 크기 강제 고정
+            function fixViewport() {
+                const viewport = document.querySelector('meta[name="viewport"]');
+                if (viewport) {
+                    const width = window.innerWidth;
+                    viewport.setAttribute('content', `width=${width}, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover`);
+                }
+            }
+            
+            window.addEventListener('resize', fixViewport);
+            window.addEventListener('orientationchange', function() {
+                setTimeout(fixViewport, 100);
+            });
+            
+            // 초기 뷰포트 고정
+            fixViewport();
         }
         
         // 자동 슬라이드 속도 조절 (끊김 없이 부드럽게, 무한 루프) - 모든 화면 크기에서 작동
