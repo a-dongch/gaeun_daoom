@@ -340,81 +340,45 @@ function initializeApp(trans) {
     
     // Swiper 초기화
     if (typeof Swiper !== 'undefined') {
-        // 무한 루프가 제대로 작동하도록 슬라이드를 충분히 복제
-        const eyebrowSwiperEl = document.querySelector('.eyebrow-swiper .swiper-wrapper');
-        if (eyebrowSwiperEl) {
-            const originalSlides = eyebrowSwiperEl.querySelectorAll('.swiper-slide:not(.cloned-slide)');
-            const originalCount = originalSlides.length;
-            
-            // PC에서 10개를 보여주려면 최소 30개 이상의 슬라이드가 필요 (3배 복제)
-            // 모바일에서도 끊김 없이 작동하도록 충분히 복제
-            if (originalCount === 10) {
-                // 3번 복제하여 총 40개로 만들기 (원본 10개 + 복제 30개)
-                for (let copy = 0; copy < 3; copy++) {
-                    originalSlides.forEach((slide, index) => {
-                        const clonedSlide = slide.cloneNode(true);
-                        clonedSlide.classList.add('cloned-slide');
-                        // data-index도 복제 슬라이드에 맞게 조정
-                        const clonedImg = clonedSlide.querySelector('.gallery-img');
-                        if (clonedImg) {
-                            clonedImg.setAttribute('data-index', index);
-                        }
-                        eyebrowSwiperEl.appendChild(clonedSlide);
-                    });
-                }
-            }
-        }
-        
-        // 눈썹 시술사진 Swiper
+        // 눈썹 시술사진 Swiper - Swiper의 기본 loop 기능 활용
         const eyebrowSwiper = new Swiper('.eyebrow-swiper', {
             slidesPerView: 1,
             spaceBetween: 20,
             loop: true,
-            loopedSlides: 30,
-            loopAdditionalSlides: 30,
+            loopedSlides: 10,
+            loopAdditionalSlides: 10,
             watchSlidesProgress: true,
-            speed: 300,
+            speed: 800,
             autoplay: {
-                delay: 1,
+                delay: 2000,
                 disableOnInteraction: false,
                 pauseOnMouseEnter: true,
-                reverseDirection: false,
             },
-            freeMode: {
-                enabled: false,
-            },
+            freeMode: false,
             effect: 'slide',
             allowTouchMove: true,
             touchRatio: 1,
-            touchReleaseOnEdges: false,
-            preventInteractionOnTransition: false,
-            grabCursor: false,
-            simulateTouch: false,
+            simulateTouch: true,
+            grabCursor: true,
             navigation: false,
             breakpoints: {
                 640: {
                     slidesPerView: 2,
                     spaceBetween: 12,
-                    loopedSlides: 30,
-                    loopAdditionalSlides: 30,
+                    loopedSlides: 10,
+                    loopAdditionalSlides: 10,
                 },
                 768: {
                     slidesPerView: 2.5,
                     spaceBetween: 15,
-                    loopedSlides: 30,
-                    loopAdditionalSlides: 30,
+                    loopedSlides: 10,
+                    loopAdditionalSlides: 10,
                 },
                 1024: {
                     slidesPerView: 10,
                     spaceBetween: 15,
-                    loopedSlides: 30,
-                    loopAdditionalSlides: 30,
-                },
-            },
-            on: {
-                init: function() {
-                    // 초기화 후 자동 슬라이드 시작
-                    this.autoplay.start();
+                    loopedSlides: 10,
+                    loopAdditionalSlides: 10,
                 },
             },
         });
@@ -462,166 +426,34 @@ function initializeApp(trans) {
             fixViewport();
         }
         
-        // 자동 슬라이드 속도 조절 (끊김 없이 부드럽게, 무한 루프) - 모든 화면 크기에서 작동
+        // Swiper의 기본 autoplay 사용 - 자연스러운 무한 루프
         if (eyebrowSwiper) {
-            let autoplayInterval = null;
-            let isPaused = false;
-            let isRunning = false;
-            
-            function startContinuousAutoplay() {
-                if (isPaused) return;
-                
-                // 이미 실행 중이면 중지하고 재시작
-                if (autoplayInterval) {
-                    clearInterval(autoplayInterval);
-                    autoplayInterval = null;
-                }
-                
-                isRunning = true;
-                
-                // Swiper autoplay를 중지하고 수동으로 더 부드럽게 제어
-                if (eyebrowSwiper.autoplay) {
-                    eyebrowSwiper.autoplay.stop();
-                }
-                
-                // 모바일 여부 확인 (768px 이하)
-                const isMobile = window.innerWidth <= 768;
-                const slideInterval = isMobile ? 990 : 480; // 모바일: 990ms (3배 느리게), PC: 480ms (3배 느리게)
-                
-                autoplayInterval = setInterval(() => {
-                    if (!isPaused && eyebrowSwiper) {
-                        try {
-                            // loop 모드에서 slideNext()는 자동으로 무한 루프 처리됨
-                            // 끝에 도달했는지 확인하고 필요시 처음으로 이동
-                            if (eyebrowSwiper.isEnd && eyebrowSwiper.params.loop) {
-                                // loop를 통해 처음으로 부드럽게 이동
-                                eyebrowSwiper.slideToLoop(0, 0, false);
-                            } else {
-                                eyebrowSwiper.slideNext();
-                            }
-                        } catch(e) {
-                            console.log('Swiper slide error:', e);
-                            clearInterval(autoplayInterval);
-                            autoplayInterval = null;
-                            isRunning = false;
-                            setTimeout(() => {
-                                startContinuousAutoplay();
-                            }, 200);
-                        }
-                    }
-                }, slideInterval);
-            }
-            
-            function stopContinuousAutoplay() {
-                if (autoplayInterval) {
-                    clearInterval(autoplayInterval);
-                    autoplayInterval = null;
-                }
-                isRunning = false;
-            }
-            
-            // 여러 방법으로 초기화 시도
-            function initializeAutoplay() {
-                setTimeout(() => {
-                    if (!isRunning && !isPaused) {
-                        console.log('Starting continuous autoplay for eyebrow gallery');
-                        startContinuousAutoplay();
-                    }
-                }, 500);
-            }
-            
-            // Swiper 초기화 이벤트
-            eyebrowSwiper.on('init', function() {
-                console.log('Eyebrow Swiper initialized, total slides:', this.slides.length);
-                initializeAutoplay();
-            });
-            
-            // 이미 초기화된 경우
-            if (eyebrowSwiper.initialized) {
-                console.log('Eyebrow Swiper already initialized, total slides:', eyebrowSwiper.slides.length);
-                initializeAutoplay();
-            } else {
-                // 초기화 대기
-                setTimeout(() => {
-                    console.log('Eyebrow Swiper initialization check, total slides:', eyebrowSwiper.slides ? eyebrowSwiper.slides.length : 'unknown');
-                    initializeAutoplay();
-                }, 1000);
-            }
-            
-            // 화면 크기 변경 시 재시작
-            let resizeTimer;
-            window.addEventListener('resize', function() {
-                clearTimeout(resizeTimer);
-                resizeTimer = setTimeout(() => {
-                    stopContinuousAutoplay();
-                    setTimeout(() => {
-                        if (!isPaused) {
-                            startContinuousAutoplay();
-                        }
-                    }, 300);
-                }, 300);
-            });
-            
-            // 마우스 호버 시 일시정지
+            // 마우스 호버 시 일시정지 (이미 autoplay 설정에 포함됨)
             const eyebrowSwiperEl = document.querySelector('.eyebrow-swiper');
             if (eyebrowSwiperEl) {
                 eyebrowSwiperEl.addEventListener('mouseenter', () => {
-                    isPaused = true;
-                    stopContinuousAutoplay();
+                    if (eyebrowSwiper.autoplay) {
+                        eyebrowSwiper.autoplay.pause();
+                    }
                 });
                 
                 eyebrowSwiperEl.addEventListener('mouseleave', () => {
-                    isPaused = false;
-                    if (!isRunning) {
-                        startContinuousAutoplay();
+                    if (eyebrowSwiper.autoplay) {
+                        eyebrowSwiper.autoplay.resume();
                     }
                 });
             }
             
-            // 슬라이드 변경 시 루프 확인
+            // 테스트 로그
+            console.log('=== Eyebrow Gallery Swiper 초기화 ===');
+            eyebrowSwiper.on('init', function() {
+                console.log('Eyebrow Swiper initialized, total slides:', this.slides.length);
+                console.log('Loop enabled:', this.params.loop);
+                console.log('Autoplay delay:', this.params.autoplay.delay);
+            });
+            
             eyebrowSwiper.on('slideChange', function() {
-                // 루프가 제대로 작동하는지 확인
-                if (!isPaused && !isRunning && !autoplayInterval) {
-                    startContinuousAutoplay();
-                }
-            });
-            
-            // 루프 완료 시 재시작
-            eyebrowSwiper.on('loopFix', function() {
-                if (!isPaused && !isRunning) {
-                    setTimeout(() => {
-                        startContinuousAutoplay();
-                    }, 200);
-                }
-            });
-            
-            // breakpoint 변경 시 재시작
-            eyebrowSwiper.on('breakpoint', function() {
-                stopContinuousAutoplay();
-                setTimeout(() => {
-                    if (!isPaused) {
-                        startContinuousAutoplay();
-                    }
-                }, 300);
-            });
-            
-            // 슬라이드 기능 테스트
-            console.log('=== Eyebrow Gallery Swiper 테스트 ===');
-            console.log('Total slides:', eyebrowSwiper.slides.length);
-            console.log('Looped slides:', eyebrowSwiper.params.loopedSlides);
-            eyebrowSwiper.on('slideChange', function() {
-                console.log('Eyebrow slide changed - Real index:', this.realIndex, 'Active index:', this.activeIndex, 'Is end:', this.isEnd);
-                // 무한 루프 확인
-                if (this.isEnd && this.params.loop) {
-                    console.log('End reached, loop should activate');
-                }
-            });
-            
-            // 네비게이션 버튼 제거됨
-            
-            // 무한 루프 테스트
-            eyebrowSwiper.on('loopFix', function() {
-                console.log('Eyebrow loop fixed - 무한 루프 작동 확인');
+                console.log('Eyebrow slide changed - Real index:', this.realIndex, 'Active index:', this.activeIndex);
             });
         }
         
@@ -755,81 +587,45 @@ function initializeApp(trans) {
             }
         });
         
-        // 무한 루프가 제대로 작동하도록 lip 슬라이드를 충분히 복제
-        const lipSwiperEl = document.querySelector('.lip-swiper .swiper-wrapper');
-        if (lipSwiperEl) {
-            const originalLipSlides = lipSwiperEl.querySelectorAll('.swiper-slide:not(.cloned-slide)');
-            const originalCount = originalLipSlides.length;
-            
-            // PC에서 10개를 보여주려면 최소 30개 이상의 슬라이드가 필요 (3배 복제)
-            // 모바일에서도 끊김 없이 작동하도록 충분히 복제
-            if (originalCount === 20) {
-                // 3번 복제하여 총 80개로 만들기 (원본 20개 + 복제 60개)
-                for (let copy = 0; copy < 3; copy++) {
-                    originalLipSlides.forEach((slide, index) => {
-                        const clonedSlide = slide.cloneNode(true);
-                        clonedSlide.classList.add('cloned-slide');
-                        // data-index도 복제 슬라이드에 맞게 조정
-                        const clonedImg = clonedSlide.querySelector('.gallery-img');
-                        if (clonedImg) {
-                            clonedImg.setAttribute('data-index', index);
-                        }
-                        lipSwiperEl.appendChild(clonedSlide);
-                    });
-                }
-            }
-        }
-        
-        // 입술 시술사진 Swiper
+        // 입술 시술사진 Swiper - Swiper의 기본 loop 기능 활용
         const lipSwiper = new Swiper('.lip-swiper', {
             slidesPerView: 1,
             spaceBetween: 20,
             loop: true,
-            loopedSlides: 60,
-            loopAdditionalSlides: 60,
+            loopedSlides: 20,
+            loopAdditionalSlides: 20,
             watchSlidesProgress: true,
-            speed: 300,
+            speed: 800,
             autoplay: {
-                delay: 1,
+                delay: 2000,
                 disableOnInteraction: false,
                 pauseOnMouseEnter: true,
-                reverseDirection: false,
             },
-            freeMode: {
-                enabled: false,
-            },
+            freeMode: false,
             effect: 'slide',
             allowTouchMove: true,
             touchRatio: 1,
-            touchReleaseOnEdges: false,
-            preventInteractionOnTransition: false,
-            grabCursor: false,
-            simulateTouch: false,
+            simulateTouch: true,
+            grabCursor: true,
             navigation: false,
             breakpoints: {
                 640: {
                     slidesPerView: 2,
                     spaceBetween: 12,
-                    loopedSlides: 60,
-                    loopAdditionalSlides: 60,
+                    loopedSlides: 20,
+                    loopAdditionalSlides: 20,
                 },
                 768: {
                     slidesPerView: 2.5,
                     spaceBetween: 15,
-                    loopedSlides: 60,
-                    loopAdditionalSlides: 60,
+                    loopedSlides: 20,
+                    loopAdditionalSlides: 20,
                 },
                 1024: {
                     slidesPerView: 10,
                     spaceBetween: 15,
-                    loopedSlides: 60,
-                    loopAdditionalSlides: 40,
-                },
-            },
-            on: {
-                init: function() {
-                    // 초기화 후 자동 슬라이드 시작
-                    this.autoplay.start();
+                    loopedSlides: 20,
+                    loopAdditionalSlides: 20,
                 },
             },
         });
@@ -860,166 +656,34 @@ function initializeApp(trans) {
             }, { passive: false });
         }
         
-        // lip-gallery 자동 슬라이드 속도 조절 (끊김 없이 부드럽게, 무한 루프) - 모든 화면 크기에서 작동
+        // Swiper의 기본 autoplay 사용 - 자연스러운 무한 루프
         if (lipSwiper) {
-            let lipAutoplayInterval = null;
-            let lipIsPaused = false;
-            let lipIsRunning = false;
-            
-            function startLipContinuousAutoplay() {
-                if (lipIsPaused) return;
-                
-                // 이미 실행 중이면 중지하고 재시작
-                if (lipAutoplayInterval) {
-                    clearInterval(lipAutoplayInterval);
-                    lipAutoplayInterval = null;
-                }
-                
-                lipIsRunning = true;
-                
-                // Swiper autoplay를 중지하고 수동으로 더 부드럽게 제어
-                if (lipSwiper.autoplay) {
-                    lipSwiper.autoplay.stop();
-                }
-                
-                // 모바일 여부 확인 (768px 이하)
-                const isMobile = window.innerWidth <= 768;
-                const slideInterval = isMobile ? 990 : 480; // 모바일: 990ms (3배 느리게), PC: 480ms (3배 느리게)
-                
-                lipAutoplayInterval = setInterval(() => {
-                    if (!lipIsPaused && lipSwiper) {
-                        try {
-                            // loop 모드에서 slideNext()는 자동으로 무한 루프 처리됨
-                            // 끝에 도달했는지 확인하고 필요시 처음으로 이동
-                            if (lipSwiper.isEnd && lipSwiper.params.loop) {
-                                // loop를 통해 처음으로 부드럽게 이동
-                                lipSwiper.slideToLoop(0, 0, false);
-                            } else {
-                                lipSwiper.slideNext();
-                            }
-                        } catch(e) {
-                            console.log('Lip Swiper slide error:', e);
-                            clearInterval(lipAutoplayInterval);
-                            lipAutoplayInterval = null;
-                            lipIsRunning = false;
-                            setTimeout(() => {
-                                startLipContinuousAutoplay();
-                            }, 200);
-                        }
-                    }
-                }, slideInterval);
-            }
-            
-            function stopLipContinuousAutoplay() {
-                if (lipAutoplayInterval) {
-                    clearInterval(lipAutoplayInterval);
-                    lipAutoplayInterval = null;
-                }
-                lipIsRunning = false;
-            }
-            
-            // 여러 방법으로 초기화 시도
-            function initializeLipAutoplay() {
-                setTimeout(() => {
-                    if (!lipIsRunning && !lipIsPaused) {
-                        console.log('Starting continuous autoplay for lip gallery');
-                        startLipContinuousAutoplay();
-                    }
-                }, 500);
-            }
-            
-            // Swiper 초기화 이벤트
-            lipSwiper.on('init', function() {
-                console.log('Lip Swiper initialized, total slides:', this.slides.length);
-                initializeLipAutoplay();
-            });
-            
-            // 이미 초기화된 경우
-            if (lipSwiper.initialized) {
-                console.log('Lip Swiper already initialized, total slides:', lipSwiper.slides.length);
-                initializeLipAutoplay();
-            } else {
-                // 초기화 대기
-                setTimeout(() => {
-                    console.log('Lip Swiper initialization check, total slides:', lipSwiper.slides ? lipSwiper.slides.length : 'unknown');
-                    initializeLipAutoplay();
-                }, 1000);
-            }
-            
-            // 화면 크기 변경 시 재시작
-            let lipResizeTimer;
-            window.addEventListener('resize', function() {
-                clearTimeout(lipResizeTimer);
-                lipResizeTimer = setTimeout(() => {
-                    stopLipContinuousAutoplay();
-                    setTimeout(() => {
-                        if (!lipIsPaused) {
-                            startLipContinuousAutoplay();
-                        }
-                    }, 300);
-                }, 300);
-            });
-            
-            // 마우스 호버 시 일시정지
+            // 마우스 호버 시 일시정지 (이미 autoplay 설정에 포함됨)
             const lipSwiperEl = document.querySelector('.lip-swiper');
             if (lipSwiperEl) {
                 lipSwiperEl.addEventListener('mouseenter', () => {
-                    lipIsPaused = true;
-                    stopLipContinuousAutoplay();
+                    if (lipSwiper.autoplay) {
+                        lipSwiper.autoplay.pause();
+                    }
                 });
                 
                 lipSwiperEl.addEventListener('mouseleave', () => {
-                    lipIsPaused = false;
-                    if (!lipIsRunning) {
-                        startLipContinuousAutoplay();
+                    if (lipSwiper.autoplay) {
+                        lipSwiper.autoplay.resume();
                     }
                 });
             }
             
-            // 슬라이드 변경 시 루프 확인
+            // 테스트 로그
+            console.log('=== Lip Gallery Swiper 초기화 ===');
+            lipSwiper.on('init', function() {
+                console.log('Lip Swiper initialized, total slides:', this.slides.length);
+                console.log('Loop enabled:', this.params.loop);
+                console.log('Autoplay delay:', this.params.autoplay.delay);
+            });
+            
             lipSwiper.on('slideChange', function() {
-                // 루프가 제대로 작동하는지 확인
-                if (!lipIsPaused && !lipIsRunning && !lipAutoplayInterval) {
-                    startLipContinuousAutoplay();
-                }
-            });
-            
-            // 루프 완료 시 재시작
-            lipSwiper.on('loopFix', function() {
-                if (!lipIsPaused && !lipIsRunning) {
-                    setTimeout(() => {
-                        startLipContinuousAutoplay();
-                    }, 200);
-                }
-            });
-            
-            // breakpoint 변경 시 재시작
-            lipSwiper.on('breakpoint', function() {
-                stopLipContinuousAutoplay();
-                setTimeout(() => {
-                    if (!lipIsPaused) {
-                        startLipContinuousAutoplay();
-                    }
-                }, 300);
-            });
-            
-            // 슬라이드 기능 테스트
-            console.log('=== Lip Gallery Swiper 테스트 ===');
-            console.log('Total slides:', lipSwiper.slides.length);
-            console.log('Looped slides:', lipSwiper.params.loopedSlides);
-            lipSwiper.on('slideChange', function() {
-                console.log('Lip slide changed - Real index:', this.realIndex, 'Active index:', this.activeIndex, 'Is end:', this.isEnd);
-                // 무한 루프 확인
-                if (this.isEnd && this.params.loop) {
-                    console.log('End reached, loop should activate');
-                }
-            });
-            
-            // 네비게이션 버튼 제거됨
-            
-            // 무한 루프 테스트
-            lipSwiper.on('loopFix', function() {
-                console.log('Lip loop fixed - 무한 루프 작동 확인');
+                console.log('Lip slide changed - Real index:', this.realIndex, 'Active index:', this.activeIndex);
             });
         }
         

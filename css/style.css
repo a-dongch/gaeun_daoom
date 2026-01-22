@@ -1183,12 +1183,10 @@ body[data-lang="zh"] {
 }
 
 .eyebrow-gallery .swiper-wrapper {
-    transition-timing-function: linear !important;
     width: 100%;
 }
 
 .eyebrow-gallery .swiper-slide {
-    transition: transform 0.2s linear !important;
     width: auto;
     flex-shrink: 0;
 }
@@ -1242,13 +1240,11 @@ body[data-lang="zh"] {
 }
 
 .lip-gallery .swiper-wrapper {
-    transition-timing-function: linear !important;
     width: 100%;
     touch-action: pan-y;
 }
 
 .lip-gallery .swiper-slide {
-    transition: transform 0.2s linear !important;
     width: auto;
     flex-shrink: 0;
 }
