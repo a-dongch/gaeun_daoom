@@ -371,6 +371,10 @@ function initializeApp(trans) {
                     eyebrowSwiper.autoplay.stop();
                 }
                 
+                // 모바일 여부 확인 (768px 이하)
+                const isMobile = window.innerWidth <= 768;
+                const slideInterval = isMobile ? 330 : 160; // 모바일: 330ms (2/3 수준으로 느리게), PC: 160ms
+                
                 autoplayInterval = setInterval(() => {
                     if (!isPaused && eyebrowSwiper && eyebrowSwiper.slideNext) {
                         try {
@@ -385,7 +389,7 @@ function initializeApp(trans) {
                             }, 200);
                         }
                     }
-                }, 134); // 134ms마다 슬라이드 이동 (속도 반으로 줄임, 부드러운 연속 효과)
+                }, slideInterval);
             }
             
             function stopContinuousAutoplay() {
