@@ -77,6 +77,55 @@ body[data-lang="zh"] {
     border-radius: 50px;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
     backdrop-filter: blur(10px);
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.language-selector.collapsed {
+    padding: 0;
+    border-radius: 50%;
+    gap: 0;
+    min-width: auto;
+    width: 50px;
+    height: 50px;
+    background: transparent !important;
+    box-shadow: none !important;
+    backdrop-filter: none;
+}
+
+.language-selector.collapsed .lang-btn {
+    display: none !important;
+    padding: 0;
+    width: 0;
+    opacity: 0;
+    margin: 0;
+    overflow: hidden;
+}
+
+.language-selector.collapsed .lang-btn.active {
+    display: flex !important;
+    width: 50px;
+    height: 50px;
+    opacity: 1;
+    padding: 0;
+    margin: 0;
+    min-width: 50px;
+    border-radius: 50%;
+    justify-content: center;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.95);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    backdrop-filter: blur(10px);
+}
+
+.language-selector.collapsed .lang-btn.active .lang-text {
+    display: none;
+}
+
+.language-selector.collapsed .lang-btn.active .flag {
+    font-size: 28px;
+    margin: 0;
+    line-height: 1;
 }
 
 .lang-btn {
@@ -97,6 +146,11 @@ body[data-lang="zh"] {
     pointer-events: auto;
     -webkit-tap-highlight-color: transparent;
     user-select: none;
+}
+
+.language-selector.collapsed .lang-btn.active {
+    pointer-events: auto;
+    cursor: pointer;
 }
 
 .lang-btn * {

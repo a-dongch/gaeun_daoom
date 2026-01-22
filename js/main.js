@@ -45,6 +45,9 @@ function initializeApp(trans) {
     // 현재 언어 설정 (기본값: 한국어)
     let currentLang = localStorage.getItem('preferredLang') || 'ko';
     
+    // 언어 선택기 확장/축소 상태 (전역 변수로 선언)
+    let isExpanded = true;
+    
     // 언어 설정 함수
     function setLanguage(lang) {
         if (!trans || !trans[lang]) {
@@ -104,7 +107,7 @@ function initializeApp(trans) {
     // 초기 언어 설정
     setLanguage(currentLang);
     
-    // 언어 버튼 클릭 이벤트
+    // 언어 버튼 클릭 이벤트 (언어 변경 로직)
     const langButtons = document.querySelectorAll('.lang-btn');
     console.log('Found language buttons:', langButtons.length);
     
@@ -114,6 +117,22 @@ function initializeApp(trans) {
         
         // 클릭 이벤트 리스너 추가
         button.addEventListener('click', function(e) {
+            const languageSelector = document.getElementById('languageSelector');
+            const isCollapsed = languageSelector && languageSelector.classList.contains('collapsed');
+            
+            // 축소된 상태에서는 언어 변경하지 않고 확장만
+            if (isCollapsed) {
+                e.preventDefault();
+                e.stopPropagation();
+                e.stopImmediatePropagation();
+                languageSelector.classList.remove('collapsed');
+                if (typeof isExpanded !== 'undefined') {
+                    isExpanded = true;
+                }
+                return false;
+            }
+            
+            // 확장된 상태에서만 언어 변경
             e.preventDefault();
             e.stopPropagation();
             
@@ -172,23 +191,66 @@ function initializeApp(trans) {
         });
     }
     
-    // 스크롤 시 언어 선택기 스타일 변경
+    // 스크롤 시 언어 선택기 축소/확장
     let lastScrollTop = 0;
-    const languageSelector = document.querySelector('.language-selector');
+    const languageSelector = document.getElementById('languageSelector');
     
-    window.addEventListener('scroll', function() {
-        const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+    if (languageSelector) {
+        // 축소된 상태에서 클릭 시 확장 (capture phase에서 먼저 처리)
+        languageSelector.addEventListener('click', function(e) {
+            if (languageSelector.classList.contains('collapsed')) {
+                console.log('Language selector clicked (collapsed state) - expanding');
+                e.preventDefault();
+                e.stopPropagation();
+                e.stopImmediatePropagation();
+                languageSelector.classList.remove('collapsed');
+                isExpanded = true;
+                return false;
+            }
+        }, true); // capture phase에서 처리하여 다른 이벤트보다 먼저 실행
         
-        if (scrollTop > 100) {
-            languageSelector.style.background = 'rgba(255, 255, 255, 0.98)';
-            languageSelector.style.boxShadow = '0 4px 30px rgba(0, 0, 0, 0.15)';
-        } else {
-            languageSelector.style.background = 'rgba(255, 255, 255, 0.95)';
-            languageSelector.style.boxShadow = '0 4px 20px rgba(0, 0, 0, 0.1)';
-        }
+        // 확장된 상태에서 언어 변경 후 자동 축소
+        const langButtons = languageSelector.querySelectorAll('.lang-btn');
+        langButtons.forEach(btn => {
+            // 언어 변경 후 축소를 위한 추가 리스너
+            btn.addEventListener('click', function(e) {
+                // 확장된 상태에서 언어 변경 후 축소
+                if (!languageSelector.classList.contains('collapsed') && isExpanded) {
+                    console.log('Language changed, will collapse after delay');
+                    setTimeout(() => {
+                        if (window.pageYOffset > 100 && isExpanded) {
+                            languageSelector.classList.add('collapsed');
+                            isExpanded = false;
+                        }
+                    }, 400);
+                }
+            }, false); // bubble phase에서 처리
+        });
         
-        lastScrollTop = scrollTop;
-    });
+        window.addEventListener('scroll', function() {
+            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            
+            if (scrollTop > 100) {
+                // 스크롤 다운 시 축소
+                if (isExpanded) {
+                    languageSelector.classList.add('collapsed');
+                    isExpanded = false;
+                }
+                languageSelector.style.background = 'rgba(255, 255, 255, 0.98)';
+                languageSelector.style.boxShadow = '0 4px 30px rgba(0, 0, 0, 0.15)';
+            } else {
+                // 스크롤 상단으로 돌아오면 확장
+                if (!isExpanded) {
+                    languageSelector.classList.remove('collapsed');
+                    isExpanded = true;
+                }
+                languageSelector.style.background = 'rgba(255, 255, 255, 0.95)';
+                languageSelector.style.boxShadow = '0 4px 20px rgba(0, 0, 0, 0.1)';
+            }
+            
+            lastScrollTop = scrollTop;
+        });
+    }
     
     // 부드러운 스크롤 (네비게이션 링크용 - 추후 추가 시)
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
