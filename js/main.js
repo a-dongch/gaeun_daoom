@@ -601,6 +601,8 @@ function initializeApp(trans) {
             grabCursor: true,
             simulateTouch: true,
             navigation: false,
+            preventClicks: false,
+            preventClicksPropagation: false,
             breakpoints: {
                 640: {
                     slidesPerView: 1.5,
@@ -621,20 +623,18 @@ function initializeApp(trans) {
             on: {
                 init: function() {
                     setupImageClickEvents();
+                    // 초기화 시 마지막 슬라이드 위치 계산
+                    this.update();
                     if (this.autoplay) {
                         this.autoplay.start();
                     }
                 },
                 slideChange: function() {
                     setupImageClickEvents();
-                    // 마지막 슬라이드에 도달하면 autoplay 중지 및 더 이상 스크롤 방지
+                    // 마지막 슬라이드에 도달하면 autoplay 중지
                     if (this.isEnd) {
                         if (this.autoplay) {
                             this.autoplay.stop();
-                        }
-                        // 마지막 슬라이드로 강제 이동하여 공백 방지
-                        if (this.activeIndex !== this.slides.length - 1) {
-                            this.slideTo(this.slides.length - 1, 0);
                         }
                     }
                 },
@@ -698,14 +698,10 @@ function initializeApp(trans) {
                 },
                 slideChange: function() {
                     setupImageClickEvents();
-                    // 마지막 슬라이드에 도달하면 autoplay 중지 및 더 이상 스크롤 방지
+                    // 마지막 슬라이드에 도달하면 autoplay 중지
                     if (this.isEnd) {
                         if (this.autoplay) {
                             this.autoplay.stop();
-                        }
-                        // 마지막 슬라이드로 강제 이동하여 공백 방지
-                        if (this.activeIndex !== this.slides.length - 1) {
-                            this.slideTo(this.slides.length - 1, 0);
                         }
                     }
                 },
