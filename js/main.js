@@ -445,175 +445,11 @@ function initializeApp(trans) {
     
     // Swiper 초기화
     if (typeof Swiper !== 'undefined') {
-        // 눈썹 시술사진 Swiper - 무한 루프 보장 (25개 이미지)
-        const eyebrowSwiper = new Swiper('.eyebrow-swiper', {
-            slidesPerView: 1,
-            spaceBetween: 20,
-            loop: true,
-            loopedSlides: 25,
-            loopAdditionalSlides: 25,
-            watchSlidesProgress: true,
-            speed: 800,
-            autoplay: {
-                delay: 2000,
-                disableOnInteraction: false,
-                pauseOnMouseEnter: true,
-            },
-            freeMode: false,
-            effect: 'slide',
-            allowTouchMove: true,
-            touchRatio: 1,
-            simulateTouch: true,
-            grabCursor: true,
-            navigation: false,
-            centeredSlides: false,
-            breakpoints: {
-                640: {
-                    slidesPerView: 1.5,
-                    spaceBetween: 20,
-                    centeredSlides: true,
-                    loopedSlides: 25,
-                    loopAdditionalSlides: 25,
-                },
-                768: {
-                    slidesPerView: 2.5,
-                    spaceBetween: 15,
-                    centeredSlides: true,
-                    loopedSlides: 25,
-                    loopAdditionalSlides: 25,
-                },
-                1024: {
-                    slidesPerView: 10,
-                    spaceBetween: 15,
-                    centeredSlides: false,
-                    loopedSlides: 25,
-                    loopAdditionalSlides: 25,
-                },
-            },
-            on: {
-                init: function() {
-                    // 초기화 후 업데이트 및 autoplay 시작
-                    setTimeout(() => {
-                        this.update();
-                        if (this.autoplay) {
-                            this.autoplay.start();
-                        }
-                    }, 100);
-                },
-            },
-        });
+        // ============================================
+        // Gallery Swiper - Complete Rewrite
+        // ============================================
         
-        // 이미지 로드 후 Swiper 업데이트
-        const eyebrowImages = document.querySelectorAll('.eyebrow-swiper img');
-        let loadedImages = 0;
-        eyebrowImages.forEach(img => {
-            if (img.complete) {
-                loadedImages++;
-            } else {
-                img.addEventListener('load', function() {
-                    loadedImages++;
-                    if (loadedImages === eyebrowImages.length) {
-                        eyebrowSwiper.update();
-                        if (eyebrowSwiper.autoplay) {
-                            eyebrowSwiper.autoplay.start();
-                        }
-                    }
-                });
-            }
-        });
-        
-        if (loadedImages === eyebrowImages.length) {
-            setTimeout(() => {
-                eyebrowSwiper.update();
-                if (eyebrowSwiper.autoplay) {
-                    eyebrowSwiper.autoplay.start();
-                }
-            }, 100);
-        }
-        
-        // 모바일에서 전체화면 모드 방지 및 뷰포트 고정
-        const eyebrowSwiperContainer = document.querySelector('.eyebrow-swiper');
-        if (eyebrowSwiperContainer) {
-            // 전체화면 API 방지
-            document.addEventListener('fullscreenchange', function() {
-                if (document.fullscreenElement) {
-                    document.exitFullscreen().catch(() => {});
-                }
-            });
-            
-            // 터치 이벤트로 인한 뷰포트 변경 방지 (핀치 줌만 방지)
-            eyebrowSwiperContainer.addEventListener('touchstart', function(e) {
-                // 핀치 줌만 방지 (두 손가락 터치)
-                if (e.touches.length === 2) {
-                    e.preventDefault();
-                }
-            }, { passive: false });
-            
-            eyebrowSwiperContainer.addEventListener('touchmove', function(e) {
-                // 핀치 줌만 방지
-                if (e.touches.length === 2) {
-                    e.preventDefault();
-                }
-            }, { passive: false });
-            
-            // 뷰포트 크기 강제 고정
-            function fixViewport() {
-                const viewport = document.querySelector('meta[name="viewport"]');
-                if (viewport) {
-                    const width = window.innerWidth;
-                    viewport.setAttribute('content', `width=${width}, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover`);
-                }
-            }
-            
-            window.addEventListener('resize', fixViewport);
-            window.addEventListener('orientationchange', function() {
-                setTimeout(fixViewport, 100);
-            });
-            
-            // 초기 뷰포트 고정
-            fixViewport();
-        }
-        
-        // Swiper의 기본 autoplay 사용 - 자연스러운 무한 루프
-        if (eyebrowSwiper) {
-            // 마우스 호버 시 일시정지 (이미 autoplay 설정에 포함됨)
-            const eyebrowSwiperEl = document.querySelector('.eyebrow-swiper');
-            if (eyebrowSwiperEl) {
-                eyebrowSwiperEl.addEventListener('mouseenter', () => {
-                    if (eyebrowSwiper.autoplay) {
-                        eyebrowSwiper.autoplay.pause();
-                    }
-                });
-                
-                eyebrowSwiperEl.addEventListener('mouseleave', () => {
-                    if (eyebrowSwiper.autoplay) {
-                        eyebrowSwiper.autoplay.resume();
-                    }
-                });
-            }
-            
-            // 테스트 로그
-            console.log('=== Eyebrow Gallery Swiper 초기화 ===');
-            eyebrowSwiper.on('init', function() {
-                console.log('Eyebrow Swiper initialized, total slides:', this.slides.length);
-                console.log('Loop enabled:', this.params.loop);
-                console.log('Autoplay delay:', this.params.autoplay.delay);
-            });
-            
-            eyebrowSwiper.on('slideChange', function() {
-                console.log('Eyebrow slide changed - Real index:', this.realIndex, 'Active index:', this.activeIndex);
-                // 마지막 이미지(realIndex 24) 다음이면 첫 번째로 이동 (무한 루프 보장 - 25개 이미지)
-                if (this.realIndex >= 24) {
-                    setTimeout(() => {
-                        if (this.autoplay && this.autoplay.running) {
-                            this.slideToLoop(0, 800);
-                        }
-                    }, 2100);
-                }
-            });
-        }
-        
-        // 이미지 갤러리 모달 기능
+        // 이미지 배열 정의
         const eyebrowImages = [
             'images/gallery-eyebrow/eyebrow1.jpeg',
             'images/gallery-eyebrow/eyebrow2.jpeg',
@@ -665,8 +501,8 @@ function initializeApp(trans) {
             'images/gallery-lip/lip20.png'
         ];
         
+        // 모달 관련 변수
         let currentImageIndex = 0;
-        let currentGallery = 'eyebrow'; // 'eyebrow' or 'lip'
         let currentImages = eyebrowImages;
         const modal = document.getElementById('imageModal');
         const modalImage = document.getElementById('modalImage');
@@ -677,27 +513,7 @@ function initializeApp(trans) {
         const modalNext = document.querySelector('.modal-next');
         const modalOverlay = document.querySelector('.modal-overlay');
         
-        // eyebrow 이미지 클릭 이벤트
-        document.querySelectorAll('.eyebrow-swiper .gallery-img').forEach((img, index) => {
-            img.addEventListener('click', function() {
-                currentGallery = 'eyebrow';
-                currentImages = eyebrowImages;
-                currentImageIndex = parseInt(this.getAttribute('data-index'));
-                openModal(currentImageIndex);
-            });
-        });
-        
-        // lip 이미지 클릭 이벤트
-        document.querySelectorAll('.lip-swiper .gallery-img').forEach((img, index) => {
-            img.addEventListener('click', function() {
-                currentGallery = 'lip';
-                currentImages = lipImages;
-                currentImageIndex = parseInt(this.getAttribute('data-index'));
-                openModal(currentImageIndex);
-            });
-        });
-        
-        // 모달 열기
+        // 모달 함수
         function openModal(index) {
             currentImageIndex = index;
             modalImage.src = currentImages[currentImageIndex];
@@ -707,47 +523,32 @@ function initializeApp(trans) {
             document.body.style.overflow = 'hidden';
         }
         
-        // 모달 닫기
         function closeModal() {
             modal.classList.remove('active');
             document.body.style.overflow = '';
-            
-            // 모달 닫은 후 Swiper 업데이트
-            if (eyebrowSwiper && eyebrowSwiper.update) {
-                setTimeout(() => {
-                    eyebrowSwiper.update();
-                }, 100);
-            }
-            if (lipSwiper && lipSwiper.update) {
-                setTimeout(() => {
-                    lipSwiper.update();
-                }, 100);
-            }
         }
         
-        // 다음 이미지
         function nextImage() {
             currentImageIndex = (currentImageIndex + 1) % currentImages.length;
             modalImage.src = currentImages[currentImageIndex];
             modalCurrent.textContent = currentImageIndex + 1;
         }
         
-        // 이전 이미지
         function prevImage() {
             currentImageIndex = (currentImageIndex - 1 + currentImages.length) % currentImages.length;
             modalImage.src = currentImages[currentImageIndex];
             modalCurrent.textContent = currentImageIndex + 1;
         }
         
-        // 이벤트 리스너
-        modalClose.addEventListener('click', closeModal);
-        modalOverlay.addEventListener('click', closeModal);
-        modalNext.addEventListener('click', nextImage);
-        modalPrev.addEventListener('click', prevImage);
+        // 모달 이벤트 리스너
+        if (modalClose) modalClose.addEventListener('click', closeModal);
+        if (modalOverlay) modalOverlay.addEventListener('click', closeModal);
+        if (modalNext) modalNext.addEventListener('click', nextImage);
+        if (modalPrev) modalPrev.addEventListener('click', prevImage);
         
         // 키보드 이벤트
         document.addEventListener('keydown', function(e) {
-            if (modal.classList.contains('active')) {
+            if (modal && modal.classList.contains('active')) {
                 if (e.key === 'Escape') {
                     closeModal();
                 } else if (e.key === 'ArrowRight') {
@@ -758,156 +559,131 @@ function initializeApp(trans) {
             }
         });
         
-        // 입술 시술사진 Swiper - 무한 루프 보장
-        const lipSwiper = new Swiper('.lip-swiper', {
+        // 이미지 클릭 이벤트 설정
+        function setupImageClickEvents() {
+            // Eyebrow 이미지 클릭
+            document.querySelectorAll('.eyebrow-swiper .gallery-img').forEach((img, index) => {
+                img.onclick = function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    currentImages = eyebrowImages;
+                    openModal(index);
+                };
+            });
+            
+            // Lip 이미지 클릭
+            document.querySelectorAll('.lip-swiper .gallery-img').forEach((img, index) => {
+                img.onclick = function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    currentImages = lipImages;
+                    openModal(index);
+                };
+            });
+        }
+        
+        // Eyebrow Swiper 초기화
+        const eyebrowSwiper = new Swiper('.eyebrow-swiper', {
             slidesPerView: 1,
             spaceBetween: 20,
             loop: true,
-            loopedSlides: 20,
-            loopAdditionalSlides: 20,
-            watchSlidesProgress: true,
+            loopedSlides: 25,
+            loopAdditionalSlides: 25,
             speed: 800,
             autoplay: {
                 delay: 2000,
                 disableOnInteraction: false,
                 pauseOnMouseEnter: true,
             },
-            freeMode: false,
-            effect: 'slide',
             allowTouchMove: true,
-            touchRatio: 1,
-            simulateTouch: true,
             grabCursor: true,
+            simulateTouch: true,
             navigation: false,
-            centeredSlides: false,
             breakpoints: {
                 640: {
                     slidesPerView: 1.5,
                     spaceBetween: 20,
                     centeredSlides: true,
-                    loopedSlides: 20,
-                    loopAdditionalSlides: 20,
                 },
                 768: {
                     slidesPerView: 2.5,
                     spaceBetween: 15,
                     centeredSlides: true,
-                    loopedSlides: 20,
-                    loopAdditionalSlides: 20,
                 },
                 1024: {
-                    slidesPerView: 10,
+                    slidesPerView: 6,
                     spaceBetween: 15,
                     centeredSlides: false,
-                    loopedSlides: 20,
-                    loopAdditionalSlides: 20,
                 },
             },
             on: {
                 init: function() {
-                    // 초기화 후 업데이트 및 autoplay 시작
-                    setTimeout(() => {
-                        this.update();
-                        if (this.autoplay) {
-                            this.autoplay.start();
-                        }
-                    }, 100);
+                    setupImageClickEvents();
+                    if (this.autoplay) {
+                        this.autoplay.start();
+                    }
+                },
+                slideChange: function() {
+                    setupImageClickEvents();
                 },
             },
         });
         
-        // 이미지 로드 후 Swiper 업데이트
-        const lipImages = document.querySelectorAll('.lip-swiper img');
-        let loadedLipImages = 0;
-        lipImages.forEach(img => {
-            if (img.complete) {
-                loadedLipImages++;
-            } else {
-                img.addEventListener('load', function() {
-                    loadedLipImages++;
-                    if (loadedLipImages === lipImages.length) {
-                        lipSwiper.update();
-                        if (lipSwiper.autoplay) {
-                            lipSwiper.autoplay.start();
-                        }
+        // Lip Swiper 초기화
+        const lipSwiper = new Swiper('.lip-swiper', {
+            slidesPerView: 1,
+            spaceBetween: 20,
+            loop: true,
+            loopedSlides: 20,
+            loopAdditionalSlides: 20,
+            speed: 800,
+            autoplay: {
+                delay: 2000,
+                disableOnInteraction: false,
+                pauseOnMouseEnter: true,
+            },
+            allowTouchMove: true,
+            grabCursor: true,
+            simulateTouch: true,
+            navigation: false,
+            breakpoints: {
+                640: {
+                    slidesPerView: 1.5,
+                    spaceBetween: 20,
+                    centeredSlides: true,
+                },
+                768: {
+                    slidesPerView: 2.5,
+                    spaceBetween: 15,
+                    centeredSlides: true,
+                },
+                1024: {
+                    slidesPerView: 6,
+                    spaceBetween: 15,
+                    centeredSlides: false,
+                },
+            },
+            on: {
+                init: function() {
+                    setupImageClickEvents();
+                    if (this.autoplay) {
+                        this.autoplay.start();
                     }
-                });
-            }
+                },
+                slideChange: function() {
+                    setupImageClickEvents();
+                },
+            },
         });
         
-        if (loadedLipImages === lipImages.length) {
+        // 이미지 로드 완료 후 이벤트 재설정
+        window.addEventListener('load', function() {
             setTimeout(() => {
-                lipSwiper.update();
-                if (lipSwiper.autoplay) {
-                    lipSwiper.autoplay.start();
-                }
-            }, 100);
-        }
-        
-        // 모바일에서 전체화면 모드 방지 및 뷰포트 고정 (lip-gallery)
-        const lipSwiperContainer = document.querySelector('.lip-swiper');
-        if (lipSwiperContainer) {
-            // 전체화면 API 방지
-            document.addEventListener('fullscreenchange', function() {
-                if (document.fullscreenElement) {
-                    document.exitFullscreen().catch(() => {});
-                }
-            });
-            
-            // 터치 이벤트로 인한 뷰포트 변경 방지 (핀치 줌만 방지)
-            lipSwiperContainer.addEventListener('touchstart', function(e) {
-                // 핀치 줌만 방지 (두 손가락 터치)
-                if (e.touches.length === 2) {
-                    e.preventDefault();
-                }
-            }, { passive: false });
-            
-            lipSwiperContainer.addEventListener('touchmove', function(e) {
-                // 핀치 줌만 방지
-                if (e.touches.length === 2) {
-                    e.preventDefault();
-                }
-            }, { passive: false });
-        }
-        
-        // Swiper의 기본 autoplay 사용 - 자연스러운 무한 루프
-        if (lipSwiper) {
-            // 마우스 호버 시 일시정지 (이미 autoplay 설정에 포함됨)
-            const lipSwiperEl = document.querySelector('.lip-swiper');
-            if (lipSwiperEl) {
-                lipSwiperEl.addEventListener('mouseenter', () => {
-                    if (lipSwiper.autoplay) {
-                        lipSwiper.autoplay.pause();
-                    }
-                });
-                
-                lipSwiperEl.addEventListener('mouseleave', () => {
-                    if (lipSwiper.autoplay) {
-                        lipSwiper.autoplay.resume();
-                    }
-                });
-            }
-            
-            // 테스트 로그
-            console.log('=== Lip Gallery Swiper 초기화 ===');
-            lipSwiper.on('init', function() {
-                console.log('Lip Swiper initialized, total slides:', this.slides.length);
-                console.log('Loop enabled:', this.params.loop);
-                console.log('Autoplay delay:', this.params.autoplay.delay);
-            });
-            
-            lipSwiper.on('slideChange', function() {
-                console.log('Lip slide changed - Real index:', this.realIndex, 'Active index:', this.activeIndex);
-                // 마지막 이미지 다음이면 첫 번째로 이동 (무한 루프 보장)
-                if (this.realIndex >= 19) {
-                    setTimeout(() => {
-                        if (this.autoplay && this.autoplay.running) {
-                            this.slideToLoop(0, 800);
-                        }
-                    }, 2100);
-                }
-            });
-        }
+                setupImageClickEvents();
+                if (eyebrowSwiper) eyebrowSwiper.update();
+                if (lipSwiper) lipSwiper.update();
+            }, 500);
+        });
         
         // 후기 모음 Swiper
         const reviewsSwiper = new Swiper('.reviews-swiper', {
