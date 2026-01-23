@@ -1300,6 +1300,7 @@ body[data-lang="zh"] {
     border-radius: 12px;
     cursor: pointer;
     transition: var(--transition);
+    display: block;
 }
 
 .gallery-image:hover {
@@ -2200,17 +2201,16 @@ body[data-lang="zh"] {
     .lip-gallery .swiper-slide {
         width: calc(66.666% - 10px) !important;
         flex-shrink: 0;
-        display: flex !important;
-        align-items: stretch;
-        min-height: 200px;
+        display: block !important;
+        height: auto;
+        padding: 0 5px;
     }
     
     .eyebrow-gallery .gallery-item,
     .lip-gallery .gallery-item {
         width: 100%;
         height: 100%;
-        display: flex;
-        flex-direction: column;
+        display: block;
     }
     
     .eyebrow-gallery .gallery-image,
@@ -2218,9 +2218,7 @@ body[data-lang="zh"] {
         aspect-ratio: 1 / 2;
         width: 100%;
         height: auto;
-        min-height: 200px;
         display: block;
-        flex: 1;
     }
     
     .eyebrow-gallery .gallery-img,
@@ -2263,26 +2261,24 @@ body[data-lang="zh"] {
     .eyebrow-gallery .swiper-slide,
     .lip-gallery .swiper-slide {
         width: calc(66.666% - 10px) !important;
-        display: flex !important;
-        align-items: stretch;
-        min-height: 200px;
+        display: block !important;
+        height: auto;
+        padding: 0 5px;
     }
     
     .eyebrow-gallery .gallery-item,
     .lip-gallery .gallery-item {
         width: 100%;
         height: 100%;
-        display: flex;
-        flex-direction: column;
+        display: block;
     }
     
     .eyebrow-gallery .gallery-image,
     .lip-gallery .gallery-image {
         aspect-ratio: 1 / 2;
         width: 100%;
-        min-height: 200px;
+        height: auto;
         display: block;
-        flex: 1;
     }
     
     .eyebrow-gallery .gallery-img,
@@ -2290,7 +2286,6 @@ body[data-lang="zh"] {
         width: 100%;
         height: 100%;
         object-fit: cover;
-        display: block;
         display: block;
     }
     

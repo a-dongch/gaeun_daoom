@@ -470,7 +470,7 @@ function initializeApp(trans) {
             breakpoints: {
                 640: {
                     slidesPerView: 1.5,
-                    spaceBetween: 15,
+                    spaceBetween: 20,
                     centeredSlides: true,
                     loopedSlides: 25,
                     loopAdditionalSlides: 25,
@@ -492,9 +492,12 @@ function initializeApp(trans) {
             },
             on: {
                 init: function() {
-                    // 초기화 후 업데이트
+                    // 초기화 후 업데이트 및 autoplay 시작
                     setTimeout(() => {
                         this.update();
+                        if (this.autoplay) {
+                            this.autoplay.start();
+                        }
                     }, 100);
                 },
             },
@@ -511,6 +514,9 @@ function initializeApp(trans) {
                     loadedImages++;
                     if (loadedImages === eyebrowImages.length) {
                         eyebrowSwiper.update();
+                        if (eyebrowSwiper.autoplay) {
+                            eyebrowSwiper.autoplay.start();
+                        }
                     }
                 });
             }
@@ -519,6 +525,9 @@ function initializeApp(trans) {
         if (loadedImages === eyebrowImages.length) {
             setTimeout(() => {
                 eyebrowSwiper.update();
+                if (eyebrowSwiper.autoplay) {
+                    eyebrowSwiper.autoplay.start();
+                }
             }, 100);
         }
         
@@ -774,7 +783,7 @@ function initializeApp(trans) {
             breakpoints: {
                 640: {
                     slidesPerView: 1.5,
-                    spaceBetween: 15,
+                    spaceBetween: 20,
                     centeredSlides: true,
                     loopedSlides: 20,
                     loopAdditionalSlides: 20,
@@ -796,9 +805,12 @@ function initializeApp(trans) {
             },
             on: {
                 init: function() {
-                    // 초기화 후 업데이트
+                    // 초기화 후 업데이트 및 autoplay 시작
                     setTimeout(() => {
                         this.update();
+                        if (this.autoplay) {
+                            this.autoplay.start();
+                        }
                     }, 100);
                 },
             },
@@ -815,6 +827,9 @@ function initializeApp(trans) {
                     loadedLipImages++;
                     if (loadedLipImages === lipImages.length) {
                         lipSwiper.update();
+                        if (lipSwiper.autoplay) {
+                            lipSwiper.autoplay.start();
+                        }
                     }
                 });
             }
@@ -823,6 +838,9 @@ function initializeApp(trans) {
         if (loadedLipImages === lipImages.length) {
             setTimeout(() => {
                 lipSwiper.update();
+                if (lipSwiper.autoplay) {
+                    lipSwiper.autoplay.start();
+                }
             }, 100);
         }
         
