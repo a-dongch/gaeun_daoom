@@ -466,7 +466,7 @@ function initializeApp(trans) {
             simulateTouch: true,
             grabCursor: true,
             navigation: false,
-            centeredSlides: true,
+            centeredSlides: false,
             breakpoints: {
                 640: {
                     slidesPerView: 1.5,
@@ -490,7 +490,37 @@ function initializeApp(trans) {
                     loopAdditionalSlides: 25,
                 },
             },
+            on: {
+                init: function() {
+                    // 초기화 후 업데이트
+                    setTimeout(() => {
+                        this.update();
+                    }, 100);
+                },
+            },
         });
+        
+        // 이미지 로드 후 Swiper 업데이트
+        const eyebrowImages = document.querySelectorAll('.eyebrow-swiper img');
+        let loadedImages = 0;
+        eyebrowImages.forEach(img => {
+            if (img.complete) {
+                loadedImages++;
+            } else {
+                img.addEventListener('load', function() {
+                    loadedImages++;
+                    if (loadedImages === eyebrowImages.length) {
+                        eyebrowSwiper.update();
+                    }
+                });
+            }
+        });
+        
+        if (loadedImages === eyebrowImages.length) {
+            setTimeout(() => {
+                eyebrowSwiper.update();
+            }, 100);
+        }
         
         // 모바일에서 전체화면 모드 방지 및 뷰포트 고정
         const eyebrowSwiperContainer = document.querySelector('.eyebrow-swiper');
@@ -740,7 +770,7 @@ function initializeApp(trans) {
             simulateTouch: true,
             grabCursor: true,
             navigation: false,
-            centeredSlides: true,
+            centeredSlides: false,
             breakpoints: {
                 640: {
                     slidesPerView: 1.5,
@@ -764,7 +794,37 @@ function initializeApp(trans) {
                     loopAdditionalSlides: 20,
                 },
             },
+            on: {
+                init: function() {
+                    // 초기화 후 업데이트
+                    setTimeout(() => {
+                        this.update();
+                    }, 100);
+                },
+            },
         });
+        
+        // 이미지 로드 후 Swiper 업데이트
+        const lipImages = document.querySelectorAll('.lip-swiper img');
+        let loadedLipImages = 0;
+        lipImages.forEach(img => {
+            if (img.complete) {
+                loadedLipImages++;
+            } else {
+                img.addEventListener('load', function() {
+                    loadedLipImages++;
+                    if (loadedLipImages === lipImages.length) {
+                        lipSwiper.update();
+                    }
+                });
+            }
+        });
+        
+        if (loadedLipImages === lipImages.length) {
+            setTimeout(() => {
+                lipSwiper.update();
+            }, 100);
+        }
         
         // 모바일에서 전체화면 모드 방지 및 뷰포트 고정 (lip-gallery)
         const lipSwiperContainer = document.querySelector('.lip-swiper');
