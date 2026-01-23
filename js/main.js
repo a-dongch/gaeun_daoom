@@ -75,8 +75,8 @@ function initializeApp(trans) {
             if (trans[lang] && trans[lang][key]) {
                 const translation = trans[lang][key];
                 
-                // HTML 태그가 포함된 경우 innerHTML 사용
-                if (translation.includes('<br>')) {
+                // HTML 태그가 포함된 경우 innerHTML 사용 (<br>, <strong>, <em> 등)
+                if (translation.includes('<') && translation.includes('>')) {
                     element.innerHTML = translation;
                 } else {
                     element.textContent = translation;
