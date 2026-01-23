@@ -586,14 +586,16 @@ function initializeApp(trans) {
         const eyebrowSwiper = new Swiper('.eyebrow-swiper', {
             slidesPerView: 1,
             spaceBetween: 20,
-            loop: true,
-            loopedSlides: 25,
-            loopAdditionalSlides: 25,
+            loop: false,
+            watchOverflow: true,
+            resistance: false,
+            resistanceRatio: 0,
             speed: 800,
             autoplay: {
                 delay: 2000,
                 disableOnInteraction: false,
                 pauseOnMouseEnter: true,
+                stopOnLastSlide: true,
             },
             allowTouchMove: true,
             grabCursor: true,
@@ -625,6 +627,28 @@ function initializeApp(trans) {
                 },
                 slideChange: function() {
                     setupImageClickEvents();
+                    // 마지막 슬라이드에 도달하면 autoplay 중지 및 더 이상 스크롤 방지
+                    if (this.isEnd) {
+                        if (this.autoplay) {
+                            this.autoplay.stop();
+                        }
+                        // 마지막 슬라이드로 강제 이동하여 공백 방지
+                        if (this.activeIndex !== this.slides.length - 1) {
+                            this.slideTo(this.slides.length - 1, 0);
+                        }
+                    }
+                },
+                reachEnd: function() {
+                    // 마지막 슬라이드에 도달하면 autoplay 중지
+                    if (this.autoplay) {
+                        this.autoplay.stop();
+                    }
+                },
+                touchEnd: function() {
+                    // 터치 종료 시 마지막 슬라이드 확인
+                    if (this.isEnd && this.activeIndex < this.slides.length - 1) {
+                        this.slideTo(this.slides.length - 1, 300);
+                    }
                 },
             },
         });
@@ -633,14 +657,16 @@ function initializeApp(trans) {
         const lipSwiper = new Swiper('.lip-swiper', {
             slidesPerView: 1,
             spaceBetween: 20,
-            loop: true,
-            loopedSlides: 20,
-            loopAdditionalSlides: 20,
+            loop: false,
+            watchOverflow: true,
+            resistance: false,
+            resistanceRatio: 0,
             speed: 800,
             autoplay: {
                 delay: 2000,
                 disableOnInteraction: false,
                 pauseOnMouseEnter: true,
+                stopOnLastSlide: true,
             },
             allowTouchMove: true,
             grabCursor: true,
@@ -672,6 +698,28 @@ function initializeApp(trans) {
                 },
                 slideChange: function() {
                     setupImageClickEvents();
+                    // 마지막 슬라이드에 도달하면 autoplay 중지 및 더 이상 스크롤 방지
+                    if (this.isEnd) {
+                        if (this.autoplay) {
+                            this.autoplay.stop();
+                        }
+                        // 마지막 슬라이드로 강제 이동하여 공백 방지
+                        if (this.activeIndex !== this.slides.length - 1) {
+                            this.slideTo(this.slides.length - 1, 0);
+                        }
+                    }
+                },
+                reachEnd: function() {
+                    // 마지막 슬라이드에 도달하면 autoplay 중지
+                    if (this.autoplay) {
+                        this.autoplay.stop();
+                    }
+                },
+                touchEnd: function() {
+                    // 터치 종료 시 마지막 슬라이드 확인
+                    if (this.isEnd && this.activeIndex < this.slides.length - 1) {
+                        this.slideTo(this.slides.length - 1, 300);
+                    }
                 },
             },
         });
