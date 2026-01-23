@@ -2194,7 +2194,7 @@ body[data-lang="zh"] {
     
     .eyebrow-gallery .swiper-slide,
     .lip-gallery .swiper-slide {
-        width: calc(50% - 6px) !important;
+        width: calc(66.666% - 10px) !important;
         flex-shrink: 0;
     }
     
@@ -2241,7 +2241,7 @@ body[data-lang="zh"] {
     
     .eyebrow-gallery .swiper-slide,
     .lip-gallery .swiper-slide {
-        width: calc(50% - 6px) !important;
+        width: auto !important;
     }
     
     .eyebrow-gallery .gallery-item,

@@ -227,15 +227,15 @@ function initializeApp(trans) {
                              window.scrollY || 
                              document.body.scrollTop || 
                              0;
-            
-            if (scrollTop > 100) {
+        
+        if (scrollTop > 100) {
                 // 스크롤 다운 시 축소
                 if (isExpanded) {
                     languageSelector.classList.add('collapsed');
                     isExpanded = false;
                     console.log('✓ Language selector collapsed (scroll > 100, scrollTop:', scrollTop, ')');
                 }
-            } else {
+        } else {
                 // 스크롤 상단으로 돌아오면 확장
                 if (!isExpanded) {
                     languageSelector.classList.remove('collapsed');
@@ -466,22 +466,26 @@ function initializeApp(trans) {
             simulateTouch: true,
             grabCursor: true,
             navigation: false,
+            centeredSlides: true,
             breakpoints: {
                 640: {
-                    slidesPerView: 2,
-                    spaceBetween: 12,
+                    slidesPerView: 1.5,
+                    spaceBetween: 15,
+                    centeredSlides: true,
                     loopedSlides: 25,
                     loopAdditionalSlides: 25,
                 },
                 768: {
                     slidesPerView: 2.5,
                     spaceBetween: 15,
+                    centeredSlides: true,
                     loopedSlides: 25,
                     loopAdditionalSlides: 25,
                 },
                 1024: {
                     slidesPerView: 10,
                     spaceBetween: 15,
+                    centeredSlides: false,
                     loopedSlides: 25,
                     loopAdditionalSlides: 25,
                 },
@@ -736,22 +740,26 @@ function initializeApp(trans) {
             simulateTouch: true,
             grabCursor: true,
             navigation: false,
+            centeredSlides: true,
             breakpoints: {
                 640: {
-                    slidesPerView: 2,
-                    spaceBetween: 12,
+                    slidesPerView: 1.5,
+                    spaceBetween: 15,
+                    centeredSlides: true,
                     loopedSlides: 20,
                     loopAdditionalSlides: 20,
                 },
                 768: {
                     slidesPerView: 2.5,
                     spaceBetween: 15,
+                    centeredSlides: true,
                     loopedSlides: 20,
                     loopAdditionalSlides: 20,
                 },
                 1024: {
                     slidesPerView: 10,
                     spaceBetween: 15,
+                    centeredSlides: false,
                     loopedSlides: 20,
                     loopAdditionalSlides: 20,
                 },
