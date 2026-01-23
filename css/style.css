@@ -1320,74 +1320,151 @@ body[data-lang="zh"] {
     }
 }
 
-/* Reviews Section */
-.reviews-section {
+/* Review Gallery Section - Same as other galleries */
+.review-gallery {
     padding: var(--section-padding);
-    background: linear-gradient(180deg, #FAF9F7 0%, #F5F0EB 50%, #FAF9F7 100%);
+    overflow: hidden;
+    width: 100%;
     position: relative;
+    background: linear-gradient(180deg, #FAF9F7 0%, #F5F0EB 50%, #FAF9F7 100%);
 }
 
-.reviews-section::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: 
-        radial-gradient(circle at 10% 20%, rgba(139, 115, 85, 0.03) 0%, transparent 40%),
-        radial-gradient(circle at 90% 80%, rgba(196, 160, 122, 0.03) 0%, transparent 40%);
-    pointer-events: none;
-}
-
-.reviews-section .section-header {
+.review-gallery .section-header {
     text-align: center;
     margin-bottom: 50px;
     position: relative;
     z-index: 1;
+    max-width: var(--container-max);
+    margin-left: auto;
+    margin-right: auto;
+    padding: 0 20px;
 }
 
-.reviews-section .swiper {
+.review-gallery .swiper {
     position: relative;
-    z-index: 1;
-    padding: 20px 0 60px;
-}
-
-.review-item {
     width: 100%;
-    height: 100%;
-    border-radius: 15px;
+    max-width: 100%;
     overflow: hidden;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-    transition: var(--transition);
-    background: var(--white-color);
+    padding: 20px 0;
 }
 
-.review-item:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
-}
-
-.review-content {
-    width: 100%;
-    height: 100%;
-}
-
-.review-image {
-    width: 100%;
-    aspect-ratio: 4 / 3;
-    overflow: hidden;
-}
-
-.review-image .image-placeholder {
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(135deg, var(--light-color) 0%, #E8DDD3 100%);
+.review-gallery .swiper-wrapper {
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    color: var(--text-light);
+    align-items: stretch;
+}
+
+.review-gallery .swiper-slide {
+    height: auto;
+    display: flex;
+    align-items: stretch;
+}
+
+.review-gallery .gallery-item {
+    width: 100%;
+    height: 100%;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.review-gallery .gallery-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.review-gallery .gallery-image {
+    width: 100%;
+    aspect-ratio: 1 / 2;
+    overflow: hidden;
+    border-radius: 12px;
+    cursor: pointer;
+    display: block;
+    position: relative;
+}
+
+.review-gallery .gallery-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.3s ease;
+}
+
+.review-gallery .gallery-item:hover .gallery-img {
+    transform: scale(1.05);
+}
+
+/* Hide Navigation Buttons for Review Gallery */
+.review-gallery .swiper-button-next,
+.review-gallery .swiper-button-prev {
+    display: none !important;
+}
+
+/* Mobile (up to 640px) */
+@media (max-width: 640px) {
+    .review-gallery .swiper {
+        padding: 20px 10px;
+        overflow: hidden;
+    }
+    
+    .review-gallery .swiper-wrapper {
+        display: flex;
+        align-items: stretch;
+    }
+    
+    .review-gallery .swiper-slide {
+        width: calc(66.666% - 10px) !important;
+        flex-shrink: 0;
+        margin-right: 10px;
+    }
+    
+    .review-gallery .gallery-item {
+        width: 100%;
+        height: 100%;
+    }
+    
+    .review-gallery .gallery-image {
+        width: 100%;
+        aspect-ratio: 1 / 2;
+        display: block;
+    }
+    
+    .review-gallery .gallery-img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+}
+
+/* Tablet (641px to 1023px) */
+@media (min-width: 641px) and (max-width: 1023px) {
+    .review-gallery .swiper {
+        padding: 20px 15px;
+    }
+    
+    .review-gallery .swiper-slide {
+        width: auto;
+    }
+    
+    .review-gallery .gallery-image {
+        aspect-ratio: 1 / 2;
+    }
+}
+
+/* Desktop (1024px and above) */
+@media (min-width: 1024px) {
+    .review-gallery .swiper {
+        padding: 20px 0;
+    }
+    
+    .review-gallery .swiper-slide {
+        width: auto;
+    }
+    
+    .review-gallery .gallery-image {
+        aspect-ratio: 1 / 2;
+    }
 }
 
 .review-image .image-placeholder i {

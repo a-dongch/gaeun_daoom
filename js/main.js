@@ -501,6 +501,39 @@ function initializeApp(trans) {
             'images/gallery-lip/lip20.png'
         ];
         
+        const reviewImages = [
+            'images/gallery-review/review1.jpeg',
+            'images/gallery-review/review2.jpeg',
+            'images/gallery-review/review3.jpeg',
+            'images/gallery-review/review4.jpeg',
+            'images/gallery-review/review5.jpeg',
+            'images/gallery-review/review6.jpeg',
+            'images/gallery-review/review7.jpeg',
+            'images/gallery-review/review8.jpeg',
+            'images/gallery-review/review9.jpeg',
+            'images/gallery-review/review10.jpeg',
+            'images/gallery-review/review11.jpeg',
+            'images/gallery-review/review12.jpeg',
+            'images/gallery-review/review13.jpeg',
+            'images/gallery-review/review14.jpeg',
+            'images/gallery-review/review15.jpeg',
+            'images/gallery-review/review16.jpeg',
+            'images/gallery-review/review17.jpeg',
+            'images/gallery-review/review18.jpeg',
+            'images/gallery-review/review19.jpeg',
+            'images/gallery-review/review20.jpeg',
+            'images/gallery-review/review21.jpeg',
+            'images/gallery-review/review22.jpeg',
+            'images/gallery-review/review23.jpeg',
+            'images/gallery-review/review24.jpeg',
+            'images/gallery-review/review25.jpeg',
+            'images/gallery-review/review26.jpeg',
+            'images/gallery-review/review27.jpeg',
+            'images/gallery-review/review28.jpeg',
+            'images/gallery-review/review29.jpeg',
+            'images/gallery-review/review30.jpeg'
+        ];
+        
         // 모달 관련 변수
         let currentImageIndex = 0;
         let currentImages = eyebrowImages;
@@ -577,6 +610,16 @@ function initializeApp(trans) {
                     e.preventDefault();
                     e.stopPropagation();
                     currentImages = lipImages;
+                    openModal(index);
+                };
+            });
+            
+            // Review 이미지 클릭
+            document.querySelectorAll('.review-swiper .gallery-img').forEach((img, index) => {
+                img.onclick = function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    currentImages = reviewImages;
                     openModal(index);
                 };
             });
@@ -720,50 +763,81 @@ function initializeApp(trans) {
             },
         });
         
+        // Review Swiper 초기화
+        const reviewSwiper = new Swiper('.review-swiper', {
+            slidesPerView: 1,
+            spaceBetween: 20,
+            loop: false,
+            watchOverflow: true,
+            resistance: false,
+            resistanceRatio: 0,
+            speed: 800,
+            autoplay: {
+                delay: 2000,
+                disableOnInteraction: false,
+                pauseOnMouseEnter: true,
+                stopOnLastSlide: true,
+            },
+            allowTouchMove: true,
+            grabCursor: true,
+            simulateTouch: true,
+            navigation: false,
+            breakpoints: {
+                640: {
+                    slidesPerView: 1.5,
+                    spaceBetween: 20,
+                    centeredSlides: true,
+                },
+                768: {
+                    slidesPerView: 2.5,
+                    spaceBetween: 15,
+                    centeredSlides: true,
+                },
+                1024: {
+                    slidesPerView: 6,
+                    spaceBetween: 15,
+                    centeredSlides: false,
+                },
+            },
+            on: {
+                init: function() {
+                    setupImageClickEvents();
+                    if (this.autoplay) {
+                        this.autoplay.start();
+                    }
+                },
+                slideChange: function() {
+                    setupImageClickEvents();
+                    // 마지막 슬라이드에 도달하면 autoplay 중지
+                    if (this.isEnd) {
+                        if (this.autoplay) {
+                            this.autoplay.stop();
+                        }
+                    }
+                },
+                reachEnd: function() {
+                    // 마지막 슬라이드에 도달하면 autoplay 중지
+                    if (this.autoplay) {
+                        this.autoplay.stop();
+                    }
+                },
+                touchEnd: function() {
+                    // 터치 종료 시 마지막 슬라이드 확인
+                    if (this.isEnd && this.activeIndex < this.slides.length - 1) {
+                        this.slideTo(this.slides.length - 1, 300);
+                    }
+                },
+            },
+        });
+        
         // 이미지 로드 완료 후 이벤트 재설정
         window.addEventListener('load', function() {
             setTimeout(() => {
                 setupImageClickEvents();
                 if (eyebrowSwiper) eyebrowSwiper.update();
                 if (lipSwiper) lipSwiper.update();
+                if (reviewSwiper) reviewSwiper.update();
             }, 500);
-        });
-        
-        // 후기 모음 Swiper
-        const reviewsSwiper = new Swiper('.reviews-swiper', {
-            slidesPerView: 1,
-            spaceBetween: 20,
-            loop: true,
-            loopAdditionalSlides: 2,
-            autoplay: {
-                delay: 3000,
-                disableOnInteraction: false,
-            },
-            pagination: {
-                el: '.reviews-swiper .swiper-pagination',
-                clickable: true,
-            },
-            navigation: {
-                nextEl: '.reviews-swiper .swiper-button-next',
-                prevEl: '.reviews-swiper .swiper-button-prev',
-            },
-            breakpoints: {
-                640: {
-                    slidesPerView: 2,
-                    spaceBetween: 20,
-                    loopAdditionalSlides: 1,
-                },
-                768: {
-                    slidesPerView: 3,
-                    spaceBetween: 20,
-                    loopAdditionalSlides: 1,
-                },
-                1024: {
-                    slidesPerView: 6,
-                    spaceBetween: 20,
-                    loopAdditionalSlides: 2,
-                },
-            },
         });
     }
     
