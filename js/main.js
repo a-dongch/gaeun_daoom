@@ -102,6 +102,27 @@ function initializeApp(trans) {
         setTimeout(() => {
             document.body.style.opacity = '1';
         }, 150);
+        
+        // 언어 변경 후 스크롤 위치 확인하여 자동 축소
+        setTimeout(() => {
+            const languageSelector = document.getElementById('languageSelector');
+            if (languageSelector) {
+                const scrollTop = window.pageYOffset || 
+                                 document.documentElement.scrollTop || 
+                                 window.scrollY || 
+                                 document.body.scrollTop || 
+                                 0;
+                
+                // 스크롤 위치가 100px 이상이면 축소
+                if (scrollTop > 100) {
+                    if (isExpanded || !languageSelector.classList.contains('collapsed')) {
+                        languageSelector.classList.add('collapsed');
+                        isExpanded = false;
+                        console.log('✓ Language changed - auto collapsed (scrollTop:', scrollTop, ')');
+                    }
+                }
+            }
+        }, 300); // 언어 변경 애니메이션 후 축소
     }
     
     // 초기 언어 설정
@@ -196,6 +217,37 @@ function initializeApp(trans) {
     const languageSelector = document.getElementById('languageSelector');
     
     if (languageSelector) {
+        console.log('Language selector found, initializing scroll handler');
+        
+        // 초기 스크롤 위치 확인 및 상태 설정 (모바일 대응)
+        function checkScrollPosition() {
+            // 모바일과 데스크톱 모두에서 작동하는 스크롤 위치 확인
+            const scrollTop = window.pageYOffset || 
+                             document.documentElement.scrollTop || 
+                             window.scrollY || 
+                             document.body.scrollTop || 
+                             0;
+            
+            if (scrollTop > 100) {
+                // 스크롤 다운 시 축소
+                if (isExpanded) {
+                    languageSelector.classList.add('collapsed');
+                    isExpanded = false;
+                    console.log('✓ Language selector collapsed (scroll > 100, scrollTop:', scrollTop, ')');
+                }
+            } else {
+                // 스크롤 상단으로 돌아오면 확장
+                if (!isExpanded) {
+                    languageSelector.classList.remove('collapsed');
+                    isExpanded = true;
+                    console.log('✓ Language selector expanded (scroll <= 100, scrollTop:', scrollTop, ')');
+                }
+            }
+        }
+        
+        // 초기 스크롤 위치 확인
+        checkScrollPosition();
+        
         // 축소된 상태에서 클릭 시 확장 (capture phase에서 먼저 처리)
         languageSelector.addEventListener('click', function(e) {
             if (languageSelector.classList.contains('collapsed')) {
@@ -214,42 +266,95 @@ function initializeApp(trans) {
         langButtons.forEach(btn => {
             // 언어 변경 후 축소를 위한 추가 리스너
             btn.addEventListener('click', function(e) {
-                // 확장된 상태에서 언어 변경 후 축소
-                if (!languageSelector.classList.contains('collapsed') && isExpanded) {
-                    console.log('Language changed, will collapse after delay');
-                    setTimeout(() => {
-                        if (window.pageYOffset > 100 && isExpanded) {
+                // 언어 변경 후 스크롤 위치 확인하여 축소
+                setTimeout(() => {
+                    const scrollTop = window.pageYOffset || 
+                                   document.documentElement.scrollTop || 
+                                   window.scrollY || 
+                                   document.body.scrollTop || 
+                                   0;
+                    
+                    // 스크롤 위치가 100px 이상이면 축소
+                    if (scrollTop > 100) {
+                        if (isExpanded || !languageSelector.classList.contains('collapsed')) {
                             languageSelector.classList.add('collapsed');
                             isExpanded = false;
+                            console.log('✓ Language changed - collapsed (scrollTop:', scrollTop, ')');
                         }
-                    }, 400);
-                }
+                    }
+                }, 300); // 언어 변경 애니메이션 후 축소
             }, false); // bubble phase에서 처리
         });
         
-        window.addEventListener('scroll', function() {
-            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-            
-            if (scrollTop > 100) {
-                // 스크롤 다운 시 축소
-                if (isExpanded) {
-                    languageSelector.classList.add('collapsed');
-                    isExpanded = false;
-                }
-                languageSelector.style.background = 'rgba(255, 255, 255, 0.98)';
-                languageSelector.style.boxShadow = '0 4px 30px rgba(0, 0, 0, 0.15)';
-            } else {
-                // 스크롤 상단으로 돌아오면 확장
-                if (!isExpanded) {
-                    languageSelector.classList.remove('collapsed');
-                    isExpanded = true;
-                }
-                languageSelector.style.background = 'rgba(255, 255, 255, 0.95)';
-                languageSelector.style.boxShadow = '0 4px 20px rgba(0, 0, 0, 0.1)';
+        // 스크롤 이벤트 핸들러 - 스크롤 시 언어 선택기 축소/확장 (모바일 대응)
+        let scrollTimeout;
+        let ticking = false;
+        
+        function onScroll() {
+            if (!ticking) {
+                window.requestAnimationFrame(function() {
+                    checkScrollPosition();
+                    ticking = false;
+                });
+                ticking = true;
             }
+        }
+        
+        // 여러 이벤트 타입에 리스너 추가 (모바일 대응)
+        window.addEventListener('scroll', onScroll, { passive: true });
+        window.addEventListener('touchmove', onScroll, { passive: true });
+        document.addEventListener('scroll', onScroll, { passive: true });
+        
+        // 모바일에서 스크롤 종료 후에도 확인
+        let scrollEndTimeout;
+        window.addEventListener('scroll', function() {
+            clearTimeout(scrollEndTimeout);
+            scrollEndTimeout = setTimeout(function() {
+                checkScrollPosition();
+            }, 150);
+        }, { passive: true });
+        
+        // 터치 종료 후에도 확인 (모바일)
+        let touchEndTimeout;
+        document.addEventListener('touchend', function() {
+            clearTimeout(touchEndTimeout);
+            touchEndTimeout = setTimeout(function() {
+                checkScrollPosition();
+            }, 100);
+        }, { passive: true });
+        
+        // 모바일에서 스크롤 감지를 위한 추가 방법 (Intersection Observer 사용)
+        const observerTarget = document.querySelector('.hero') || document.body;
+        if (observerTarget && 'IntersectionObserver' in window) {
+            const observer = new IntersectionObserver(function(entries) {
+                entries.forEach(function(entry) {
+                    // hero 섹션이 뷰포트에서 벗어나면 축소
+                    if (!entry.isIntersecting) {
+                        if (isExpanded) {
+                            const scrollTop = window.pageYOffset || document.documentElement.scrollTop || window.scrollY || document.body.scrollTop || 0;
+                            if (scrollTop > 100) {
+                                languageSelector.classList.add('collapsed');
+                                isExpanded = false;
+                                console.log('✓ Language selector collapsed (via IntersectionObserver)');
+                            }
+                        }
+                    } else {
+                        // hero 섹션이 뷰포트에 보이면 확장
+                        if (!isExpanded) {
+                            languageSelector.classList.remove('collapsed');
+                            isExpanded = true;
+                            console.log('✓ Language selector expanded (via IntersectionObserver)');
+                        }
+                    }
+                });
+            }, {
+                root: null,
+                rootMargin: '-100px 0px 0px 0px',
+                threshold: 0
+            });
             
-            lastScrollTop = scrollTop;
-        });
+            observer.observe(observerTarget);
+        }
     }
     
     // 부드러운 스크롤 (네비게이션 링크용 - 추후 추가 시)
@@ -340,13 +445,13 @@ function initializeApp(trans) {
     
     // Swiper 초기화
     if (typeof Swiper !== 'undefined') {
-        // 눈썹 시술사진 Swiper - 무한 루프 보장
+        // 눈썹 시술사진 Swiper - 무한 루프 보장 (25개 이미지)
         const eyebrowSwiper = new Swiper('.eyebrow-swiper', {
             slidesPerView: 1,
             spaceBetween: 20,
             loop: true,
-            loopedSlides: 10,
-            loopAdditionalSlides: 10,
+            loopedSlides: 25,
+            loopAdditionalSlides: 25,
             watchSlidesProgress: true,
             speed: 800,
             autoplay: {
@@ -365,20 +470,20 @@ function initializeApp(trans) {
                 640: {
                     slidesPerView: 2,
                     spaceBetween: 12,
-                    loopedSlides: 10,
-                    loopAdditionalSlides: 10,
+                    loopedSlides: 25,
+                    loopAdditionalSlides: 25,
                 },
                 768: {
                     slidesPerView: 2.5,
                     spaceBetween: 15,
-                    loopedSlides: 10,
-                    loopAdditionalSlides: 10,
+                    loopedSlides: 25,
+                    loopAdditionalSlides: 25,
                 },
                 1024: {
                     slidesPerView: 10,
                     spaceBetween: 15,
-                    loopedSlides: 10,
-                    loopAdditionalSlides: 10,
+                    loopedSlides: 25,
+                    loopAdditionalSlides: 25,
                 },
             },
         });
@@ -454,8 +559,8 @@ function initializeApp(trans) {
             
             eyebrowSwiper.on('slideChange', function() {
                 console.log('Eyebrow slide changed - Real index:', this.realIndex, 'Active index:', this.activeIndex);
-                // 마지막 이미지 다음이면 첫 번째로 이동 (무한 루프 보장)
-                if (this.realIndex >= 9) {
+                // 마지막 이미지(realIndex 24) 다음이면 첫 번째로 이동 (무한 루프 보장 - 25개 이미지)
+                if (this.realIndex >= 24) {
                     setTimeout(() => {
                         if (this.autoplay && this.autoplay.running) {
                             this.slideToLoop(0, 800);
@@ -476,7 +581,22 @@ function initializeApp(trans) {
             'images/gallery-eyebrow/eyebrow7.jpeg',
             'images/gallery-eyebrow/eyebrow8.jpeg',
             'images/gallery-eyebrow/eyebrow9.jpeg',
-            'images/gallery-eyebrow/eyebrow10.jpeg'
+            'images/gallery-eyebrow/eyebrow10.jpeg',
+            'images/gallery-eyebrow/eyebrow11.jpeg',
+            'images/gallery-eyebrow/eyebrow12.jpeg',
+            'images/gallery-eyebrow/eyebrow13.jpeg',
+            'images/gallery-eyebrow/eyebrow14.jpeg',
+            'images/gallery-eyebrow/eyebrow15.jpeg',
+            'images/gallery-eyebrow/eyebrow16.jpeg',
+            'images/gallery-eyebrow/eyebrow17.jpeg',
+            'images/gallery-eyebrow/eyebrow18.jpeg',
+            'images/gallery-eyebrow/eyebrow19.jpeg',
+            'images/gallery-eyebrow/eyebrow20.jpeg',
+            'images/gallery-eyebrow/eyebrow21.jpeg',
+            'images/gallery-eyebrow/eyebrow22.jpeg',
+            'images/gallery-eyebrow/eyebrow23.jpeg',
+            'images/gallery-eyebrow/eyebrow24.jpeg',
+            'images/gallery-eyebrow/eyebrow25.jpeg'
         ];
         
         const lipImages = [
