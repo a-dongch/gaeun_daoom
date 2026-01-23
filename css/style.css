@@ -1189,6 +1189,8 @@ body[data-lang="zh"] {
 .eyebrow-gallery .swiper-slide {
     width: auto;
     flex-shrink: 0;
+    display: block;
+    height: auto;
 }
 
 .eyebrow-gallery .swiper {
@@ -1247,6 +1249,8 @@ body[data-lang="zh"] {
 .lip-gallery .swiper-slide {
     width: auto;
     flex-shrink: 0;
+    display: block;
+    height: auto;
 }
 
 .gallery-section::before {
@@ -2194,14 +2198,17 @@ body[data-lang="zh"] {
     
     .eyebrow-gallery .swiper-slide,
     .lip-gallery .swiper-slide {
-        width: calc(66.666% - 10px) !important;
+        width: auto !important;
         flex-shrink: 0;
+        display: block !important;
     }
     
     .eyebrow-gallery .gallery-image,
     .lip-gallery .gallery-image {
         aspect-ratio: 1 / 2;
         width: 100%;
+        max-width: 200px;
+        margin: 0 auto;
     }
     
     .eyebrow-gallery .gallery-item,
@@ -2242,12 +2249,21 @@ body[data-lang="zh"] {
     .eyebrow-gallery .swiper-slide,
     .lip-gallery .swiper-slide {
         width: auto !important;
+        display: block !important;
     }
     
     .eyebrow-gallery .gallery-item,
     .lip-gallery .gallery-item {
         width: 100%;
         height: 100%;
+    }
+    
+    .eyebrow-gallery .gallery-image,
+    .lip-gallery .gallery-image {
+        aspect-ratio: 1 / 2;
+        width: 100%;
+        max-width: 200px;
+        margin: 0 auto;
     }
     
     .faq-question {
