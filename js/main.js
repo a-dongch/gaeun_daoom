@@ -531,7 +531,15 @@ function initializeApp(trans) {
             'images/gallery-review/review27.jpeg',
             'images/gallery-review/review28.jpeg',
             'images/gallery-review/review29.jpeg',
-            'images/gallery-review/review30.jpeg'
+            'images/gallery-review/review30.jpeg',
+            'images/gallery-review/review31.jpeg',
+            'images/gallery-review/review32.jpeg',
+            'images/gallery-review/review33.jpeg',
+            'images/gallery-review/review34.jpeg',
+            'images/gallery-review/review35.jpeg',
+            'images/gallery-review/review36.jpeg',
+            'images/gallery-review/review37.jpeg',
+            'images/gallery-review/review38.jpeg'
         ];
         
         // 모달 관련 변수
@@ -666,7 +674,6 @@ function initializeApp(trans) {
             on: {
                 init: function() {
                     setupImageClickEvents();
-                    // 초기화 시 마지막 슬라이드 위치 계산
                     this.update();
                     if (this.autoplay) {
                         this.autoplay.start();
@@ -674,7 +681,6 @@ function initializeApp(trans) {
                 },
                 slideChange: function() {
                     setupImageClickEvents();
-                    // 마지막 슬라이드에 도달하면 autoplay 중지
                     if (this.isEnd) {
                         if (this.autoplay) {
                             this.autoplay.stop();
@@ -682,13 +688,11 @@ function initializeApp(trans) {
                     }
                 },
                 reachEnd: function() {
-                    // 마지막 슬라이드에 도달하면 autoplay 중지
                     if (this.autoplay) {
                         this.autoplay.stop();
                     }
                 },
                 touchEnd: function() {
-                    // 터치 종료 시 마지막 슬라이드 확인
                     if (this.isEnd && this.activeIndex < this.slides.length - 1) {
                         this.slideTo(this.slides.length - 1, 300);
                     }
@@ -741,7 +745,6 @@ function initializeApp(trans) {
                 },
                 slideChange: function() {
                     setupImageClickEvents();
-                    // 마지막 슬라이드에 도달하면 autoplay 중지
                     if (this.isEnd) {
                         if (this.autoplay) {
                             this.autoplay.stop();
@@ -749,13 +752,11 @@ function initializeApp(trans) {
                     }
                 },
                 reachEnd: function() {
-                    // 마지막 슬라이드에 도달하면 autoplay 중지
                     if (this.autoplay) {
                         this.autoplay.stop();
                     }
                 },
                 touchEnd: function() {
-                    // 터치 종료 시 마지막 슬라이드 확인
                     if (this.isEnd && this.activeIndex < this.slides.length - 1) {
                         this.slideTo(this.slides.length - 1, 300);
                     }
@@ -808,7 +809,6 @@ function initializeApp(trans) {
                 },
                 slideChange: function() {
                     setupImageClickEvents();
-                    // 마지막 슬라이드에 도달하면 autoplay 중지
                     if (this.isEnd) {
                         if (this.autoplay) {
                             this.autoplay.stop();
@@ -816,13 +816,11 @@ function initializeApp(trans) {
                     }
                 },
                 reachEnd: function() {
-                    // 마지막 슬라이드에 도달하면 autoplay 중지
                     if (this.autoplay) {
                         this.autoplay.stop();
                     }
                 },
                 touchEnd: function() {
-                    // 터치 종료 시 마지막 슬라이드 확인
                     if (this.isEnd && this.activeIndex < this.slides.length - 1) {
                         this.slideTo(this.slides.length - 1, 300);
                     }
