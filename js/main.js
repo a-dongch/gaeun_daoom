@@ -633,20 +633,18 @@ function initializeApp(trans) {
             });
         }
         
-        // Eyebrow Swiper 초기화
+        // Eyebrow Swiper 초기화 - 끊김 없이 흐르는 연속 스크롤 (jsfiddle 방식)
         const eyebrowSwiper = new Swiper('.eyebrow-swiper', {
             slidesPerView: 1,
             spaceBetween: 20,
-            loop: false,
-            watchOverflow: true,
-            resistance: false,
-            resistanceRatio: 0,
-            speed: 800,
+            loop: true,
+            loopedSlides: 25,
+            loopAdditionalSlides: 3,
+            speed: 4000,
             autoplay: {
-                delay: 2000,
+                delay: 0,
                 disableOnInteraction: false,
                 pauseOnMouseEnter: true,
-                stopOnLastSlide: true,
             },
             allowTouchMove: true,
             grabCursor: true,
@@ -659,61 +657,48 @@ function initializeApp(trans) {
                     slidesPerView: 1.5,
                     spaceBetween: 20,
                     centeredSlides: true,
+                    loopedSlides: 25,
+                    loopAdditionalSlides: 3,
                 },
                 768: {
                     slidesPerView: 2.5,
                     spaceBetween: 15,
                     centeredSlides: true,
+                    loopedSlides: 25,
+                    loopAdditionalSlides: 3,
                 },
                 1024: {
                     slidesPerView: 6,
                     spaceBetween: 15,
                     centeredSlides: false,
+                    loopedSlides: 25,
+                    loopAdditionalSlides: 3,
                 },
             },
             on: {
                 init: function() {
                     setupImageClickEvents();
                     this.update();
-                    if (this.autoplay) {
-                        this.autoplay.start();
-                    }
+                    if (this.autoplay) this.autoplay.start();
                 },
                 slideChange: function() {
                     setupImageClickEvents();
-                    if (this.isEnd) {
-                        if (this.autoplay) {
-                            this.autoplay.stop();
-                        }
-                    }
-                },
-                reachEnd: function() {
-                    if (this.autoplay) {
-                        this.autoplay.stop();
-                    }
-                },
-                touchEnd: function() {
-                    if (this.isEnd && this.activeIndex < this.slides.length - 1) {
-                        this.slideTo(this.slides.length - 1, 300);
-                    }
                 },
             },
         });
         
-        // Lip Swiper 초기화
+        // Lip Swiper 초기화 - 끊김 없이 흐르는 연속 스크롤 (jsfiddle 방식)
         const lipSwiper = new Swiper('.lip-swiper', {
             slidesPerView: 1,
             spaceBetween: 20,
-            loop: false,
-            watchOverflow: true,
-            resistance: false,
-            resistanceRatio: 0,
-            speed: 800,
+            loop: true,
+            loopedSlides: 20,
+            loopAdditionalSlides: 3,
+            speed: 4000,
             autoplay: {
-                delay: 2000,
+                delay: 0,
                 disableOnInteraction: false,
                 pauseOnMouseEnter: true,
-                stopOnLastSlide: true,
             },
             allowTouchMove: true,
             grabCursor: true,
@@ -724,60 +709,47 @@ function initializeApp(trans) {
                     slidesPerView: 1.5,
                     spaceBetween: 20,
                     centeredSlides: true,
+                    loopedSlides: 20,
+                    loopAdditionalSlides: 3,
                 },
                 768: {
                     slidesPerView: 2.5,
                     spaceBetween: 15,
                     centeredSlides: true,
+                    loopedSlides: 20,
+                    loopAdditionalSlides: 3,
                 },
                 1024: {
                     slidesPerView: 6,
                     spaceBetween: 15,
                     centeredSlides: false,
+                    loopedSlides: 20,
+                    loopAdditionalSlides: 3,
                 },
             },
             on: {
                 init: function() {
                     setupImageClickEvents();
-                    if (this.autoplay) {
-                        this.autoplay.start();
-                    }
+                    if (this.autoplay) this.autoplay.start();
                 },
                 slideChange: function() {
                     setupImageClickEvents();
-                    if (this.isEnd) {
-                        if (this.autoplay) {
-                            this.autoplay.stop();
-                        }
-                    }
-                },
-                reachEnd: function() {
-                    if (this.autoplay) {
-                        this.autoplay.stop();
-                    }
-                },
-                touchEnd: function() {
-                    if (this.isEnd && this.activeIndex < this.slides.length - 1) {
-                        this.slideTo(this.slides.length - 1, 300);
-                    }
                 },
             },
         });
         
-        // Review Swiper 초기화
+        // Review Swiper 초기화 - 끊김 없이 흐르는 연속 스크롤 (jsfiddle 방식)
         const reviewSwiper = new Swiper('.review-swiper', {
             slidesPerView: 1,
             spaceBetween: 20,
-            loop: false,
-            watchOverflow: true,
-            resistance: false,
-            resistanceRatio: 0,
-            speed: 800,
+            loop: true,
+            loopedSlides: 38,
+            loopAdditionalSlides: 3,
+            speed: 4000,
             autoplay: {
-                delay: 2000,
+                delay: 0,
                 disableOnInteraction: false,
                 pauseOnMouseEnter: true,
-                stopOnLastSlide: true,
             },
             allowTouchMove: true,
             grabCursor: true,
@@ -788,42 +760,31 @@ function initializeApp(trans) {
                     slidesPerView: 1.5,
                     spaceBetween: 20,
                     centeredSlides: true,
+                    loopedSlides: 38,
+                    loopAdditionalSlides: 3,
                 },
                 768: {
                     slidesPerView: 2.5,
                     spaceBetween: 15,
                     centeredSlides: true,
+                    loopedSlides: 38,
+                    loopAdditionalSlides: 3,
                 },
                 1024: {
                     slidesPerView: 6,
                     spaceBetween: 15,
                     centeredSlides: false,
+                    loopedSlides: 38,
+                    loopAdditionalSlides: 3,
                 },
             },
             on: {
                 init: function() {
                     setupImageClickEvents();
-                    if (this.autoplay) {
-                        this.autoplay.start();
-                    }
+                    if (this.autoplay) this.autoplay.start();
                 },
                 slideChange: function() {
                     setupImageClickEvents();
-                    if (this.isEnd) {
-                        if (this.autoplay) {
-                            this.autoplay.stop();
-                        }
-                    }
-                },
-                reachEnd: function() {
-                    if (this.autoplay) {
-                        this.autoplay.stop();
-                    }
-                },
-                touchEnd: function() {
-                    if (this.isEnd && this.activeIndex < this.slides.length - 1) {
-                        this.slideTo(this.slides.length - 1, 300);
-                    }
                 },
             },
         });

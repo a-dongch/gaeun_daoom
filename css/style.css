@@ -1203,6 +1203,8 @@ body[data-lang="zh"] {
 .gallery-section .swiper-wrapper {
     display: flex;
     align-items: stretch;
+    /* 끊김 없이 흐르는 연속 스크롤 (jsfiddle 방식) */
+    transition-timing-function: linear !important;
 }
 
 .gallery-section .swiper-slide {
@@ -1351,6 +1353,7 @@ body[data-lang="zh"] {
 .review-gallery .swiper-wrapper {
     display: flex;
     align-items: stretch;
+    transition-timing-function: linear !important;
 }
 
 .review-gallery .swiper-slide {
